@@ -39,16 +39,16 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        decrement: (state, { payload }) => {
+        toggleIsCompleted:(state, { payload }) => {
             state.forEach((i) => {
                 if (i.id === payload) {
-                    i.remainingTime -= 1;
+                    i.isCompleted = !i.isCompleted;
                 }
             });
         },
     },
 });
 
-export const { create, remove, update, reset, toggleIsRunning , tick } = tasksSlice.actions;
+export const { create, remove, update, reset, toggleIsRunning , tick , toggleIsCompleted} = tasksSlice.actions;
 
 export default tasksSlice.reducer;

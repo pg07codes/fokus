@@ -15,9 +15,12 @@ export function Task() {
         let newTask = {
             id: Math.floor(Math.random() * 10000),
             content: task,
-            time: time,
-            remainingTime: time,
+            time: time*60,
+            remainingTime: time*60,
             isRunning: false,
+            isCompleted:false,
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString()
         };
         dispatch(create(newTask));
     }
@@ -27,7 +30,7 @@ export function Task() {
             <input type="text" onChange={(e) => setTask(e.target.value)}/>
             <input type="number" onChange={(e) => setTime(e.target.value)}/>
             <input type="button" value="submit task" onClick={submitTask} />
-            {tasks.map((i) => <TaskCard task={i}/>)}
+            {tasks.map((i) => <TaskCard key={i.id} task={i}/>)}
         </div>
     );
 }
