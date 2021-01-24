@@ -10,10 +10,10 @@ export const tasksSlice = createSlice({
         remove: (state, { payload }) => {
             return state.filter((i) => i.id !== payload);
         },
-        update: (state, { payload }) => {
+        update: (state, {payload}) => {
             state.forEach((i) => {
                 if (i.id === payload.id) {
-                    i = payload;
+                    i.content = payload.updatedTask;
                 }
             });
         },
