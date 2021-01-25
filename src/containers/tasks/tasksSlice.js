@@ -10,17 +10,20 @@ export const tasksSlice = createSlice({
         remove: (state, { payload }) => {
             return state.filter((i) => i.id !== payload);
         },
-        update: (state, {payload}) => {
+        update: (state, { payload }) => {
             state.forEach((i) => {
                 if (i.id === payload.id) {
                     i.content = payload.updatedTask;
                 }
             });
         },
-        tick:(state, { payload }) => {
+        updateOrder: (state, { payload }) => {
+            return payload;
+        },
+        tick: (state, { payload }) => {
             state.forEach((i) => {
                 if (i.id === payload) {
-                    i.remainingTime = i.remainingTime -1;
+                    i.remainingTime = i.remainingTime - 1;
                 }
             });
         },
@@ -28,7 +31,7 @@ export const tasksSlice = createSlice({
             state.forEach((i) => {
                 if (i.id === payload) {
                     i.remainingTime = i.time;
-                    i.isRunning=false;
+                    i.isRunning = false;
                 }
             });
         },
@@ -39,7 +42,7 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        toggleIsCompleted:(state, { payload }) => {
+        toggleIsCompleted: (state, { payload }) => {
             state.forEach((i) => {
                 if (i.id === payload) {
                     i.isCompleted = !i.isCompleted;
@@ -49,6 +52,6 @@ export const tasksSlice = createSlice({
     },
 });
 
-export const { create, remove, update, reset, toggleIsRunning , tick , toggleIsCompleted} = tasksSlice.actions;
+export const { create, remove, update, reset, toggleIsRunning, tick, toggleIsCompleted, updateOrder } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
