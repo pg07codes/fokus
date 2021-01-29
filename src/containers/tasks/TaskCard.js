@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted } from "./tasksSlice";
+import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./tasksSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
 import { AiFillPlayCircle, AiFillPauseCircle, AiFillCheckCircle, AiOutlineCheckCircle, AiFillClockCircle } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
 import { GrPowerReset } from "react-icons/gr";
-import { Flipper, Flipped } from "react-flip-toolkit";
+import { Flipped } from "react-flip-toolkit";
 
 function formattedTimeString(x) {
     let seconds = x % 60;
@@ -117,7 +117,7 @@ export default function TaskCard({task , forwardRBDProvided}) {
                             onChange={(e) => setUpdatedTask(e.target.value)}
                         />
                     ) : (
-                        <h3 onDoubleClick={() => setTaskEdit(true)}>{task.content}</h3>
+                        <h3 onDoubleClick={() => setTaskEdit(true)}>{task.globalKey+": "+task.content}</h3>
                     )}
 
                     <p>{`created at: ${new Date(task.createdAt).getHours()}:${new Date(task.createdAt).getMinutes()}`}</p>
@@ -129,9 +129,9 @@ export default function TaskCard({task , forwardRBDProvided}) {
 
                 <TaskControllerDiv style={{ fontSize: "1.5rem" }}>
                     {task.isCompleted ? (
-                        <AiFillCheckCircle onClick={() => dispatch(toggleIsCompleted(task.id))} />
+                        <AiFillCheckCircle onClick={() => {dispatch(toggleIsCompleted(task.id));dispatch(rearrange({id:task.id,markedAsComplete:false}))}} />
                     ) : (
-                        <AiOutlineCheckCircle onClick={() => dispatch(toggleIsCompleted(task.id))} />
+                        <AiOutlineCheckCircle onClick={() => {dispatch(toggleIsCompleted(task.id));dispatch(rearrange({id:task.id,markedAsComplete:true}))}} />
                     )}
                     {task.isRunning ? (
                         <AiFillPauseCircle onClick={() => dispatch(toggleIsRunning(task.id))} />

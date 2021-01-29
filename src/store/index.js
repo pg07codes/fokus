@@ -5,6 +5,6 @@ import tasksReducer from "../containers/tasks/tasksSlice";
 export default configureStore({
     reducer: {
         counter: counterReducer,
-        tasks: tasksReducer,
+        tasks: tasksReducer
     },
 });
