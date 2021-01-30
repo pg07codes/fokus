@@ -45,9 +45,10 @@ export function Task() {
     function handleOnDragEnd(result) {
         if (!result.destination) return;
 
-        let items = [...tasks];
-        let x = JSON.stringify(items);
-        items = JSON.parse(x);
+        let items = [...tasks.map(i=>({...i}))];
+        //let items = [...tasks]
+        // let x = JSON.stringify(items);
+        // items = JSON.parse(x);
 
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);

@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./tasksSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
-import { AiFillPlayCircle, AiFillPauseCircle, AiFillCheckCircle, AiOutlineCheckCircle, AiFillClockCircle } from "react-icons/ai";
+import { AiFillPlayCircle, AiFillPauseCircle, AiFillCheckCircle, AiOutlineClockCircle } from "react-icons/ai";
+import { BsCheckCircle, BsClockFill } from "react-icons/bs";
 import { TiDelete } from "react-icons/ti";
-import { GrPowerReset } from "react-icons/gr";
 import { Flipped } from "react-flip-toolkit";
 
 function formattedTimeString(x) {
@@ -31,12 +31,13 @@ const TaskCardDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    height: 120px;
-    width: 476px;
-    border-radius: 10px;
+    height: 150px;
+    width: 576px;
+    border-radius: 5px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    background: #f8f8ff;
+    background: #fff;
     margin: 10px;
+    border: 2px solid black;
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -44,19 +45,13 @@ const TaskDetailsDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    height: 100px;
-    width: 280px;
+    height: 140px;
+    width: 400px;
     margin: 0 0 0 10px;
-    border-radius: 20px;
-    h3,
+    /* background-color: #fffcec; */
+    h1,
     p {
-        margin: 2px;
-        padding: 0;
-    }
-    p {
-        font-size: 0.6rem;
-        font-style: italic;
-        color: grey;
+        margin:15px 0 15px 0;
     }
 `;
 
@@ -65,11 +60,58 @@ const TaskTimerDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 120px;
     width: 100px;
-    border-radius: 10px;
-    background-color: #eeeeff;
+    /* background-color: #f8f8ff; */
     position: relative;
+    p {
+        margin: 3px;
+    }
+    svg {
+        margin-top: 7px;
+    }
+`;
+
+const TaskTimeButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 70px;
+    border-radius: 5px;
+    background-color: #000;
+    color: white;
+    p {
+        margin: 3px;
+        font-size: 6px;
+        font-weight: bold;
+    }
+    svg {
+        font-size: 16px;
+    }
+`;
+
+const TaskDoneButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 70px;
+    border-radius: 5px;
+    border:1px solid black;
+    background-color: ${(props)=>props.isCompleted?"#000":"#fff"};
+    color: ${(props)=>props.isCompleted?"#fff":"#000"}; 
+    cursor:pointer;
+    p {
+        margin: 3px;
+        font-size: 8px;
+        font-weight: bold;
+    }
+    svg {
+        font-size: 18px;
+    }
 `;
 
 const TaskControllerDiv = styled.div`
@@ -82,7 +124,7 @@ const TaskControllerDiv = styled.div`
     border-radius: 0 10px 10px 0;
 `;
 
-export default function TaskCard({task , forwardRBDProvided}) {
+export default function TaskCard({ task, forwardRBDProvided }) {
     const delay = 1000;
     const dispatch = useDispatch();
     useTimer(
@@ -101,12 +143,19 @@ export default function TaskCard({task , forwardRBDProvided}) {
 
     return (
         <Flipped flipId={`${task.id}`}>
-            <TaskCardDiv  ref={forwardRBDProvided.innerRef} {...forwardRBDProvided.draggableProps} {...forwardRBDProvided.dragHandleProps}>
+            <TaskCardDiv ref={forwardRBDProvided.innerRef} {...forwardRBDProvided.draggableProps} {...forwardRBDProvided.dragHandleProps}>
+                <TaskTimerDiv>
+                    <BsClockFill style={{ fontSize: "50px" }} />
+                    <p>{formattedTimeString(task.remainingTime)}</p>
+                    {/* <GrPowerReset style={{ position: "absolute", bottom: 5, right: 5, fontSize: "0.8rem" }} onClick={() => dispatch(reset(task.id))} /> */}
+                </TaskTimerDiv>
+
                 <TaskDetailsDiv>
-                    <p>
-                        <AiFillClockCircle />
-                        {Math.round(task.time / 60) + "min"}
-                    </p>
+                    <TaskTimeButton>
+                        <AiOutlineClockCircle />
+                        <p>{Math.round(task.time / 60) + "mins"}</p>
+                    </TaskTimeButton>
+
                     {taskEdit ? (
                         <input
                             value={updatedTask}
@@ -117,22 +166,22 @@ export default function TaskCard({task , forwardRBDProvided}) {
                             onChange={(e) => setUpdatedTask(e.target.value)}
                         />
                     ) : (
-                        <h3 onDoubleClick={() => setTaskEdit(true)}>{task.globalKey+": "+task.content}</h3>
+                        <h1 onDoubleClick={() => setTaskEdit(true)}>{task.content}</h1>
                     )}
 
-                    <p>{`created at: ${new Date(task.createdAt).getHours()}:${new Date(task.createdAt).getMinutes()}`}</p>
+                    <TaskDoneButton isCompleted={task.isCompleted} onClick={task.isCompleted?(() => {
+                                dispatch(toggleIsCompleted(task.id));
+                                dispatch(rearrange({ id: task.id, markedAsComplete: false }));
+                            }):(() => {
+                                dispatch(toggleIsCompleted(task.id));
+                                dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+                            })}>
+                        <BsCheckCircle/>
+                        <p>Done</p>
+                    </TaskDoneButton>
                 </TaskDetailsDiv>
-                <TaskTimerDiv>
-                    <h2>{formattedTimeString(task.remainingTime)}</h2>
-                    <GrPowerReset style={{ position: "absolute", bottom: 5, right: 5, fontSize: "0.8rem" }} onClick={() => dispatch(reset(task.id))} />
-                </TaskTimerDiv>
 
                 <TaskControllerDiv style={{ fontSize: "1.5rem" }}>
-                    {task.isCompleted ? (
-                        <AiFillCheckCircle onClick={() => {dispatch(toggleIsCompleted(task.id));dispatch(rearrange({id:task.id,markedAsComplete:false}))}} />
-                    ) : (
-                        <AiOutlineCheckCircle onClick={() => {dispatch(toggleIsCompleted(task.id));dispatch(rearrange({id:task.id,markedAsComplete:true}))}} />
-                    )}
                     {task.isRunning ? (
                         <AiFillPauseCircle onClick={() => dispatch(toggleIsRunning(task.id))} />
                     ) : (
@@ -142,6 +191,6 @@ export default function TaskCard({task , forwardRBDProvided}) {
                     <TiDelete onClick={() => dispatch(remove(task.id))} />
                 </TaskControllerDiv>
             </TaskCardDiv>
-            </Flipped>
+        </Flipped>
     );
 }
