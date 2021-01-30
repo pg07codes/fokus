@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./tasksSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
-import { AiFillPlayCircle, AiFillPauseCircle, AiFillCheckCircle, AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import { BsCheckCircle, BsClockFill } from "react-icons/bs";
-import { TiDelete } from "react-icons/ti";
+import { ImLoop2, ImCancelCircle } from "react-icons/im";
 import { Flipped } from "react-flip-toolkit";
+import { GrDrag } from "react-icons/gr";
 
 function formattedTimeString(x) {
     let seconds = x % 60;
@@ -26,17 +27,41 @@ function formattedTimeString(x) {
     return `${minutes}:${seconds}`;
 }
 
+const TaskCardContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 600px;
+    height: 150px;
+    margin: 10px;
+    /* background-color: #fff4e1; */
+`;
+
+const TaskCardDragIcon = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 30px;
+    height: 100%;
+    /* background-color: #fff9ac; */
+    svg {
+        font-size: 24px;
+        opacity: 0.6;
+    }
+`;
+
 const TaskCardDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    height: 150px;
+    height: 100%;
     width: 576px;
     border-radius: 5px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     background: #fff;
-    margin: 10px;
     border: 2px solid black;
 `;
 
@@ -51,7 +76,7 @@ const TaskDetailsDiv = styled.div`
     /* background-color: #fffcec; */
     h1,
     p {
-        margin:15px 0 15px 0;
+        margin: 5px 0 15px 0;
     }
 `;
 
@@ -68,16 +93,26 @@ const TaskTimerDiv = styled.div`
         margin: 3px;
     }
     svg {
-        margin-top: 7px;
+        margin-top: 15px;
     }
 `;
-
+const TaskTimeDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 24px;
+    width: 95px;
+    svg {
+        font-size: 15px;
+    }
+`;
 const TaskTimeButton = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 24px;
+    height: 100%;
     width: 70px;
     border-radius: 5px;
     background-color: #000;
@@ -86,9 +121,6 @@ const TaskTimeButton = styled.div`
         margin: 3px;
         font-size: 6px;
         font-weight: bold;
-    }
-    svg {
-        font-size: 16px;
     }
 `;
 
@@ -100,10 +132,10 @@ const TaskDoneButton = styled.div`
     height: 24px;
     width: 70px;
     border-radius: 5px;
-    border:1px solid black;
-    background-color: ${(props)=>props.isCompleted?"#000":"#fff"};
-    color: ${(props)=>props.isCompleted?"#fff":"#000"}; 
-    cursor:pointer;
+    border: 1px solid black;
+    background-color: ${(props) => (props.isCompleted ? "#000" : "#fff")};
+    color: ${(props) => (props.isCompleted ? "#fff" : "#000")};
+    cursor: pointer;
     p {
         margin: 3px;
         font-size: 8px;
@@ -117,11 +149,14 @@ const TaskDoneButton = styled.div`
 const TaskControllerDiv = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    height: 120px;
-    width: 40px;
-    border-radius: 0 10px 10px 0;
+    height: 100%;
+    width: 30px;
+    svg {
+        font-size: 20px;
+        margin: 5px;
+    }
 `;
 
 export default function TaskCard({ task, forwardRBDProvided }) {
@@ -140,57 +175,71 @@ export default function TaskCard({ task, forwardRBDProvided }) {
 
     const [taskEdit, setTaskEdit] = useState(false);
     const [updatedTask, setUpdatedTask] = useState(task.content);
+    const [showDragIcon, setShowDragIcon] = useState(false);
 
     return (
         <Flipped flipId={`${task.id}`}>
-            <TaskCardDiv ref={forwardRBDProvided.innerRef} {...forwardRBDProvided.draggableProps} {...forwardRBDProvided.dragHandleProps}>
-                <TaskTimerDiv>
-                    <BsClockFill style={{ fontSize: "50px" }} />
-                    <p>{formattedTimeString(task.remainingTime)}</p>
-                    {/* <GrPowerReset style={{ position: "absolute", bottom: 5, right: 5, fontSize: "0.8rem" }} onClick={() => dispatch(reset(task.id))} /> */}
-                </TaskTimerDiv>
+            <TaskCardContainer
+                ref={forwardRBDProvided.innerRef}
+                {...forwardRBDProvided.draggableProps}
+                {...forwardRBDProvided.dragHandleProps}
+                onMouseEnter={() => setShowDragIcon(true)}
+                onMouseLeave={() => setShowDragIcon(false)}
+            >
+                <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskDetailsDiv>
-                    <TaskTimeButton>
-                        <AiOutlineClockCircle />
-                        <p>{Math.round(task.time / 60) + "mins"}</p>
-                    </TaskTimeButton>
+                <TaskCardDiv>
+                    <TaskTimerDiv>
+                        <BsClockFill style={{ fontSize: "50px" }} onClick={() => dispatch(toggleIsRunning(task.id))} />
+                        <p>{formattedTimeString(task.remainingTime)}</p>
+                    </TaskTimerDiv>
 
-                    {taskEdit ? (
-                        <input
-                            value={updatedTask}
-                            onBlur={() => {
-                                dispatch(update({ id: task.id, updatedTask }));
-                                setTaskEdit(false);
-                            }}
-                            onChange={(e) => setUpdatedTask(e.target.value)}
-                        />
-                    ) : (
-                        <h1 onDoubleClick={() => setTaskEdit(true)}>{task.content}</h1>
-                    )}
+                    <TaskDetailsDiv>
+                        <TaskTimeDiv>
+                            <TaskTimeButton>
+                                <AiOutlineClockCircle />
+                                <p>{Math.round(task.time / 60) + "mins"}</p>
+                            </TaskTimeButton>
+                            <ImLoop2 onClick={() => dispatch(reset(task.id))} />
+                        </TaskTimeDiv>
 
-                    <TaskDoneButton isCompleted={task.isCompleted} onClick={task.isCompleted?(() => {
-                                dispatch(toggleIsCompleted(task.id));
-                                dispatch(rearrange({ id: task.id, markedAsComplete: false }));
-                            }):(() => {
-                                dispatch(toggleIsCompleted(task.id));
-                                dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                            })}>
-                        <BsCheckCircle/>
-                        <p>Done</p>
-                    </TaskDoneButton>
-                </TaskDetailsDiv>
+                        {taskEdit ? (
+                            <input
+                                value={updatedTask}
+                                onBlur={() => {
+                                    dispatch(update({ id: task.id, updatedTask }));
+                                    setTaskEdit(false);
+                                }}
+                                onChange={(e) => setUpdatedTask(e.target.value)}
+                            />
+                        ) : (
+                            <h1 onDoubleClick={() => setTaskEdit(true)}>{task.content}</h1>
+                        )}
 
-                <TaskControllerDiv style={{ fontSize: "1.5rem" }}>
-                    {task.isRunning ? (
-                        <AiFillPauseCircle onClick={() => dispatch(toggleIsRunning(task.id))} />
-                    ) : (
-                        <AiFillPlayCircle onClick={() => dispatch(toggleIsRunning(task.id))} />
-                    )}
+                        <TaskDoneButton
+                            isCompleted={task.isCompleted}
+                            onClick={
+                                task.isCompleted
+                                    ? () => {
+                                          dispatch(toggleIsCompleted(task.id));
+                                          dispatch(rearrange({ id: task.id, markedAsComplete: false }));
+                                      }
+                                    : () => {
+                                          dispatch(toggleIsCompleted(task.id));
+                                          dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+                                      }
+                            }
+                        >
+                            <BsCheckCircle />
+                            <p>Done</p>
+                        </TaskDoneButton>
+                    </TaskDetailsDiv>
 
-                    <TiDelete onClick={() => dispatch(remove(task.id))} />
-                </TaskControllerDiv>
-            </TaskCardDiv>
+                    <TaskControllerDiv>
+                        <ImCancelCircle onClick={() => dispatch(remove(task.id))} />
+                    </TaskControllerDiv>
+                </TaskCardDiv>
+            </TaskCardContainer>
         </Flipped>
     );
 }

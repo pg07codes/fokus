@@ -42,7 +42,7 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        reset: (taskArray, { payload }) => {
+        reset: ({taskArray}, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload) {
                     i.remainingTime = i.time;
