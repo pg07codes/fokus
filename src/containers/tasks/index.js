@@ -4,6 +4,28 @@ import { create, updateOrder, incrementGlobalKey } from "./tasksSlice";
 import TaskCard from "./TaskCard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Flipper } from "react-flip-toolkit";
+import styled from "styled-components";
+
+const TaskInputContainer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px auto;
+    width: 600px;
+    background-color: #f8f8ff;
+    border-radius: 15px;
+    height: 75px;
+`;
+
+const TaskInputField = styled.input`
+    height: 50px;
+    width: 90%;
+    font-size: 0.9rem;
+    border: 0;
+    outline: none;
+    border-radius: 15px;
+    background-color: #dcdcfa;
+`;
 
 export function Task() {
     const tasks = useSelector((state) => state.tasks.taskArray);
@@ -45,7 +67,7 @@ export function Task() {
     function handleOnDragEnd(result) {
         if (!result.destination) return;
 
-        let items = [...tasks.map(i=>({...i}))];
+        let items = [...tasks.map((i) => ({ ...i }))];
         //let items = [...tasks]
         // let x = JSON.stringify(items);
         // items = JSON.parse(x);
@@ -57,19 +79,19 @@ export function Task() {
         let direction = result.destination.index > result.source.index; // direction true means moving right & swapping
         while (i != result.destination.index) {
             if (direction) {
-                console.log(items[i].globalKey)
-                items[i].globalKey=tasks[i].globalKey;
-                console.log(tasks[i].globalKey)
+                console.log(items[i].globalKey);
+                items[i].globalKey = tasks[i].globalKey;
+                console.log(tasks[i].globalKey);
                 i++;
             } else {
-                items[i].globalKey=tasks[i].globalKey;
+                items[i].globalKey = tasks[i].globalKey;
                 i--;
             }
-            if(i == result.destination.index){
-                items[i].globalKey=tasks[i].globalKey;
+            if (i == result.destination.index) {
+                items[i].globalKey = tasks[i].globalKey;
             }
         }
-        
+
         dispatch(updateOrder(items));
     }
 
@@ -82,8 +104,10 @@ export function Task() {
     }
 
     return (
-        <>
-            <input type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
+        <div style={{ flex: "1 1 0", backgroundColor: "#fff4ef" }}>
+            <TaskInputContainer>
+                <TaskInputField type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
+            </TaskInputContainer>
             <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="dropArea">
                     {(provided) => (
@@ -100,6 +124,6 @@ export function Task() {
                     )}
                 </Droppable>
             </DragDropContext>
-        </>
+        </div>
     );
 }

@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./../containers/counter/counterSlice";
 import tasksReducer from "../containers/tasks/tasksSlice";
+import focusBoardReducer from "../containers/focusBoard/focusBoardSlice";
 
 export default configureStore({
     reducer: {
-        counter: counterReducer,
-        tasks: tasksReducer
+        tasks: tasksReducer,
+        focusBoard:focusBoardReducer
     },
 });

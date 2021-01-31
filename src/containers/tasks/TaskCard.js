@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./tasksSlice";
+import { focusOnTask } from "./../focusBoard/focusBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
@@ -47,6 +48,7 @@ const TaskCardDragIcon = styled.div`
     height: 100%;
     /* background-color: #fff9ac; */
     svg {
+        cursor: url("https://ssl.gstatic.com/ui/v1/icons/mail/images/2/openhand.cur"), default !important;
         font-size: 24px;
         opacity: 0.6;
     }
@@ -133,9 +135,9 @@ const TaskDoneButton = styled.div`
     width: 70px;
     border-radius: 5px;
     border: 1px solid black;
+    cursor:pointer;
     background-color: ${(props) => (props.isCompleted ? "#000" : "#fff")};
     color: ${(props) => (props.isCompleted ? "#fff" : "#000")};
-    cursor: pointer;
     p {
         margin: 3px;
         font-size: 8px;
@@ -188,7 +190,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskCardDiv>
+                <TaskCardDiv onClick={()=>dispatch(focusOnTask(task))}>
                     <TaskTimerDiv>
                         <BsClockFill style={{ fontSize: "50px" }} onClick={() => dispatch(toggleIsRunning(task.id))} />
                         <p>{formattedTimeString(task.remainingTime)}</p>
