@@ -24,7 +24,7 @@ const TaskInputField = styled.input`
     border: 0;
     outline: none;
     border-radius: 15px;
-    background-color: #dcdcfa;
+    background-color: #f8f8ff;
 `;
 
 export function Task() {
@@ -79,9 +79,7 @@ export function Task() {
         let direction = result.destination.index > result.source.index; // direction true means moving right & swapping
         while (i != result.destination.index) {
             if (direction) {
-                console.log(items[i].globalKey);
                 items[i].globalKey = tasks[i].globalKey;
-                console.log(tasks[i].globalKey);
                 i++;
             } else {
                 items[i].globalKey = tasks[i].globalKey;
@@ -104,7 +102,7 @@ export function Task() {
     }
 
     return (
-        <div style={{ flex: "1 1 0", backgroundColor: "#fff4ef" }}>
+        <div style={{ flex: "3 1 0"}}>
             <TaskInputContainer>
                 <TaskInputField type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
             </TaskInputContainer>

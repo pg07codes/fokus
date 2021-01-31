@@ -5,7 +5,8 @@ import { focusOnTask } from "./../focusBoard/focusBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { BsCheckCircle, BsClockFill } from "react-icons/bs";
+import { BsCheckCircle } from "react-icons/bs";
+import { FiClock } from "react-icons/fi";
 import { ImLoop2, ImCancelCircle } from "react-icons/im";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
@@ -33,9 +34,9 @@ const TaskCardContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 600px;
-    height: 150px;
-    margin: 10px;
+    width: 576px;
+    height: 140px;
+    margin: 15px;
     /* background-color: #fff4e1; */
 `;
 
@@ -46,21 +47,20 @@ const TaskCardDragIcon = styled.div`
     flex-direction: row;
     width: 30px;
     height: 100%;
-    /* background-color: #fff9ac; */
+    /* background-color: #ff09ac; */
     svg {
         cursor: url("https://ssl.gstatic.com/ui/v1/icons/mail/images/2/openhand.cur"), default !important;
-        font-size: 24px;
+        font-size: 2em;
         opacity: 0.6;
     }
 `;
 
 const TaskCardDiv = styled.div`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
     flex-direction: row;
     height: 100%;
-    width: 576px;
+    width: 520px;
     border-radius: 5px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
     background: #fff;
@@ -70,13 +70,24 @@ const TaskCardDiv = styled.div`
 const TaskDetailsDiv = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 140px;
-    width: 400px;
+    justify-content: space-around;
+    height: 100%;
+    width: 75%;
     margin: 0 0 0 10px;
     /* background-color: #fffcec; */
-    h1,
+    h3,
+    p {
+        margin: 5px 0 15px 0;
+    }
+`;
+
+const TaskContentDiv = styled.div`
+    display: flex;
+    align-items: center;
+    height: 65%;
+    margin: 0 0 0 5px;
+    /* background-color: #fffcec; */
+    h3,
     p {
         margin: 5px 0 15px 0;
     }
@@ -87,14 +98,16 @@ const TaskTimerDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 120px;
-    width: 100px;
+    height: 80%;
+    width: 20%;
     /* background-color: #f8f8ff; */
     position: relative;
     p {
-        margin: 3px;
+        margin: 5px;
+        font-size: 1em;
     }
     svg {
+        font-size: 2.5em;
         margin-top: 15px;
     }
 `;
@@ -103,11 +116,8 @@ const TaskTimeDiv = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 24px;
-    width: 95px;
-    svg {
-        font-size: 15px;
-    }
+    height: 80%;
+    width: 120px;
 `;
 const TaskTimeButton = styled.div`
     display: flex;
@@ -115,14 +125,16 @@ const TaskTimeButton = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 70px;
+    width: 85px;
     border-radius: 5px;
-    background-color: #000;
-    color: white;
+    border: 1px solid black;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
     p {
-        margin: 3px;
-        font-size: 6px;
-        font-weight: bold;
+        margin: 0;
+        font-size: 0.7em;
     }
 `;
 
@@ -131,35 +143,60 @@ const TaskDoneButton = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 24px;
+    height: 80%;
     width: 70px;
     border-radius: 5px;
     border: 1px solid black;
-    cursor:pointer;
+    margin: 5px;
+    cursor: pointer;
     background-color: ${(props) => (props.isCompleted ? "#000" : "#fff")};
     color: ${(props) => (props.isCompleted ? "#fff" : "#000")};
     p {
-        margin: 3px;
-        font-size: 8px;
-        font-weight: bold;
+        margin: 0;
+        font-size: 0.7em;
     }
-    svg {
-        font-size: 18px;
+`;
+
+const TaskDeleteButton = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 80px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    margin-left: auto;
+    color: #000;
+    p {
+        margin: 0;
+        font-size: 0.7em;
+    }
+    &:hover {
+        background-color: #000;
+        color: #fff;
     }
 `;
 
 const TaskControllerDiv = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
-    width: 30px;
+    height: 25%;
+    /* background-color: #fffa91; */
     svg {
         font-size: 20px;
         margin: 5px;
     }
 `;
+
+function previewTask(str) {
+    if (str.length <= 70) return str;
+    else return str.substring(0, 70) + "...";
+}
 
 export default function TaskCard({ task, forwardRBDProvided }) {
     const delay = 1000;
@@ -190,56 +227,60 @@ export default function TaskCard({ task, forwardRBDProvided }) {
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskCardDiv onClick={()=>dispatch(focusOnTask(task))}>
+                <TaskCardDiv onClick={() => dispatch(focusOnTask(task))}>
                     <TaskTimerDiv>
-                        <BsClockFill style={{ fontSize: "50px" }} onClick={() => dispatch(toggleIsRunning(task.id))} />
+                        <FiClock onClick={() => dispatch(toggleIsRunning(task.id))} />
                         <p>{formattedTimeString(task.remainingTime)}</p>
                     </TaskTimerDiv>
 
                     <TaskDetailsDiv>
-                        <TaskTimeDiv>
-                            <TaskTimeButton>
-                                <AiOutlineClockCircle />
-                                <p>{Math.round(task.time / 60) + "mins"}</p>
-                            </TaskTimeButton>
-                            <ImLoop2 onClick={() => dispatch(reset(task.id))} />
-                        </TaskTimeDiv>
+                        <TaskContentDiv>
+                            {taskEdit ? (
+                                <input
+                                    value={updatedTask}
+                                    onBlur={() => {
+                                        dispatch(update({ id: task.id, updatedTask }));
+                                        setTaskEdit(false);
+                                    }}
+                                    onChange={(e) => setUpdatedTask(e.target.value)}
+                                />
+                            ) : (
+                                <h3 onDoubleClick={() => setTaskEdit(true)}>{previewTask(task.content)}</h3>
+                            )}
+                        </TaskContentDiv>
 
-                        {taskEdit ? (
-                            <input
-                                value={updatedTask}
-                                onBlur={() => {
-                                    dispatch(update({ id: task.id, updatedTask }));
-                                    setTaskEdit(false);
-                                }}
-                                onChange={(e) => setUpdatedTask(e.target.value)}
-                            />
-                        ) : (
-                            <h1 onDoubleClick={() => setTaskEdit(true)}>{task.content}</h1>
-                        )}
+                        <TaskControllerDiv>
+                            <TaskDoneButton
+                                isCompleted={task.isCompleted}
+                                onClick={
+                                    task.isCompleted
+                                        ? () => {
+                                              dispatch(toggleIsCompleted(task.id));
+                                              dispatch(rearrange({ id: task.id, markedAsComplete: false }));
+                                          }
+                                        : () => {
+                                              dispatch(toggleIsCompleted(task.id));
+                                              dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+                                          }
+                                }
+                            >
+                                <BsCheckCircle />
+                                <p>Done</p>
+                            </TaskDoneButton>
+                            <TaskTimeDiv>
+                                <TaskTimeButton>
+                                    <AiOutlineClockCircle />
+                                    <p>{Math.round(task.time / 60) + "mins"}</p>
+                                </TaskTimeButton>
+                                <ImLoop2 onClick={() => dispatch(reset(task.id))} />
+                            </TaskTimeDiv>
 
-                        <TaskDoneButton
-                            isCompleted={task.isCompleted}
-                            onClick={
-                                task.isCompleted
-                                    ? () => {
-                                          dispatch(toggleIsCompleted(task.id));
-                                          dispatch(rearrange({ id: task.id, markedAsComplete: false }));
-                                      }
-                                    : () => {
-                                          dispatch(toggleIsCompleted(task.id));
-                                          dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                      }
-                            }
-                        >
-                            <BsCheckCircle />
-                            <p>Done</p>
-                        </TaskDoneButton>
+                            <TaskDeleteButton onClick={() => dispatch(remove(task.id))}>
+                                <ImCancelCircle />
+                                <p>Delete</p>
+                            </TaskDeleteButton>
+                        </TaskControllerDiv>
                     </TaskDetailsDiv>
-
-                    <TaskControllerDiv>
-                        <ImCancelCircle onClick={() => dispatch(remove(task.id))} />
-                    </TaskControllerDiv>
                 </TaskCardDiv>
             </TaskCardContainer>
         </Flipped>
