@@ -1,5 +1,5 @@
 import React from "react";
-import { Task } from "./tasks";
+import { TaskBoard } from "./taskBoard";
 import { FocusBoard } from "./focusBoard";
 import styled from "styled-components";
 
@@ -12,7 +12,7 @@ function App() {
     return (
         <Container>
             <FocusBoard/>
-            <Task />
+            <TaskBoard />
         </Container>
     );
 }

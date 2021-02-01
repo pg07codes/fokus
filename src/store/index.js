@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import tasksReducer from "../containers/tasks/tasksSlice";
+import tasksReducer from "../containers/taskBoard/taskBoardSlice";
 import focusBoardReducer from "../containers/focusBoard/focusBoardSlice";
 
 export default configureStore({

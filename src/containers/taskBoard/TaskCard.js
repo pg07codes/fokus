@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./tasksSlice";
-import { focusOnTask } from "./../focusBoard/focusBoardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./taskBoardSlice";
+import { focusOnTask } from "../focusBoard/focusBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
@@ -65,7 +65,7 @@ const TaskCardDiv = styled.div`
     /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); */
     -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2) ;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    /* border: 2px solid black; */
+    border: ${(props)=>props.isFocussed?"2px solid black":"none"};
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -225,6 +225,8 @@ export default function TaskCard({ task, forwardRBDProvided }) {
     const [updatedTask, setUpdatedTask] = useState(task.content);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
+    const focussedTask = useSelector((state)=> state.focusBoard.focussedTask);
+
     function submitUpdatedTask(e) {
         if (e.key === "Enter" && updatedTask.trim().length >= 3) {
             let temp = updatedTask.trim().split(" ");
@@ -239,6 +241,11 @@ export default function TaskCard({ task, forwardRBDProvided }) {
         }
     }
 
+    function isFocussed(id){
+        if(focussedTask!==null && focussedTask.id===id) return true;
+        return false;
+    }
+
 
     return (
         <Flipped flipId={`${task.id}`}>
@@ -251,7 +258,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskCardDiv onClick={() => dispatch(focusOnTask(task))}>
+                <TaskCardDiv onClick={() => dispatch(focusOnTask(task))} isFocussed={isFocussed(task.id)}>
                     <TaskTimerDiv>
                         <FiClock onClick={() => dispatch(toggleIsRunning(task.id))} />
                         <p>{formattedTimeString(task.remainingTime)}</p>

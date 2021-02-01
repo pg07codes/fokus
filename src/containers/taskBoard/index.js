@@ -1,33 +1,40 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create, updateOrder, incrementGlobalKey } from "./tasksSlice";
+import { create, updateOrder, incrementGlobalKey } from "./taskBoardSlice";
 import TaskCard from "./TaskCard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Flipper } from "react-flip-toolkit";
 import styled from "styled-components";
 
+const TaskBoardContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    flex: 3 1 0;
+`;
+
 const TaskInputContainer = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    margin: 20px auto;
-    width: 600px;
+    margin: 20px;
+    width: 576px;
     background-color: #f8f8ff;
-    border-radius: 15px;
+    border-radius: 5px;
     height: 75px;
 `;
 
 const TaskInputField = styled.input`
-    height: 50px;
+    height: 70%;
     width: 90%;
-    font-size: 0.9rem;
+    font-size: 1em;
+    font-weight: bold;
     border: 0;
     outline: none;
-    border-radius: 15px;
     background-color: #f8f8ff;
 `;
 
-export function Task() {
+export function TaskBoard() {
     const tasks = useSelector((state) => state.tasks.taskArray);
     const meta = useSelector((state) => state.tasks.meta);
     const dispatch = useDispatch();
@@ -103,7 +110,7 @@ export function Task() {
     // input has both onChange and onKeyDown - can be optimised by using one and combining
 
     return (
-        <div style={{ flex: "3 1 0" }}>
+        <TaskBoardContainer>
             <TaskInputContainer>
                 <TaskInputField type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
             </TaskInputContainer>
@@ -123,6 +130,6 @@ export function Task() {
                     )}
                 </Droppable>
             </DragDropContext>
-        </div>
+        </TaskBoardContainer>
     );
 }
