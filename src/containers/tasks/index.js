@@ -35,10 +35,10 @@ export function Task() {
     const [task, setTask] = useState("");
 
     function submitTask(e) {
-        if (e.key === "Enter" && task.trim().length > 2) {
+        if (e.key === "Enter" && task.trim().length >= 3) {
             let temp = task.trim().split(" ");
             let time = 0;
-            if (!isNaN(parseInt(temp[temp.length - 1]))) {
+            if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
                 time = parseInt(temp.pop());
             } else {
                 time = 20;
@@ -54,7 +54,6 @@ export function Task() {
                 isRunning: false,
                 isCompleted: false,
                 createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
             };
             dispatch(create(newTask));
             dispatch(incrementGlobalKey());
@@ -101,8 +100,10 @@ export function Task() {
         return flipKey;
     }
 
+    // input has both onChange and onKeyDown - can be optimised by using one and combining
+
     return (
-        <div style={{ flex: "3 1 0"}}>
+        <div style={{ flex: "3 1 0" }}>
             <TaskInputContainer>
                 <TaskInputField type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
             </TaskInputContainer>

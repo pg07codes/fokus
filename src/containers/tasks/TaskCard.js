@@ -36,7 +36,7 @@ const TaskCardContainer = styled.div`
     flex-direction: row;
     width: 576px;
     height: 140px;
-    margin: 15px;
+    margin: 25px;
     /* background-color: #fff4e1; */
 `;
 
@@ -62,9 +62,10 @@ const TaskCardDiv = styled.div`
     height: 100%;
     width: 520px;
     border-radius: 5px;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    background: #fff;
-    border: 2px solid black;
+    /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); */
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2) ;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+    /* border: 2px solid black; */
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -74,11 +75,7 @@ const TaskDetailsDiv = styled.div`
     height: 100%;
     width: 75%;
     margin: 0 0 0 10px;
-    /* background-color: #fffcec; */
-    h3,
-    p {
-        margin: 5px 0 15px 0;
-    }
+    /* background-color: #fff1fc; */
 `;
 
 const TaskContentDiv = styled.div`
@@ -86,10 +83,25 @@ const TaskContentDiv = styled.div`
     align-items: center;
     height: 65%;
     margin: 0 0 0 5px;
+    border-bottom:1px solid rgba(0, 0, 0, 0.1);
     /* background-color: #fffcec; */
-    h3,
-    p {
-        margin: 5px 0 15px 0;
+    h3:hover {
+        cursor: text;
+    }
+`;
+
+const TaskEditInput = styled.textarea`
+    resize: none;
+    height: 90%;
+    width: 100%;
+    font-size: 1.17em;
+    font-weight: bold;
+    overflow: hidden;
+    vertical-align:center;
+    &:focus {
+        outline:none;
+        border: 2px black dashed;
+        border-radius:5px;
     }
 `;
 
@@ -99,7 +111,7 @@ const TaskTimerDiv = styled.div`
     justify-content: center;
     align-items: center;
     height: 80%;
-    width: 20%;
+    width: 15%;
     /* background-color: #f8f8ff; */
     position: relative;
     p {
@@ -108,7 +120,7 @@ const TaskTimerDiv = styled.div`
     }
     svg {
         font-size: 2.5em;
-        margin-top: 15px;
+        margin-top: 25px;
     }
 `;
 const TaskTimeDiv = styled.div`
@@ -117,19 +129,17 @@ const TaskTimeDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     height: 80%;
-    width: 120px;
+    width: 110px;
 `;
 const TaskTimeButton = styled.div`
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 85px;
+    width: 70px;
     border-radius: 5px;
     border: 1px solid black;
     margin: 5px;
-    cursor: pointer;
     background-color: #fff;
     color: #000;
     p {
@@ -140,7 +150,6 @@ const TaskTimeButton = styled.div`
 
 const TaskDoneButton = styled.div`
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 80%;
@@ -212,9 +221,24 @@ export default function TaskCard({ task, forwardRBDProvided }) {
         task.isRunning ? delay : null
     );
 
-    const [taskEdit, setTaskEdit] = useState(false);
+    const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTask, setUpdatedTask] = useState(task.content);
     const [showDragIcon, setShowDragIcon] = useState(false);
+
+    function submitUpdatedTask(e) {
+        if (e.key === "Enter" && updatedTask.trim().length >= 3) {
+            let temp = updatedTask.trim().split(" ");
+            let time = 0;
+            if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
+                time = parseInt(temp.pop());
+            }
+            temp = temp.join(" ");
+            // manage to update time also
+            dispatch(update({ id: task.id, updatedTask }));
+            setTaskUnderEdit(false);
+        }
+    }
+
 
     return (
         <Flipped flipId={`${task.id}`}>
@@ -235,17 +259,19 @@ export default function TaskCard({ task, forwardRBDProvided }) {
 
                     <TaskDetailsDiv>
                         <TaskContentDiv>
-                            {taskEdit ? (
-                                <input
+                            {taskUnderEdit ? (
+                                <TaskEditInput
+                                    autoFocus
                                     value={updatedTask}
                                     onBlur={() => {
                                         dispatch(update({ id: task.id, updatedTask }));
-                                        setTaskEdit(false);
+                                        setTaskUnderEdit(false);
                                     }}
+                                    onKeyDown={submitUpdatedTask}
                                     onChange={(e) => setUpdatedTask(e.target.value)}
                                 />
                             ) : (
-                                <h3 onDoubleClick={() => setTaskEdit(true)}>{previewTask(task.content)}</h3>
+                                <h3 onClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</h3>
                             )}
                         </TaskContentDiv>
 
@@ -270,7 +296,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                             <TaskTimeDiv>
                                 <TaskTimeButton>
                                     <AiOutlineClockCircle />
-                                    <p>{Math.round(task.time / 60) + "mins"}</p>
+                                    <p>{Math.round(task.time / 60) + "m"}</p>
                                 </TaskTimeButton>
                                 <ImLoop2 onClick={() => dispatch(reset(task.id))} />
                             </TaskTimeDiv>
