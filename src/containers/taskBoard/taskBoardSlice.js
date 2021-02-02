@@ -25,10 +25,13 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        update: ({ taskArray }, { payload }) => {
+        updateTask:(tasks, { payload }) => {
+            tasks.taskArray = tasks.taskArray.map((i)=>i.id === payload.id?payload:i);
+        },
+        updateTaskContent: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload.id) {
-                    i.content = payload.updatedTask;
+                    i.content = payload.updatedTaskContent;
                 }
             });
         },
@@ -168,6 +171,6 @@ export const tasksSlice = createSlice({
     },
 });
 
-export const { create, remove, update, reset, toggleIsRunning, tick, toggleIsCompleted, updateOrder, incrementGlobalKey, rearrange } = tasksSlice.actions;
+export const { create, remove, updateTask, updateTaskContent, reset, toggleIsRunning, tick, toggleIsCompleted, updateOrder, incrementGlobalKey, rearrange } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

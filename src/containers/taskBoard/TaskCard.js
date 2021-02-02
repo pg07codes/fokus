@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, update, tick, reset, toggleIsRunning, toggleIsCompleted, rearrange } from "./taskBoardSlice";
+import { remove, updateTaskContent, reset, toggleIsCompleted, rearrange } from "./taskBoardSlice";
 import { focusOnTask } from "../focusBoard/focusBoardSlice";
-import useTimer from "../../hooks/useTimer";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { BsCheckCircle } from "react-icons/bs";
@@ -208,35 +207,24 @@ function previewTask(str) {
 }
 
 export default function TaskCard({ task, forwardRBDProvided }) {
-    const delay = 1000;
     const dispatch = useDispatch();
-    useTimer(
-        () => {
-            if (task.remainingTime > 0) {
-                dispatch(tick(task.id));
-            } else if (task.remainingTime === 0) {
-                dispatch(toggleIsRunning(task.id));
-            }
-        },
-        task.isRunning ? delay : null
-    );
 
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
-    const [updatedTask, setUpdatedTask] = useState(task.content);
+    const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
     const focussedTask = useSelector((state)=> state.focusBoard.focussedTask);
 
-    function submitUpdatedTask(e) {
-        if (e.key === "Enter" && updatedTask.trim().length >= 3) {
-            let temp = updatedTask.trim().split(" ");
+    function submitUpdatedTaskContent(e) {
+        if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
+            let temp = updatedTaskContent.trim().split(" ");
             let time = 0;
             if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
                 time = parseInt(temp.pop());
             }
-            temp = temp.join(" ");
+            temp = temp.join(" "); 
             // manage to update time also
-            dispatch(update({ id: task.id, updatedTask }));
+            dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
             setTaskUnderEdit(false);
         }
     }
@@ -260,7 +248,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
 
                 <TaskCardDiv onClick={() => dispatch(focusOnTask(task))} isFocussed={isFocussed(task.id)}>
                     <TaskTimerDiv>
-                        <FiClock onClick={() => dispatch(toggleIsRunning(task.id))} />
+                        <FiClock/>
                         <p>{formattedTimeString(task.remainingTime)}</p>
                     </TaskTimerDiv>
 
@@ -269,13 +257,13 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                             {taskUnderEdit ? (
                                 <TaskEditInput
                                     autoFocus
-                                    value={updatedTask}
+                                    value={updatedTaskContent}
                                     onBlur={() => {
-                                        dispatch(update({ id: task.id, updatedTask }));
+                                        dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
                                         setTaskUnderEdit(false);
                                     }}
-                                    onKeyDown={submitUpdatedTask}
-                                    onChange={(e) => setUpdatedTask(e.target.value)}
+                                    onKeyDown={submitUpdatedTaskContent}
+                                    onChange={(e) => setUpdatedTaskContent(e.target.value)}
                                 />
                             ) : (
                                 <h3 onClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</h3>
