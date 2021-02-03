@@ -22,9 +22,13 @@ export const focusBoardSlice = createSlice({
             focusBoard.focussedTask.isRunning=false;
             focusBoard.focussedTask.remainingTime=focusBoard.focussedTask.time;
         },
+        updateTaskTime:(focusBoard,{payload}) => {
+            focusBoard.focussedTask.time+=(payload*60);
+            focusBoard.focussedTask.remainingTime+=(payload*60);
+        },
     },
 });
 
-export const { focusOnTask , tick , reset, toggleIsRunning} = focusBoardSlice.actions;
+export const { focusOnTask , tick , reset, toggleIsRunning , updateTaskTime} = focusBoardSlice.actions;
 
 export default focusBoardSlice.reducer;

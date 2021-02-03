@@ -10,6 +10,7 @@
     "framer-motion": "^3.2.2-rc.1",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^17.0.1",
     "react-flip-toolkit": "^7.0.13",
     "react-icons": "^4.1.0",

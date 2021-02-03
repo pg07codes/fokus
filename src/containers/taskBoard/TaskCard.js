@@ -9,24 +9,8 @@ import { FiClock } from "react-icons/fi";
 import { ImLoop2, ImCancelCircle } from "react-icons/im";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
+import {formattedTimeString} from "./../../helpers";
 
-function formattedTimeString(x) {
-    let seconds = x % 60;
-    let minutes = Math.floor(x / 60);
-
-    if (seconds == 0) {
-        seconds = `00`;
-    } else if (seconds < 10) {
-        seconds = `0${seconds}`;
-    }
-    if (minutes == 0) {
-        minutes = `00`;
-    } else if (minutes < 10) {
-        minutes = `0${minutes}`;
-    }
-
-    return `${minutes}:${seconds}`;
-}
 
 const TaskCardContainer = styled.div`
     display: flex;
@@ -266,7 +250,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                     onChange={(e) => setUpdatedTaskContent(e.target.value)}
                                 />
                             ) : (
-                                <h3 onClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</h3>
+                                <h3 onDoubleClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</h3>
                             )}
                         </TaskContentDiv>
 
@@ -293,7 +277,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                     <AiOutlineClockCircle />
                                     <p>{Math.round(task.time / 60) + "m"}</p>
                                 </TaskTimeButton>
-                                <ImLoop2 onClick={() => dispatch(reset(task.id))} />
+                               
                             </TaskTimeDiv>
 
                             <TaskDeleteButton onClick={() => dispatch(remove(task.id))}>
