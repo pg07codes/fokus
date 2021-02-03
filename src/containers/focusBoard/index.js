@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, reset, tick ,  updateTaskTime} from "./focusBoardSlice";
+import { toggleIsRunning, reset, tick, updateTaskTime } from "./focusBoardSlice";
 import { updateTask } from "./../taskBoard/taskBoardSlice";
 import useTimer from "./../../hooks/useTimer";
 import { formattedTimeString } from "./../../helpers";
-import { CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import {BsFillPlayFill} from "react-icons/bs";
-import {ImLoop2} from "react-icons/im";
+import { BsFillPlayFill } from "react-icons/bs";
+import { ImLoop2 } from "react-icons/im";
 
 const FocusBoardContainer = styled.div`
     flex: 2 1 0;
@@ -16,18 +16,19 @@ const FocusBoardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    background-color: #f8f8ff;
+    /* background-color: #f8f8ff; */
 `;
 
 const FocussedTaskDiv = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content:space-around;
+    justify-content: space-around;
     width: 400px;
     height: 400px;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
-    background-color: #fffccc;
+    margin: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 2, 0.3);
+    /* background-color: #fffccc; */
 `;
 
 const FocussedTaskTimer = styled.div`
@@ -36,8 +37,7 @@ const FocussedTaskTimer = styled.div`
     justify-content: center;
     width: 90%;
     height: 40%;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
-    background-color: #ffeaca;
+    /* background-color: #ffeaca; */
 `;
 
 const TimerDiv = styled.div`
@@ -47,8 +47,8 @@ const TimerDiv = styled.div`
     align-items: center;
     width: 100px;
     height: 100px;
-    background-color: #ff1c1c;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
+    /* background-color: #ff1c1c; */
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     border-radius: 50%;
 `;
 
@@ -59,8 +59,8 @@ const ButtonContainer = styled.div`
     align-items: center;
     width: 40px;
     height: 40px;
-    background-color: #ffaa1c;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
+    /* background-color: #ffaa1c; */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     margin: 15px;
 `;
@@ -69,11 +69,10 @@ const FocussedTaskContent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align:center;
+    text-align: center;
     width: 90%;
     height: 30%;
-    background-color: #ffea1c;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
+    /* background-color: #ffea1c; */
 `;
 
 const FocussedTaskController = styled.div`
@@ -82,8 +81,7 @@ const FocussedTaskController = styled.div`
     align-items: center;
     width: 90%;
     height: 20%;
-    background-color: #efaaa1;
-    box-shadow: 0 4px 4px rgba(0, 0, 2, 0.2);
+    /* background-color: #efaaa1; */
 `;
 
 export function FocusBoard() {
@@ -118,11 +116,11 @@ export function FocusBoard() {
         dispatch(updateTask(temp));
     }
 
-    function updateTaskTimeHandler(task,val){
+    function updateTaskTimeHandler(task, val) {
         dispatch(updateTaskTime(val));
         let temp = { ...task };
-        temp.time += (val*60);
-        temp.remainingTime += (val*60);
+        temp.time += val * 60;
+        temp.remainingTime += val * 60;
         dispatch(updateTask(temp));
     }
 
@@ -132,31 +130,37 @@ export function FocusBoard() {
                 <div>
                     <FocussedTaskDiv>
                         <FocussedTaskTimer>
-                            <ButtonContainer onClick={()=>updateTaskTimeHandler(focussedTask,-5)}>
+                            <ButtonContainer onClick={() => updateTaskTimeHandler(focussedTask, -5)}>
                                 <h4>-5</h4>
                             </ButtonContainer>
                             <div style={{ width: 140, height: 140 }}>
-                                <CircularProgressbarWithChildren value={Math.floor((focussedTask.remainingTime/focussedTask.time)*100)}>
+                                <CircularProgressbarWithChildren
+                                    value={Math.floor((focussedTask.remainingTime / focussedTask.time) * 100)}
+                                    styles={buildStyles({
+                                        strokeLinecap: "butt",
+                                        pathColor: "black",
+                                        trailColor: "white",
+                                    })}
+                                >
                                     <TimerDiv>
-                                        <p>{formattedTimeString(focussedTask.remainingTime)}</p>
+                                        <h3>{formattedTimeString(focussedTask.remainingTime)}</h3>
                                     </TimerDiv>
                                 </CircularProgressbarWithChildren>
                             </div>
-                            <ButtonContainer onClick={()=>updateTaskTimeHandler(focussedTask,5)}>
-                                <h4>-5</h4>
+                            <ButtonContainer onClick={() => updateTaskTimeHandler(focussedTask, 5)}>
+                                <h4>+5</h4>
                             </ButtonContainer>
                         </FocussedTaskTimer>
                         <FocussedTaskContent>
                             <h4>{focussedTask.content}</h4>
                         </FocussedTaskContent>
                         <FocussedTaskController>
-                            <ButtonContainer onClick={()=>playStateHandler(focussedTask)} style={{fontSize:"1.5em"}}>
-                            <BsFillPlayFill />
+                            <ButtonContainer onClick={() => playStateHandler(focussedTask)} style={{ fontSize: "1.5em" }}>
+                                <BsFillPlayFill />
                             </ButtonContainer>
                             <ButtonContainer onClick={() => resetHandler(focussedTask)}>
-                            <ImLoop2 />
+                                <ImLoop2 />
                             </ButtonContainer>
-                            
                         </FocussedTaskController>
                     </FocussedTaskDiv>
                 </div>
