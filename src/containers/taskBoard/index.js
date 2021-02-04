@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const TaskBoardContainer = styled.div`
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     flex: 3 1 0;
 `;
@@ -32,6 +32,12 @@ const TaskInputField = styled.input`
     border: 0;
     outline: none;
     background-color: #f8f8ff;
+`;
+
+const DoneTasksDivider = styled.div`
+    width: 100px;
+    height: 10px;
+    background-color: pink;
 `;
 
 export function TaskBoard() {
@@ -114,22 +120,30 @@ export function TaskBoard() {
             <TaskInputContainer>
                 <TaskInputField type="text" onChange={(e) => setTask(e.target.value)} onKeyDown={submitTask} />
             </TaskInputContainer>
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-                <Droppable droppableId="dropArea">
-                    {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef}>
-                            <Flipper flipKey={getFlipKey()}>
-                                {tasks.map((i, index) => (
-                                    <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
-                                        {(provided2) => <TaskCard forwardRBDProvided={provided2} task={i} />}
-                                    </Draggable>
-                                ))}
+            <Flipper flipKey={getFlipKey()}>
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <Droppable droppableId="dropArea">
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                {tasks.map((i, index) =>
+                                    !i.isCompleted ? (
+                                        <Draggable isDragDisabled={i.isCompleted} key={i.id} draggableId={`${i.id}`} index={index}>
+                                            {(provided2) => <TaskCard forwardRBDProvided={provided2} task={i} />}
+                                        </Draggable>
+                                    ) : (
+                                        ""
+                                    )
+                                )}
                                 {provided.placeholder}
-                            </Flipper>
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+
+                <DoneTasksDivider />
+
+                {tasks.map((i, index) => (i.isCompleted ? <TaskCard forwardRBDProvided={{ innerRef: null }} task={i} /> : ""))}
+            </Flipper>
         </TaskBoardContainer>
     );
 }

@@ -9,8 +9,7 @@ import { FiClock } from "react-icons/fi";
 import { ImLoop2, ImCancelCircle } from "react-icons/im";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
-import {formattedTimeString} from "./../../helpers";
-
+import { formattedTimeString } from "./../../helpers";
 
 const TaskCardContainer = styled.div`
     display: flex;
@@ -46,9 +45,9 @@ const TaskCardDiv = styled.div`
     width: 520px;
     border-radius: 5px;
     /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); */
-    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2) ;
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    border: ${(props)=>props.isFocussed?"2px solid black":"none"};
+    border: ${(props) => (props.isFocussed ? "2px solid black" : "none")};
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -66,7 +65,7 @@ const TaskContentDiv = styled.div`
     align-items: center;
     height: 65%;
     margin: 0 0 0 5px;
-    border-bottom:1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     /* background-color: #fffcec; */
     h3:hover {
         cursor: text;
@@ -80,11 +79,11 @@ const TaskEditInput = styled.textarea`
     font-size: 1.17em;
     font-weight: bold;
     overflow: hidden;
-    vertical-align:center;
+    vertical-align: center;
     &:focus {
-        outline:none;
+        outline: none;
         border: 2px black dashed;
-        border-radius:5px;
+        border-radius: 5px;
     }
 `;
 
@@ -197,7 +196,7 @@ export default function TaskCard({ task, forwardRBDProvided }) {
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
-    const focussedTask = useSelector((state)=> state.focusBoard.focussedTask);
+    const focussedTask = useSelector((state) => state.focusBoard.focussedTask);
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
@@ -206,18 +205,17 @@ export default function TaskCard({ task, forwardRBDProvided }) {
             if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
                 time = parseInt(temp.pop());
             }
-            temp = temp.join(" "); 
+            temp = temp.join(" ");
             // manage to update time also
             dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
             setTaskUnderEdit(false);
         }
     }
 
-    function isFocussed(id){
-        if(focussedTask!==null && focussedTask.id===id) return true;
+    function isFocussed(id) {
+        if (focussedTask !== null && focussedTask.id === id) return true;
         return false;
     }
-
 
     return (
         <Flipped flipId={`${task.id}`}>
@@ -225,14 +223,14 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                 ref={forwardRBDProvided.innerRef}
                 {...forwardRBDProvided.draggableProps}
                 {...forwardRBDProvided.dragHandleProps}
-                onMouseEnter={() => setShowDragIcon(true)}
-                onMouseLeave={() => setShowDragIcon(false)}
+                onMouseEnter={() => setShowDragIcon(!task.isCompleted && true)}
+                onMouseLeave={() => setShowDragIcon(!task.isCompleted && false)}
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
                 <TaskCardDiv onClick={() => dispatch(focusOnTask(task))} isFocussed={isFocussed(task.id)}>
                     <TaskTimerDiv>
-                        <FiClock/>
+                        <FiClock />
                         <p>{formattedTimeString(task.remainingTime)}</p>
                     </TaskTimerDiv>
 
@@ -277,7 +275,6 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                     <AiOutlineClockCircle />
                                     <p>{Math.round(task.time / 60) + "m"}</p>
                                 </TaskTimeButton>
-                               
                             </TaskTimeDiv>
 
                             <TaskDeleteButton onClick={() => dispatch(remove(task.id))}>

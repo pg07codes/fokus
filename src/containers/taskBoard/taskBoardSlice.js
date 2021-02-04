@@ -38,28 +38,28 @@ export const tasksSlice = createSlice({
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
         },
-        tick: ({ taskArray }, { payload }) => {
-            taskArray.forEach((i) => {
-                if (i.id === payload) {
-                    i.remainingTime = i.remainingTime - 1;
-                }
-            });
-        },
-        reset: ({taskArray}, { payload }) => {
-            taskArray.forEach((i) => {
-                if (i.id === payload) {
-                    i.remainingTime = i.time;
-                    i.isRunning = false;
-                }
-            });
-        },
-        toggleIsRunning: ({ taskArray }, { payload }) => {
-            taskArray.forEach((i) => {
-                if (i.id === payload) {
-                    i.isRunning = !i.isRunning;
-                }
-            });
-        },
+        // tick: ({ taskArray }, { payload }) => {
+        //     taskArray.forEach((i) => {
+        //         if (i.id === payload) {
+        //             i.remainingTime = i.remainingTime - 1;
+        //         }
+        //     });
+        // },
+        // reset: ({taskArray}, { payload }) => {
+        //     taskArray.forEach((i) => {
+        //         if (i.id === payload) {
+        //             i.remainingTime = i.time;
+        //             i.isRunning = false;
+        //         }
+        //     });
+        // },
+        // toggleIsRunning: ({ taskArray }, { payload }) => {
+        //     taskArray.forEach((i) => {
+        //         if (i.id === payload) {
+        //             i.isRunning = !i.isRunning;
+        //         }
+        //     });
+        // },
         toggleIsCompleted: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload) {
