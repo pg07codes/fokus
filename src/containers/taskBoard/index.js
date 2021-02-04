@@ -35,9 +35,9 @@ const TaskInputField = styled.input`
 `;
 
 const DoneTasksDivider = styled.div`
-    width: 100px;
+    width: 100%;
     height: 10px;
-    background-color: pink;
+    background-color: black;
 `;
 
 export function TaskBoard() {
@@ -52,6 +52,7 @@ export function TaskBoard() {
             let temp = task.trim().split(" ");
             let time = 0;
             if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
+                // add a max time limit
                 time = parseInt(temp.pop());
             } else {
                 time = 20;
@@ -140,7 +141,7 @@ export function TaskBoard() {
                     </Droppable>
                 </DragDropContext>
 
-                <DoneTasksDivider />
+                {meta.completedTaskStartIndex!==-1 && <DoneTasksDivider />}
 
                 {tasks.map((i, index) => (i.isCompleted ? <TaskCard forwardRBDProvided={{ innerRef: null }} task={i} /> : ""))}
             </Flipper>

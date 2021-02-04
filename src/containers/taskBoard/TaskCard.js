@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, updateTaskContent, reset, toggleIsCompleted, rearrange } from "./taskBoardSlice";
-import { focusOnTask } from "../focusBoard/focusBoardSlice";
+import { remove, updateTaskContent, toggleIsCompleted, rearrange } from "./taskBoardSlice";
+import { focusOnTask , resetFocussedTask} from "../focusBoard/focusBoardSlice";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { BsCheckCircle } from "react-icons/bs";
 import { FiClock } from "react-icons/fi";
-import { ImLoop2, ImCancelCircle } from "react-icons/im";
+import { ImCancelCircle } from "react-icons/im";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
 import { formattedTimeString } from "./../../helpers";
@@ -66,6 +66,7 @@ const TaskContentDiv = styled.div`
     height: 65%;
     margin: 0 0 0 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
     /* background-color: #fffcec; */
     h3:hover {
         cursor: text;
@@ -248,7 +249,9 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                     onChange={(e) => setUpdatedTaskContent(e.target.value)}
                                 />
                             ) : (
-                                <h3 onDoubleClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</h3>
+                                <h3 style={{ minWidth: 0 }} onDoubleClick={() => setTaskUnderEdit(true)}>
+                                    {previewTask(task.content)}
+                                </h3>
                             )}
                         </TaskContentDiv>
 
@@ -257,13 +260,17 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                 isCompleted={task.isCompleted}
                                 onClick={
                                     task.isCompleted
-                                        ? () => {
+                                        ? (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: false }));
+                                              dispatch(focusOnTask(task))
+                                              e.stopPropagation();
                                           }
-                                        : () => {
+                                        : (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+                                              dispatch(focusOnTask(task))
+                                              e.stopPropagation();
                                           }
                                 }
                             >
@@ -277,7 +284,15 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                                 </TaskTimeButton>
                             </TaskTimeDiv>
 
-                            <TaskDeleteButton onClick={() => dispatch(remove(task.id))}>
+                            <TaskDeleteButton
+                                onClick={(e) => {
+                                    dispatch(remove(task.id));
+                                    e.stopPropagation();
+                                    if(isFocussed(task.id)){
+                                        dispatch(resetFocussedTask());
+                                    }
+                                }}
+                            >
                                 <ImCancelCircle />
                                 <p>Delete</p>
                             </TaskDeleteButton>

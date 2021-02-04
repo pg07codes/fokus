@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, reset, tick, updateTaskTime } from "./focusBoardSlice";
+import { toggleIsRunning, resetTaskTime, tick, updateTaskTime } from "./focusBoardSlice";
 import { updateTask } from "./../taskBoard/taskBoardSlice";
 import useTimer from "./../../hooks/useTimer";
 import { formattedTimeString } from "./../../helpers";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { BsFillPlayFill } from "react-icons/bs";
+import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { ImLoop2 } from "react-icons/im";
+import dingSound from "./../../sounds/ding.mp3";
+
+let dingSoundElement = new Audio(dingSound);
 
 const FocusBoardContainer = styled.div`
     flex: 2 1 0;
@@ -72,6 +75,7 @@ const FocussedTaskContent = styled.div`
     text-align: center;
     width: 90%;
     height: 30%;
+    word-wrap: break-word;
     /* background-color: #ffea1c; */
 `;
 
@@ -96,12 +100,14 @@ export function FocusBoard() {
                 dispatch(tick());
             } else if (focussedTask.remainingTime === 0) {
                 dispatch(toggleIsRunning());
+                dingSoundElement.play();
             }
         },
         focussedTask !== null && focussedTask.isRunning ? delay : null
     );
 
     function playStateHandler(task) {
+        if(task.isCompleted) return;
         dispatch(toggleIsRunning());
         let temp = { ...task };
         temp.isRunning = !temp.isRunning;
@@ -109,7 +115,8 @@ export function FocusBoard() {
     }
 
     function resetHandler(task) {
-        dispatch(reset());
+        if(task.isCompleted) return;
+        dispatch(resetTaskTime());
         let temp = { ...task };
         temp.isRunning = false;
         temp.remainingTime = temp.time;
@@ -117,6 +124,7 @@ export function FocusBoard() {
     }
 
     function updateTaskTimeHandler(task, val) {
+        if(task.isCompleted) return;
         dispatch(updateTaskTime(val));
         let temp = { ...task };
         temp.time += val * 60;
@@ -152,11 +160,11 @@ export function FocusBoard() {
                             </ButtonContainer>
                         </FocussedTaskTimer>
                         <FocussedTaskContent>
-                            <h4>{focussedTask.content}</h4>
+                            <h4 style={{ minWidth: 0 }}>{focussedTask.content}</h4>
                         </FocussedTaskContent>
                         <FocussedTaskController>
                             <ButtonContainer onClick={() => playStateHandler(focussedTask)} style={{ fontSize: "1.5em" }}>
-                                <BsFillPlayFill />
+                                {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                             </ButtonContainer>
                             <ButtonContainer onClick={() => resetHandler(focussedTask)}>
                                 <ImLoop2 />

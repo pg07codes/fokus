@@ -18,7 +18,7 @@ export const focusBoardSlice = createSlice({
         toggleIsRunning: (focusBoard) => {
             focusBoard.focussedTask.isRunning = !focusBoard.focussedTask.isRunning;
         },
-        reset: (focusBoard) => {
+        resetTaskTime: (focusBoard) => {
             focusBoard.focussedTask.isRunning=false;
             focusBoard.focussedTask.remainingTime=focusBoard.focussedTask.time;
         },
@@ -29,6 +29,6 @@ export const focusBoardSlice = createSlice({
     },
 });
 
-export const { focusOnTask , tick , reset, toggleIsRunning , updateTaskTime} = focusBoardSlice.actions;
+export const { focusOnTask ,resetFocussedTask, tick , resetTaskTime, toggleIsRunning , updateTaskTime} = focusBoardSlice.actions;
 
 export default focusBoardSlice.reducer;
