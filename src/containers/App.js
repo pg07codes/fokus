@@ -1,6 +1,6 @@
 import React from "react";
-import { TaskBoard } from "./taskBoard";
-import { FocusBoard } from "./focusBoard";
+import { TaskBoard } from "./taskBoard/TaskBoard";
+import { FocusBoard } from "./focusBoard/FocusBoard";
 import styled from "styled-components";
 
 const Container = styled.div`
