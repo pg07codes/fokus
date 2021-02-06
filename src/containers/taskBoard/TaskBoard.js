@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "./taskBoardSlice";
-import TaskCard from "./TaskCard";
+import TaskCard from "./../../components/TaskBoard/TaskCard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Flipper } from "react-flip-toolkit";
 import styled from "styled-components";
@@ -23,6 +23,7 @@ const DoneTasksDivider = styled.div`
 export function TaskBoard() {
     const tasks = useSelector((state) => state.tasks.taskArray);
     const meta = useSelector((state) => state.tasks.meta);
+    const focussedTask = useSelector((state) => state.focusBoard.focussedTask);
     const dispatch = useDispatch();
 
     function handleOnDragEnd(result) {
@@ -62,12 +63,17 @@ export function TaskBoard() {
         return flipKey;
     }
 
+    function isFocussed(id) {
+        if (focussedTask !== null && focussedTask.id === id) return true;
+        return false;
+    }
+
     // input has both onChange and onKeyDown - can be optimised by using one and combining
 
     return (
         <TaskBoardContainer>
-            <TaskInput/>
-            
+            <TaskInput />
+
             <Flipper flipKey={getFlipKey()}>
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="dropArea">
@@ -76,7 +82,7 @@ export function TaskBoard() {
                                 {tasks.map((i, index) =>
                                     !i.isCompleted ? (
                                         <Draggable isDragDisabled={i.isCompleted} key={i.id} draggableId={`${i.id}`} index={index}>
-                                            {(provided2) => <TaskCard forwardRBDProvided={provided2} task={i} />}
+                                            {(provided2) => <TaskCard forwardRBDProvided={provided2} task={i} isFocussed={isFocussed(i.id)} />}
                                         </Draggable>
                                     ) : (
                                         ""
@@ -88,9 +94,9 @@ export function TaskBoard() {
                     </Droppable>
                 </DragDropContext>
 
-                {meta.completedTaskStartIndex!==-1 && <DoneTasksDivider />}
+                {meta.completedTaskStartIndex !== -1 && <DoneTasksDivider />}
 
-                {tasks.map((i, index) => (i.isCompleted ? <TaskCard forwardRBDProvided={{ innerRef: null }} task={i} /> : ""))}
+                {tasks.map((i, index) => (i.isCompleted ? <TaskCard key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)}/> : ""))}
             </Flipper>
         </TaskBoardContainer>
     );

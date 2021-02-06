@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { create, incrementGlobalKey } from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { MdAddCircle } from "react-icons/md";
-import { BsFillClockFill } from "react-icons/bs";
+import { ImClock2 } from "react-icons/im";
 
 const TaskInputContainer = styled.div`
     display: flex;
@@ -21,6 +21,7 @@ const TaskContentInputDiv = styled.div`
     align-items: center;
     height: 80%;
     width: 70%;
+    margin-left:10px;
     svg {
         font-size: 1.3em;
     }
@@ -39,12 +40,11 @@ const TaskTimeInputDiv = styled.div`
     display: flex;
     align-items: center;
     height: 80%;
-    width: 20%;
+    width: 25%;
     span {
         font-size: 0.8em;
         font-weight:bold;
         color:rgb(118,118,118);
-        margin-right:3px;
     }
 `;
 
@@ -53,7 +53,6 @@ const TaskTimeInputField = styled.input`
     width: 35%;
     font-size: 1em;
     font-weight: bold;
-    margin-left: auto;
     text-align:center;
     border: 0;
     outline: none;
@@ -116,7 +115,7 @@ export default function TaskInput() {
                 />
             </TaskContentInputDiv>
             <TaskTimeInputDiv>
-                <BsFillClockFill />
+                <ImClock2 />
                 <TaskTimeInputField
                     type="number"
                     placeholder="20"

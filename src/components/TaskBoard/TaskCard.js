@@ -1,23 +1,21 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, updateTaskContent, toggleIsCompleted, rearrange } from "./taskBoardSlice";
-import { focusOnTask , resetFocussedTask} from "../focusBoard/focusBoardSlice";
+import { remove, updateTaskContent, toggleIsCompleted, rearrange } from "../../containers/taskBoard/taskBoardSlice";
+import { focusOnTask, resetFocussedTask } from "../../containers/focusBoard/focusBoardSlice";
 import styled from "styled-components";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { BsCheckCircle } from "react-icons/bs";
-import { FiClock } from "react-icons/fi";
-import { ImCancelCircle } from "react-icons/im";
+import { FaRegLightbulb, FaLightbulb, FaCheckCircle } from "react-icons/fa";
+import { BsTrashFill } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
-import { formattedTimeString } from "./../../helpers";
+import { formattedTimeString } from "../../helpers";
 
 const TaskCardContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 576px;
-    height: 140px;
+    width: 476px;
+    height: 120px;
     margin: 25px;
     /* background-color: #fff4e1; */
 `;
@@ -42,12 +40,11 @@ const TaskCardDiv = styled.div`
     justify-content: space-around;
     flex-direction: row;
     height: 100%;
-    width: 520px;
+    width: 420px;
     border-radius: 5px;
-    /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); */
-    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-    border: ${(props) => (props.isFocussed ? "2px solid black" : "none")};
+    -webkit-box-shadow: ${(props) => (props.isFocussed ? "0 0 6px rgb(255, 216, 0, 0.6)" : "0 0 4px rgb(0, 0, 0, 0.2)")};
+    box-shadow: ${(props) => (props.isFocussed ? "0 0 6px rgb(255, 216, 0, 0.6)" : "0 0 4px rgb(0, 0, 0, 0.2)")};
+    border: ${(props) => (props.isFocussed ? "2px solid #ffd800" : "none")};
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -65,7 +62,6 @@ const TaskContentDiv = styled.div`
     align-items: center;
     height: 65%;
     margin: 0 0 0 5px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     word-wrap: break-word;
     /* background-color: #fffcec; */
     h3:hover {
@@ -83,93 +79,54 @@ const TaskEditInput = styled.textarea`
     vertical-align: center;
     &:focus {
         outline: none;
-        border: 2px black dashed;
+        border: 2px #7e8d9f dashed;
         border-radius: 5px;
     }
 `;
 
-const TaskTimerDiv = styled.div`
+const TaskStatusDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    height: 100%;
     width: 15%;
     /* background-color: #f8f8ff; */
     position: relative;
     p {
         margin: 5px;
-        font-size: 1em;
+        font-size: 0.8em;
     }
     svg {
         font-size: 2.5em;
-        margin-top: 25px;
-    }
-`;
-const TaskTimeDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 80%;
-    width: 110px;
-`;
-const TaskTimeButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 70px;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin: 5px;
-    background-color: #fff;
-    color: #000;
-    p {
-        margin: 0;
-        font-size: 0.7em;
+        color: ${(p) => (p.isCompleted ? "#00a86b" : p.isFocussed ? "#ffd800" : "#000")};
     }
 `;
 
-const TaskDoneButton = styled.div`
+const TaskActionButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80%;
-    width: 70px;
     border-radius: 5px;
-    border: 1px solid black;
     margin: 5px;
     cursor: pointer;
-    background-color: ${(props) => (props.isCompleted ? "#000" : "#fff")};
-    color: ${(props) => (props.isCompleted ? "#fff" : "#000")};
+    &:hover {
+        background-color: #c0c0c0;
+    }
     p {
-        margin: 0;
+        margin: 5px;
         font-size: 0.7em;
     }
 `;
 
 const TaskDeleteButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     height: 80%;
-    width: 80px;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin: 5px;
     cursor: pointer;
-    background-color: #fff;
     margin-left: auto;
-    color: #000;
-    p {
-        margin: 0;
-        font-size: 0.7em;
-    }
+    color: rgb(118, 118, 118);
     &:hover {
-        background-color: #000;
-        color: #fff;
+        color: #E44D2E;
     }
 `;
 
@@ -190,14 +147,12 @@ function previewTask(str) {
     else return str.substring(0, 70) + "...";
 }
 
-export default function TaskCard({ task, forwardRBDProvided }) {
+export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
     const dispatch = useDispatch();
 
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [showDragIcon, setShowDragIcon] = useState(false);
-
-    const focussedTask = useSelector((state) => state.focusBoard.focussedTask);
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
@@ -213,11 +168,6 @@ export default function TaskCard({ task, forwardRBDProvided }) {
         }
     }
 
-    function isFocussed(id) {
-        if (focussedTask !== null && focussedTask.id === id) return true;
-        return false;
-    }
-
     return (
         <Flipped flipId={`${task.id}`}>
             <TaskCardContainer
@@ -229,11 +179,11 @@ export default function TaskCard({ task, forwardRBDProvided }) {
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskCardDiv onClick={() => dispatch(focusOnTask(task))} isFocussed={isFocussed(task.id)}>
-                    <TaskTimerDiv>
-                        <FiClock />
-                        <p>{formattedTimeString(task.remainingTime)}</p>
-                    </TaskTimerDiv>
+                <TaskCardDiv isFocussed={isFocussed}>
+                    <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>
+                        {task.isCompleted ? <FaCheckCircle /> : isFocussed ? <FaLightbulb /> : <FaRegLightbulb />}
+                        {!task.isCompleted && <p>{formattedTimeString(task.remainingTime)}</p>}
+                    </TaskStatusDiv>
 
                     <TaskDetailsDiv>
                         <TaskContentDiv>
@@ -256,45 +206,44 @@ export default function TaskCard({ task, forwardRBDProvided }) {
                         </TaskContentDiv>
 
                         <TaskControllerDiv>
-                            <TaskDoneButton
-                                isCompleted={task.isCompleted}
+                            <TaskActionButton
+                                onClick={() => {
+                                    isFocussed ? dispatch(resetFocussedTask()) : dispatch(focusOnTask(task));
+                                }}
+                            >
+                                <p>{isFocussed ? "Unfocus" : "Focus"}</p>
+                            </TaskActionButton>
+
+                            <TaskActionButton
                                 onClick={
                                     task.isCompleted
                                         ? (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: false }));
-                                              dispatch(focusOnTask(task))
+                                              dispatch(focusOnTask(task));
                                               e.stopPropagation();
                                           }
                                         : (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                              dispatch(focusOnTask(task))
+                                              dispatch(focusOnTask(task));
                                               e.stopPropagation();
                                           }
                                 }
                             >
-                                <BsCheckCircle />
-                                <p>Done</p>
-                            </TaskDoneButton>
-                            <TaskTimeDiv>
-                                <TaskTimeButton>
-                                    <AiOutlineClockCircle />
-                                    <p>{Math.round(task.time / 60) + "m"}</p>
-                                </TaskTimeButton>
-                            </TaskTimeDiv>
+                                <p>{task.isCompleted ? "Undone" : "Done"}</p>
+                            </TaskActionButton>
 
                             <TaskDeleteButton
                                 onClick={(e) => {
                                     dispatch(remove(task.id));
                                     e.stopPropagation();
-                                    if(isFocussed(task.id)){
+                                    if (isFocussed) {
                                         dispatch(resetFocussedTask());
                                     }
                                 }}
                             >
-                                <ImCancelCircle />
-                                <p>Delete</p>
+                                <BsTrashFill />
                             </TaskDeleteButton>
                         </TaskControllerDiv>
                     </TaskDetailsDiv>
