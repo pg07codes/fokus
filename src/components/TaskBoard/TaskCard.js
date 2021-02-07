@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTask } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask , toggleIsRunning} from "../../containers/focusBoard/focusBoardSlice";
+import { focusOnTask, resetFocussedTask, toggleIsRunning } from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { FaRegLightbulb, FaLightbulb, FaCheckCircle } from "react-icons/fa";
 import { BsTrashFill } from "react-icons/bs";
@@ -147,7 +147,7 @@ function previewTask(str) {
     else return str.substring(0, 70) + "...";
 }
 
-export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
+export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocussed }) {
     const dispatch = useDispatch();
 
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
@@ -208,9 +208,16 @@ export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
                         <TaskControllerDiv>
                             {!task.isCompleted && (
                                 <TaskActionButton
-                                    onClick={() => {
-                                        isFocussed ? dispatch(resetFocussedTask()) : dispatch(focusOnTask(task));
-                                    }}
+                                    onClick={
+                                        isFocussed
+                                            ? () => {
+                                                  if (task.isRunning) dispatch(toggleIsRunning(taskIndex));
+                                                  dispatch(resetFocussedTask());
+                                              }
+                                            : () => {
+                                                  dispatch(focusOnTask(taskIndex));
+                                              }
+                                    }
                                 >
                                     <p>{isFocussed ? "Unfocus" : "Focus"}</p>
                                 </TaskActionButton>
@@ -225,9 +232,10 @@ export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
                                               e.stopPropagation();
                                           }
                                         : (e) => {
+                                              if (task.isRunning)dispatch(toggleIsRunning(taskIndex));
+                                              if (isFocussed) dispatch(resetFocussedTask());
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                              if(isFocussed)dispatch(resetFocussedTask());
                                               e.stopPropagation();
                                           }
                                 }

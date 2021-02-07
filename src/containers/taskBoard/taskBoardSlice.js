@@ -7,6 +7,7 @@ export const tasksSlice = createSlice({
         meta: {
             globalKey: 0,
             completedTaskStartIndex: -1,
+            focussedTaskIndex: -1,
         },
     },
     reducers: {
@@ -40,28 +41,24 @@ export const tasksSlice = createSlice({
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
         },
-        // tick: ({ taskArray }, { payload }) => {
-        //     taskArray.forEach((i) => {
-        //         if (i.id === payload) {
-        //             i.remainingTime = i.remainingTime - 1;
-        //         }
-        //     });
-        // },
-        // reset: ({taskArray}, { payload }) => {
-        //     taskArray.forEach((i) => {
-        //         if (i.id === payload) {
-        //             i.remainingTime = i.time;
-        //             i.isRunning = false;
-        //         }
-        //     });
-        // },
-        // toggleIsRunning: ({ taskArray }, { payload }) => {
-        //     taskArray.forEach((i) => {
-        //         if (i.id === payload) {
-        //             i.isRunning = !i.isRunning;
-        //         }
-        //     });
-        // },
+
+        focusOnTask: (tasks, { payload }) => {
+            tasks.meta.focussedTaskIndex = payload;
+        },
+        resetFocussedTask: (tasks) => {
+            tasks.meta.focussedTaskIndex = -1;
+        },
+        tick: (tasks, { payload }) => {
+            --tasks.taskArray[payload].remainingTime;
+        },
+        resetTaskTimer: (tasks, { payload }) => {
+            tasks.taskArray[payload].isRunning = false;
+            tasks.taskArray[payload].remainingTime = tasks.taskArray[payload].time;
+        },
+        toggleIsRunning: (tasks, { payload }) => {
+            tasks.taskArray[payload].isRunning = !tasks.taskArray[payload].isRunning;
+        },
+
         toggleIsCompleted: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload) {
@@ -175,7 +172,9 @@ export const {
     remove,
     updateTask,
     updateTaskContent,
-    reset,
+    focusOnTask,
+    resetFocussedTask,
+    resetTaskTimer,
     toggleIsRunning,
     tick,
     toggleIsCompleted,

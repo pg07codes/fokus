@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, resetTask, tick, updateTaskTime } from "./focusBoardSlice";
-import { updateTask } from "../taskBoard/taskBoardSlice";
+import { toggleIsRunning, resetTaskTimer, tick , updateTask } from "./../taskBoard/taskBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import { formattedTimeString } from "../../helpers";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
@@ -89,48 +88,28 @@ const FocussedTaskController = styled.div`
 `;
 
 export function FocusBoard() {
-    const focussedTask = useSelector((state) => state.focusBoard.focussedTask);
+    const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
+    let focussedTask = useSelector((state) => state.tasks.taskArray[focussedTaskIndex]);
+    if (focussedTaskIndex === -1) focussedTask = null;
     const dispatch = useDispatch();
-
     const delay = 1000;
     useTimer(
         () => {
             if (focussedTask === null) return;
             else if (focussedTask.remainingTime > 0) {
-                dispatch(tick());
+                dispatch(tick(focussedTaskIndex));
             } else if (focussedTask.remainingTime === 0) {
-                dispatch(toggleIsRunning());
+                dispatch(toggleIsRunning(focussedTaskIndex));
                 dingSoundElement.play();
             }
         },
         focussedTask !== null && focussedTask.isRunning ? delay : null
     );
 
-    function playStateHandler(task) {
-        if(task.isCompleted) return;
-        dispatch(toggleIsRunning());
-        // this is done to update remaining time in the corresponding task inside arr of tasks(when pause clicked)
-        if(task.isRunning){
-            let temp = { ...task };
-            temp.isRunning = false;
-            dispatch(updateTask(task));
-        }
-    }
-
-    function resetHandler(task) {
-        if(task.isCompleted) return;
-        dispatch(resetTask());
-        let temp = { ...task };
-        // below is done to update remaining time in corresponding task inside arr of tasks (when reset clicked)
-        temp.isRunning = false;
-        temp.remainingTime = temp.time;
-        dispatch(updateTask(temp));
-    }
-
     function updateTaskTimeHandler(task, val) {
-        if(task.isCompleted) return;
+        if (task.isCompleted) return;
         dispatch(toggleIsRunning(false));
-        dispatch(updateTaskTime(val));
+        // dispatch(updateTaskTime(val));
         let temp = { ...task };
         temp.time += val * 60;
         temp.remainingTime += val * 60;
@@ -168,10 +147,10 @@ export function FocusBoard() {
                             <h4 style={{ minWidth: 0 }}>{focussedTask.content}</h4>
                         </FocussedTaskContent>
                         <FocussedTaskController>
-                            <ButtonContainer onClick={() => playStateHandler(focussedTask)} style={{ fontSize: "1.5em" }}>
+                            <ButtonContainer onClick={() => dispatch(toggleIsRunning(focussedTaskIndex))} style={{ fontSize: "1.5em" }}>
                                 {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                             </ButtonContainer>
-                            <ButtonContainer onClick={() => resetHandler(focussedTask)}>
+                            <ButtonContainer onClick={() => dispatch(resetTaskTimer(focussedTaskIndex))}>
                                 <ImLoop2 />
                             </ButtonContainer>
                         </FocussedTaskController>
