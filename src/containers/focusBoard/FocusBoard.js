@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, resetTaskTime, tick, updateTaskTime } from "./focusBoardSlice";
+import { toggleIsRunning, resetTask, tick, updateTaskTime } from "./focusBoardSlice";
 import { updateTask } from "../taskBoard/taskBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import { formattedTimeString } from "../../helpers";
@@ -109,15 +109,19 @@ export function FocusBoard() {
     function playStateHandler(task) {
         if(task.isCompleted) return;
         dispatch(toggleIsRunning());
-        let temp = { ...task };
-        temp.isRunning = !temp.isRunning;
-        dispatch(updateTask(temp));
+        // this is done to update remaining time in the corresponding task inside arr of tasks(when pause clicked)
+        if(task.isRunning){
+            let temp = { ...task };
+            temp.isRunning = false;
+            dispatch(updateTask(task));
+        }
     }
 
     function resetHandler(task) {
         if(task.isCompleted) return;
-        dispatch(resetTaskTime());
+        dispatch(resetTask());
         let temp = { ...task };
+        // below is done to update remaining time in corresponding task inside arr of tasks (when reset clicked)
         temp.isRunning = false;
         temp.remainingTime = temp.time;
         dispatch(updateTask(temp));
@@ -125,6 +129,7 @@ export function FocusBoard() {
 
     function updateTaskTimeHandler(task, val) {
         if(task.isCompleted) return;
+        dispatch(toggleIsRunning(false));
         dispatch(updateTaskTime(val));
         let temp = { ...task };
         temp.time += val * 60;

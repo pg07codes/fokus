@@ -6,18 +6,13 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Flipper } from "react-flip-toolkit";
 import styled from "styled-components";
 import TaskInput from "./../../components/TaskBoard/TaskInput";
+import Divider from "./../../components/TaskBoard/Divider";
 
 const TaskBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 3 1 0;
-`;
-
-const DoneTasksDivider = styled.div`
-    width: 100%;
-    height: 10px;
-    background-color: black;
 `;
 
 export function TaskBoard() {
@@ -60,6 +55,7 @@ export function TaskBoard() {
         tasks.forEach((i) => {
             flipKey += `${i.globalKey}`;
         });
+        flipKey += `${meta.completedTaskStartIndex}`;
         return flipKey;
     }
 
@@ -94,9 +90,11 @@ export function TaskBoard() {
                     </Droppable>
                 </DragDropContext>
 
-                {meta.completedTaskStartIndex !== -1 && <DoneTasksDivider />}
+                {meta.completedTaskStartIndex !== -1 && meta.completedTaskStartIndex !== 0 && <Divider />}
 
-                {tasks.map((i, index) => (i.isCompleted ? <TaskCard key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)}/> : ""))}
+                {tasks.map((i, index) =>
+                    i.isCompleted ? <TaskCard key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)} /> : ""
+                )}
             </Flipper>
         </TaskBoardContainer>
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, updateTaskContent, toggleIsCompleted, rearrange } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask } from "../../containers/focusBoard/focusBoardSlice";
+import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTask } from "../../containers/taskBoard/taskBoardSlice";
+import { focusOnTask, resetFocussedTask , toggleIsRunning} from "../../containers/focusBoard/focusBoardSlice";
 import styled from "styled-components";
 import { FaRegLightbulb, FaLightbulb, FaCheckCircle } from "react-icons/fa";
 import { BsTrashFill } from "react-icons/bs";
@@ -16,7 +16,7 @@ const TaskCardContainer = styled.div`
     flex-direction: row;
     width: 476px;
     height: 120px;
-    margin: 25px;
+    margin-top: 25px;
     /* background-color: #fff4e1; */
 `;
 
@@ -124,9 +124,9 @@ const TaskDeleteButton = styled.div`
     height: 80%;
     cursor: pointer;
     margin-left: auto;
-    color: rgb(118, 118, 118);
+    color: #d0d0d0;
     &:hover {
-        color: #E44D2E;
+        color: #e44d2e;
     }
 `;
 
@@ -206,13 +206,15 @@ export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
                         </TaskContentDiv>
 
                         <TaskControllerDiv>
-                            <TaskActionButton
-                                onClick={() => {
-                                    isFocussed ? dispatch(resetFocussedTask()) : dispatch(focusOnTask(task));
-                                }}
-                            >
-                                <p>{isFocussed ? "Unfocus" : "Focus"}</p>
-                            </TaskActionButton>
+                            {!task.isCompleted && (
+                                <TaskActionButton
+                                    onClick={() => {
+                                        isFocussed ? dispatch(resetFocussedTask()) : dispatch(focusOnTask(task));
+                                    }}
+                                >
+                                    <p>{isFocussed ? "Unfocus" : "Focus"}</p>
+                                </TaskActionButton>
+                            )}
 
                             <TaskActionButton
                                 onClick={
@@ -220,13 +222,12 @@ export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
                                         ? (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: false }));
-                                              dispatch(focusOnTask(task));
                                               e.stopPropagation();
                                           }
                                         : (e) => {
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                              dispatch(focusOnTask(task));
+                                              if(isFocussed)dispatch(resetFocussedTask());
                                               e.stopPropagation();
                                           }
                                 }
@@ -234,17 +235,19 @@ export default function TaskCard({ task, forwardRBDProvided, isFocussed }) {
                                 <p>{task.isCompleted ? "Undone" : "Done"}</p>
                             </TaskActionButton>
 
-                            <TaskDeleteButton
-                                onClick={(e) => {
-                                    dispatch(remove(task.id));
-                                    e.stopPropagation();
-                                    if (isFocussed) {
-                                        dispatch(resetFocussedTask());
-                                    }
-                                }}
-                            >
-                                <BsTrashFill />
-                            </TaskDeleteButton>
+                            {!isFocussed && (
+                                <TaskDeleteButton
+                                    onClick={(e) => {
+                                        dispatch(remove(task.id));
+                                        e.stopPropagation();
+                                        if (isFocussed) {
+                                            dispatch(resetFocussedTask());
+                                        }
+                                    }}
+                                >
+                                    <BsTrashFill />
+                                </TaskDeleteButton>
+                            )}
                         </TaskControllerDiv>
                     </TaskDetailsDiv>
                 </TaskCardDiv>

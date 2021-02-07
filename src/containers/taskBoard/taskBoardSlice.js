@@ -20,13 +20,15 @@ export const tasksSlice = createSlice({
                 else {
                     if (!i.isCompleted) {
                         if (tasks.meta.completedTaskStartIndex != -1) --tasks.meta.completedTaskStartIndex;
+                    } else if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length - 1) {
+                        tasks.meta.completedTaskStartIndex = -1;
                     }
                     return false;
                 }
             });
         },
-        updateTask:(tasks, { payload }) => {
-            tasks.taskArray = tasks.taskArray.map((i)=>i.id === payload.id?payload:i);
+        updateTask: (tasks, { payload }) => {
+            tasks.taskArray = tasks.taskArray.map((i) => (i.id === payload.id ? payload : i));
         },
         updateTaskContent: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
@@ -78,12 +80,12 @@ export const tasksSlice = createSlice({
                     tasks.meta.completedTaskStartIndex = tasks.taskArray.length - 1;
                     let found = false;
                     for (let i = 0; i < tasks.taskArray.length - 1; i++) {
-                        if(found){
+                        if (found) {
                             let temp = tasks.taskArray[i];
                             tasks.taskArray[i] = tasks.taskArray[i + 1];
                             tasks.taskArray[i + 1] = temp;
-                        }else if(tasks.taskArray[i].id === id){
-                            found=true;
+                        } else if (tasks.taskArray[i].id === id) {
+                            found = true;
                             let temp = tasks.taskArray[i];
                             tasks.taskArray[i] = tasks.taskArray[i + 1];
                             tasks.taskArray[i + 1] = temp;
@@ -107,18 +109,17 @@ export const tasksSlice = createSlice({
                             break;
                         }
                     }
-                    
+
                     if (pos === -1) {
                         tasks.taskArray.push(task);
                     } else {
                         tasks.taskArray.splice(pos, 0, task);
                     }
                     tasks.taskArray.splice(idx, 1);
-                    tasks.meta.completedTaskStartIndex -=1;
+                    tasks.meta.completedTaskStartIndex -= 1;
                 }
             } else {
                 if (tasks.meta.completedTaskStartIndex == 0) {
-
                     let task, idx;
                     for (let i = tasks.meta.completedTaskStartIndex; i < tasks.taskArray.length; i++) {
                         if (tasks.taskArray[i].id === id) {
@@ -132,7 +133,6 @@ export const tasksSlice = createSlice({
                     tasks.taskArray.unshift(task);
                     tasks.meta.completedTaskStartIndex = 1;
                 } else {
-
                     let task, idx;
                     for (let i = tasks.meta.completedTaskStartIndex; i < tasks.taskArray.length; i++) {
                         if (tasks.taskArray[i].id === id) {
@@ -145,7 +145,7 @@ export const tasksSlice = createSlice({
                     let start = tasks.meta.completedTaskStartIndex - 1;
                     let pos = -1;
                     for (let i = start; i >= 0; i--) {
-                        if (tasks.taskArray[i].globalKey < task.globalKey ) continue;
+                        if (tasks.taskArray[i].globalKey < task.globalKey) continue;
                         else {
                             pos = i;
                             break;
@@ -160,17 +160,28 @@ export const tasksSlice = createSlice({
                         tasks.taskArray.splice(pos, 0, task);
                     }
                     tasks.meta.completedTaskStartIndex += 1;
-
                 }
 
-                if(tasks.meta.completedTaskStartIndex==tasks.taskArray.length){
-                    tasks.meta.completedTaskStartIndex=-1;
+                if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length) {
+                    tasks.meta.completedTaskStartIndex = -1;
                 }
             }
         },
     },
 });
 
-export const { create, remove, updateTask, updateTaskContent, reset, toggleIsRunning, tick, toggleIsCompleted, updateOrder, incrementGlobalKey, rearrange } = tasksSlice.actions;
+export const {
+    create,
+    remove,
+    updateTask,
+    updateTaskContent,
+    reset,
+    toggleIsRunning,
+    tick,
+    toggleIsCompleted,
+    updateOrder,
+    incrementGlobalKey,
+    rearrange,
+} = tasksSlice.actions;
 
 export default tasksSlice.reducer;

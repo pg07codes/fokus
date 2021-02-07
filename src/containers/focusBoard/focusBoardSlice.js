@@ -9,26 +9,27 @@ export const focusBoardSlice = createSlice({
         focusOnTask: (focusBoard, { payload }) => {
             focusBoard.focussedTask = payload;
         },
-        resetFocussedTask:(focusBoard) => {
+        resetFocussedTask: (focusBoard) => {
             focusBoard.focussedTask = null;
         },
         tick: (focusBoard) => {
             --focusBoard.focussedTask.remainingTime;
         },
-        toggleIsRunning: (focusBoard) => {
-            focusBoard.focussedTask.isRunning = !focusBoard.focussedTask.isRunning;
+        toggleIsRunning: (focusBoard, { payload }) => {
+            if (payload !== undefined) focusBoard.focussedTask.isRunning = payload;
+            else focusBoard.focussedTask.isRunning = !focusBoard.focussedTask.isRunning;
         },
-        resetTaskTime: (focusBoard) => {
-            focusBoard.focussedTask.isRunning=false;
-            focusBoard.focussedTask.remainingTime=focusBoard.focussedTask.time;
+        resetTask: (focusBoard) => {
+            focusBoard.focussedTask.isRunning = false;
+            focusBoard.focussedTask.remainingTime = focusBoard.focussedTask.time;
         },
-        updateTaskTime:(focusBoard,{payload}) => {
-            focusBoard.focussedTask.time+=(payload*60);
-            focusBoard.focussedTask.remainingTime+=(payload*60);
+        updateTaskTime: (focusBoard, { payload }) => {
+            focusBoard.focussedTask.time += payload * 60;
+            focusBoard.focussedTask.remainingTime += payload * 60;
         },
     },
 });
 
-export const { focusOnTask ,resetFocussedTask, tick , resetTaskTime, toggleIsRunning , updateTaskTime} = focusBoardSlice.actions;
+export const { focusOnTask, resetFocussedTask, tick, resetTask, toggleIsRunning, updateTaskTime } = focusBoardSlice.actions;
 
 export default focusBoardSlice.reducer;

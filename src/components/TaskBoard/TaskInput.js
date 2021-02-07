@@ -73,7 +73,7 @@ export default function TaskInput() {
     const dispatch = useDispatch();
 
     function submitTask(e) {
-        if (e.key === "Enter" && task.trim().length >= 3) {
+        if (e.key === "Enter" && task.trim().length >= 1) {
             let temp = task.trim().split(" ");
             // add a max time limit
             let taskTime = time;
