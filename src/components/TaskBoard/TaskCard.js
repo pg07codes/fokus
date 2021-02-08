@@ -14,8 +14,8 @@ const TaskCardContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 476px;
-    height: 120px;
+    width: 420px;
+    height: 100px;
     margin-top: 25px;
     /* background-color: #fff4e1; */
 `;
@@ -25,13 +25,12 @@ const TaskCardDragIcon = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 30px;
+    width: 25px;
     height: 100%;
     /* background-color: #ff09ac; */
     svg {
         cursor: url("https://ssl.gstatic.com/ui/v1/icons/mail/images/2/openhand.cur"), default !important;
-        font-size: 2em;
-        opacity: 0.6;
+        opacity: 0.5;
     }
 `;
 
@@ -40,7 +39,7 @@ const TaskCardDiv = styled.div`
     justify-content: space-around;
     flex-direction: row;
     height: 100%;
-    width: 420px;
+    width: 376px;
     border-radius: 5px;
     -webkit-box-shadow: ${(props) => (props.isFocussed ? "0 0 6px rgb(255, 216, 0, 0.6)" : "0 0 4px rgb(0, 0, 0, 0.2)")};
     box-shadow: ${(props) => (props.isFocussed ? "0 0 6px rgb(255, 216, 0, 0.6)" : "0 0 4px rgb(0, 0, 0, 0.2)")};
@@ -64,8 +63,12 @@ const TaskContentDiv = styled.div`
     margin: 0 0 0 5px;
     word-wrap: break-word;
     /* background-color: #fffcec; */
-    h3:hover {
-        cursor: text;
+    p {
+        font-size:0.9em;
+        min-width: 0;
+        &:hover {
+            cursor: text;
+        }
     }
 `;
 
@@ -73,8 +76,7 @@ const TaskEditInput = styled.textarea`
     resize: none;
     height: 90%;
     width: 100%;
-    font-size: 1.17em;
-    font-weight: bold;
+    font-size:0.9em;
     overflow: hidden;
     vertical-align: center;
     &:focus {
@@ -87,15 +89,12 @@ const TaskEditInput = styled.textarea`
 const TimeEditInput = styled.input`
     height: 15px;
     width: 30px;
-    margin-top:5px;
-    text-align:center;
-    /* font-size: 1.17em;
-    font-weight: bold;
-    vertical-align: center; */
+    margin-top: 5px;
+    text-align: center;
     &:focus {
         outline: none;
         border: 1px #7e8d9f dashed;
-        border-radius:2px;
+        border-radius: 2px;
     }
 `;
 
@@ -110,10 +109,10 @@ const TaskStatusDiv = styled.div`
     position: relative;
     p {
         margin: 5px;
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
     svg {
-        font-size: 2.5em;
+        font-size: 2.2em;
         color: ${(p) => (p.isCompleted ? "#00a86b" : p.isFocussed ? "#ffd800" : "#000")};
     }
 `;
@@ -131,7 +130,7 @@ const TaskActionButton = styled.div`
     }
     p {
         margin: 5px;
-        font-size: 0.7em;
+        font-size: 0.6em;
     }
 `;
 
@@ -152,14 +151,14 @@ const TaskControllerDiv = styled.div`
     height: 25%;
     /* background-color: #fffa91; */
     svg {
-        font-size: 20px;
+        font-size: 0.8em;
         margin: 5px;
     }
 `;
 
 function previewTask(str) {
-    if (str.length <= 70) return str;
-    else return str.substring(0, 70) + "...";
+    if (str.length <= 60) return str;
+    else return str.substring(0, 60) + "...";
 }
 
 export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocussed, focussedTaskIndex }) {
@@ -168,7 +167,7 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [timeUnderEdit, setTimeUnderEdit] = useState(false);
-    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time/60));
+    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 60));
     const [showDragIcon, setShowDragIcon] = useState(false);
 
     function submitUpdatedTaskContent(e) {
@@ -205,7 +204,8 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                 <TaskCardDiv isFocussed={isFocussed}>
                     <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>
                         {task.isCompleted ? <FaCheckCircle /> : isFocussed ? <FaLightbulb /> : <FaRegLightbulb />}
-                        {!task.isCompleted && (timeUnderEdit ? (
+                        {!task.isCompleted &&
+                            (timeUnderEdit ? (
                                 <TimeEditInput
                                     autoFocus
                                     value={updatedTime}
@@ -217,9 +217,7 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                     onChange={(e) => setUpdatedTime(e.target.value)}
                                 />
                             ) : (
-                                <p onDoubleClick={() => setTimeUnderEdit(true)}>
-                                    {formattedTimeString(task.remainingTime)}
-                                </p>
+                                <p onDoubleClick={() => setTimeUnderEdit(true)}>{formattedTimeString(task.remainingTime)}</p>
                             ))}
                     </TaskStatusDiv>
 
@@ -237,9 +235,7 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                     onChange={(e) => setUpdatedTaskContent(e.target.value)}
                                 />
                             ) : (
-                                <h3 style={{ minWidth: 0 }} onDoubleClick={() => setTaskUnderEdit(true)}>
-                                    {previewTask(task.content)}
-                                </h3>
+                                <p onDoubleClick={() => setTaskUnderEdit(true)}>{previewTask(task.content)}</p>
                             )}
                         </TaskContentDiv>
 

@@ -46,6 +46,16 @@ export const tasksSlice = createSlice({
                 }
             });
         },
+        updateTaskTimeByVal:(tasks, { payload }) => {
+            tasks.taskArray[payload.focussedTaskIndex].remainingTime+=payload.val*60;
+            tasks.taskArray[payload.focussedTaskIndex].time+=payload.val*60;
+            if(tasks.taskArray[payload.focussedTaskIndex].remainingTime<0){
+                tasks.taskArray[payload.focussedTaskIndex].remainingTime=0;
+            }
+            if(tasks.taskArray[payload.focussedTaskIndex].time<0){
+                tasks.taskArray[payload.focussedTaskIndex].time=0;
+            }
+        },
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
         },
@@ -181,6 +191,7 @@ export const {
     updateTask,
     updateTaskContent,
     updateTaskTime,
+    updateTaskTimeByVal,
     focusOnTask,
     resetFocussedTask,
     resetTaskTimer,

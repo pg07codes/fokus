@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, resetTaskTimer, tick , updateTask } from "./../taskBoard/taskBoardSlice";
+import { toggleIsRunning, resetTaskTimer, tick, updateTask, updateTaskTimeByVal } from "../taskBoard/taskBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import { formattedTimeString } from "../../helpers";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
@@ -13,7 +13,7 @@ import dingSound from "./../../sounds/ding.mp3";
 let dingSoundElement = new Audio(dingSound);
 
 const FocusBoardContainer = styled.div`
-    flex: 2 1 0;
+    flex: 3 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,7 +89,7 @@ const FocussedTaskController = styled.div`
 
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
-    let focussedTask = useSelector((state) => focussedTaskIndex !== -1 ? state.tasks.taskArray[focussedTaskIndex] : null);
+    let focussedTask = useSelector((state) => (focussedTaskIndex !== -1 ? state.tasks.taskArray[focussedTaskIndex] : null));
     const dispatch = useDispatch();
     const delay = 1000;
     useTimer(
@@ -105,14 +105,10 @@ export function FocusBoard() {
         focussedTask !== null && focussedTask.isRunning ? delay : null
     );
 
-    function updateTaskTimeHandler(task, val) {
-        if (task.isCompleted) return;
-        dispatch(toggleIsRunning(false));
-        // dispatch(updateTaskTime(val));
-        let temp = { ...task };
-        temp.time += val * 60;
-        temp.remainingTime += val * 60;
-        dispatch(updateTask(temp));
+    function updateTaskTimeHandler(val) {
+        if (focussedTask.isCompleted) return;
+        if (focussedTask.isRunning) dispatch(toggleIsRunning(focussedTaskIndex));
+        dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
     }
 
     return (
@@ -121,12 +117,12 @@ export function FocusBoard() {
                 <div>
                     <FocussedTaskDiv>
                         <FocussedTaskTimer>
-                            <ButtonContainer onClick={() => updateTaskTimeHandler(focussedTask, -5)}>
+                            <ButtonContainer onClick={() => updateTaskTimeHandler(-5)}>
                                 <h4>-5</h4>
                             </ButtonContainer>
                             <div style={{ width: 140, height: 140 }}>
                                 <CircularProgressbarWithChildren
-                                    value={Math.floor((focussedTask.remainingTime / focussedTask.time) * 100)}
+                                    value={focussedTask.time !== 0 ? Math.floor((focussedTask.remainingTime / focussedTask.time) * 100) : 0}
                                     styles={buildStyles({
                                         strokeLinecap: "butt",
                                         pathColor: "black",
@@ -138,7 +134,7 @@ export function FocusBoard() {
                                     </TimerDiv>
                                 </CircularProgressbarWithChildren>
                             </div>
-                            <ButtonContainer onClick={() => updateTaskTimeHandler(focussedTask, 5)}>
+                            <ButtonContainer onClick={() => updateTaskTimeHandler(5)}>
                                 <h4>+5</h4>
                             </ButtonContainer>
                         </FocussedTaskTimer>

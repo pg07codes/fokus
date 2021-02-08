@@ -10,28 +10,28 @@ const TaskInputContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 20px;
-    width: 476px;
-    border-bottom: 5px solid black;
-    height: 50px;
+    width: 420px;
+    border-bottom: 3px solid black;
+    height: 40px;
 `;
 
 const TaskContentInputDiv = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 80%;
+    height: 90%;
     width: 70%;
     margin-left:10px;
     svg {
-        font-size: 1.3em;
+        font-size: 1.2em;
+        margin-right:5px;
     }
 `;
 
 const TaskContentInputField = styled.input`
     height: 100%;
     width: 90%;
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 0.9em;
     border: 0;
     outline: none;
 `;
@@ -39,20 +39,18 @@ const TaskContentInputField = styled.input`
 const TaskTimeInputDiv = styled.div`
     display: flex;
     align-items: center;
-    height: 80%;
+    height: 90%;
     width: 25%;
     span {
-        font-size: 0.8em;
-        font-weight:bold;
+        font-size: 0.7em;
         color:rgb(118,118,118);
     }
 `;
 
 const TaskTimeInputField = styled.input`
     height: 100%;
-    width: 35%;
-    font-size: 1em;
-    font-weight: bold;
+    width: 40%;
+    font-size: 0.9em;
     text-align:center;
     border: 0;
     outline: none;

@@ -8,13 +8,12 @@ import { focusOnTask } from "./taskBoardSlice";
 import styled from "styled-components";
 import TaskInput from "./../../components/TaskBoard/TaskInput";
 import Divider from "./../../components/TaskBoard/Divider";
-import { BsSubtract } from "react-icons/bs";
 
 const TaskBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 3 1 0;
+    flex: 2 1 0;
 `;
 
 export function TaskBoard() {
