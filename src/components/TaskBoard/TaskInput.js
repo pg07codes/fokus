@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { create, incrementGlobalKey } from "./../../containers/taskBoard/taskBoardSlice";
+import { create, incrementGlobalKey , focusOnTask} from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { MdAddCircle } from "react-icons/md";
 import { ImClock2 } from "react-icons/im";
@@ -92,6 +92,7 @@ export default function TaskInput() {
                 isCompleted: false,
                 createdAt: new Date().toISOString(),
             };
+            if(meta.focussedTaskIndex!==-1)dispatch(focusOnTask(meta.focussedTaskIndex + 1));
             dispatch(create(newTask));
             dispatch(incrementGlobalKey());
             setTask("");

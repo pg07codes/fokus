@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTask } from "../../containers/taskBoard/taskBoardSlice";
+import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
 import { focusOnTask, resetFocussedTask, toggleIsRunning } from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { FaRegLightbulb, FaLightbulb, FaCheckCircle } from "react-icons/fa";
@@ -84,6 +84,21 @@ const TaskEditInput = styled.textarea`
     }
 `;
 
+const TimeEditInput = styled.input`
+    height: 15px;
+    width: 30px;
+    margin-top:5px;
+    text-align:center;
+    /* font-size: 1.17em;
+    font-weight: bold;
+    vertical-align: center; */
+    &:focus {
+        outline: none;
+        border: 1px #7e8d9f dashed;
+        border-radius:2px;
+    }
+`;
+
 const TaskStatusDiv = styled.div`
     display: flex;
     flex-direction: column;
@@ -147,24 +162,32 @@ function previewTask(str) {
     else return str.substring(0, 70) + "...";
 }
 
-export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocussed }) {
+export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocussed, focussedTaskIndex }) {
     const dispatch = useDispatch();
 
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
+    const [timeUnderEdit, setTimeUnderEdit] = useState(false);
+    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time/60));
     const [showDragIcon, setShowDragIcon] = useState(false);
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
             let temp = updatedTaskContent.trim().split(" ");
-            let time = 0;
-            if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
-                time = parseInt(temp.pop());
-            }
-            temp = temp.join(" ");
-            // manage to update time also
+            // let time = 0;
+            // if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
+            //     time = parseInt(temp.pop());
+            // }
+            // temp = temp.join(" ");
+            // wont be managing to update time here also
             dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
             setTaskUnderEdit(false);
+        }
+    }
+    function submitUpdatedTime(e) {
+        if (e.key === "Enter") {
+            dispatch(updateTaskTime({ id: task.id, updatedTime }));
+            setTimeUnderEdit(false);
         }
     }
 
@@ -182,7 +205,22 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                 <TaskCardDiv isFocussed={isFocussed}>
                     <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>
                         {task.isCompleted ? <FaCheckCircle /> : isFocussed ? <FaLightbulb /> : <FaRegLightbulb />}
-                        {!task.isCompleted && <p>{formattedTimeString(task.remainingTime)}</p>}
+                        {!task.isCompleted && (timeUnderEdit ? (
+                                <TimeEditInput
+                                    autoFocus
+                                    value={updatedTime}
+                                    onBlur={() => {
+                                        dispatch(updateTaskTime({ id: task.id, updatedTime }));
+                                        setTimeUnderEdit(false);
+                                    }}
+                                    onKeyDown={submitUpdatedTime}
+                                    onChange={(e) => setUpdatedTime(e.target.value)}
+                                />
+                            ) : (
+                                <p onDoubleClick={() => setTimeUnderEdit(true)}>
+                                    {formattedTimeString(task.remainingTime)}
+                                </p>
+                            ))}
                     </TaskStatusDiv>
 
                     <TaskDetailsDiv>
@@ -232,7 +270,8 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                               e.stopPropagation();
                                           }
                                         : (e) => {
-                                              if (task.isRunning)dispatch(toggleIsRunning(taskIndex));
+                                              if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
+                                              if (task.isRunning) dispatch(toggleIsRunning(taskIndex));
                                               if (isFocussed) dispatch(resetFocussedTask());
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
@@ -246,11 +285,9 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                             {!isFocussed && (
                                 <TaskDeleteButton
                                     onClick={(e) => {
+                                        if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
                                         dispatch(remove(task.id));
                                         e.stopPropagation();
-                                        if (isFocussed) {
-                                            dispatch(resetFocussedTask());
-                                        }
                                     }}
                                 >
                                     <BsTrashFill />

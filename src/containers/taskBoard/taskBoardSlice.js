@@ -38,6 +38,14 @@ export const tasksSlice = createSlice({
                 }
             });
         },
+        updateTaskTime: ({ taskArray }, { payload }) => {
+            taskArray.forEach((i) => {
+                if (i.id === payload.id) {
+                    i.remainingTime = payload.updatedTime * 60;
+                    i.time = payload.updatedTime * 60;
+                }
+            });
+        },
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
         },
@@ -172,6 +180,7 @@ export const {
     remove,
     updateTask,
     updateTaskContent,
+    updateTaskTime,
     focusOnTask,
     resetFocussedTask,
     resetTaskTimer,

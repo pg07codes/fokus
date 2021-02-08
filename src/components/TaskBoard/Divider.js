@@ -5,12 +5,13 @@ import { Flipped } from "react-flip-toolkit";
 
 const DoneTasksDivider = styled.div`
     display: flex;
+    margin:15px;
 `;
 const DividerLine = styled.div`
     width: 100%;
     position: relative;
     margin: 15px;
-    border-bottom: 5px dashed #c0c0c0;
+    border-bottom: 3px solid #c0c0c0;
 `;
 
 const DividerIcon = styled.div`
@@ -19,7 +20,7 @@ const DividerIcon = styled.div`
     top: 3px;
     color: #00a86b;
     svg {
-        font-size: 2em;
+        font-size: 1.8em;
     }
 `;
 

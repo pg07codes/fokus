@@ -89,8 +89,7 @@ const FocussedTaskController = styled.div`
 
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
-    let focussedTask = useSelector((state) => state.tasks.taskArray[focussedTaskIndex]);
-    if (focussedTaskIndex === -1) focussedTask = null;
+    let focussedTask = useSelector((state) => focussedTaskIndex !== -1 ? state.tasks.taskArray[focussedTaskIndex] : null);
     const dispatch = useDispatch();
     const delay = 1000;
     useTimer(

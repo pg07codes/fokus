@@ -4,7 +4,7 @@ import { updateOrder } from "./taskBoardSlice";
 import TaskCard from "./../../components/TaskBoard/TaskCard";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Flipper } from "react-flip-toolkit";
-import {focusOnTask} from "./taskBoardSlice";
+import { focusOnTask } from "./taskBoardSlice";
 import styled from "styled-components";
 import TaskInput from "./../../components/TaskBoard/TaskInput";
 import Divider from "./../../components/TaskBoard/Divider";
@@ -20,11 +20,7 @@ const TaskBoardContainer = styled.div`
 export function TaskBoard() {
     const tasks = useSelector((state) => state.tasks.taskArray);
     const meta = useSelector((state) => state.tasks.meta);
-    let focussedTask = null;
-    if(meta.focussedTaskIndex !== -1){
-        focussedTask=tasks[meta.focussedTaskIndex];
-    }
-    // const focussedTask = useSelector((state) => state.focusBoard.focussedTask);
+    let focussedTask = meta.focussedTaskIndex !== -1 ? tasks[meta.focussedTaskIndex] : null;
     const dispatch = useDispatch();
 
     function handleOnDragEnd(result) {
@@ -50,20 +46,22 @@ export function TaskBoard() {
             }
         }
 
-        let greaterIndex=Math.max(result.destination.index,result.source.index);
-        let smallerIndex=Math.min(result.destination.index,result.source.index);
-        
-        if(result.source.index===meta.focussedTaskIndex){
-            dispatch(focusOnTask(result.destination.index));
-        }else if(meta.focussedTaskIndex>=smallerIndex && meta.focussedTaskIndex<=greaterIndex){
-            if(result.destination.index > result.source.index){
-                dispatch(focusOnTask(meta.focussedTaskIndex-1)); // -1
-            }else{
-                dispatch(focusOnTask(meta.focussedTaskIndex+1)); // +1
+        if (meta.focussedTaskIndex !== -1) {
+            let greaterIndex = Math.max(result.destination.index, result.source.index);
+            let smallerIndex = Math.min(result.destination.index, result.source.index);
+
+            if (result.source.index === meta.focussedTaskIndex) {
+                dispatch(focusOnTask(result.destination.index));
+            } else if (meta.focussedTaskIndex >= smallerIndex && meta.focussedTaskIndex <= greaterIndex) {
+                if (result.destination.index > result.source.index) {
+                    dispatch(focusOnTask(meta.focussedTaskIndex - 1)); // -1
+                } else {
+                    dispatch(focusOnTask(meta.focussedTaskIndex + 1)); // +1
+                }
             }
         }
-        
-        dispatch(updateOrder(items));
+
+        dispatch(updateOrder(items)); // order is imp. focus then updateOrder
     }
 
     function getFlipKey() {
@@ -84,7 +82,7 @@ export function TaskBoard() {
 
     return (
         <TaskBoardContainer>
-            <TaskInput />
+            <TaskInput focussedTaskIndex={meta.focussedTaskIndex}/>
 
             <Flipper flipKey={getFlipKey()}>
                 <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -94,7 +92,9 @@ export function TaskBoard() {
                                 {tasks.map((i, index) =>
                                     !i.isCompleted ? (
                                         <Draggable isDragDisabled={i.isCompleted} key={i.id} draggableId={`${i.id}`} index={index}>
-                                            {(provided2) => <TaskCard taskIndex = {index} forwardRBDProvided={provided2} task={i} isFocussed={isFocussed(i.id)} />}
+                                            {(provided2) => (
+                                                <TaskCard focussedTaskIndex={meta.focussedTaskIndex} taskIndex={index} forwardRBDProvided={provided2} task={i} isFocussed={isFocussed(i.id)} />
+                                            )}
                                         </Draggable>
                                     ) : (
                                         ""
@@ -109,7 +109,11 @@ export function TaskBoard() {
                 {meta.completedTaskStartIndex !== -1 && meta.completedTaskStartIndex !== 0 && <Divider />}
 
                 {tasks.map((i, index) =>
-                    i.isCompleted ? <TaskCard taskIndex = {index} key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)} /> : ""
+                    i.isCompleted ? (
+                        <TaskCard focussedTaskIndex={meta.focussedTaskIndex} taskIndex={index} key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)} />
+                    ) : (
+                        ""
+                    )
                 )}
             </Flipper>
         </TaskBoardContainer>
