@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { create, incrementGlobalKey , focusOnTask} from "./../../containers/taskBoard/taskBoardSlice";
+import { create, incrementGlobalKey, focusOnTask } from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
-import { MdAddCircle } from "react-icons/md";
-import { ImClock2 } from "react-icons/im";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { AiOutlineClockCircle } from "react-icons/ai"; 
 
 const TaskInputContainer = styled.div`
     display: flex;
@@ -11,8 +11,9 @@ const TaskInputContainer = styled.div`
     align-items: center;
     margin: 20px;
     width: 420px;
-    border-bottom: 3px solid black;
-    height: 40px;
+    border-radius: 10px;
+    background-color: #F8F8FD;
+    height: 50px;
 `;
 
 const TaskContentInputDiv = styled.div`
@@ -21,10 +22,11 @@ const TaskContentInputDiv = styled.div`
     align-items: center;
     height: 90%;
     width: 70%;
-    margin-left:10px;
+    margin-left: 10px;
     svg {
-        font-size: 1.2em;
-        margin-right:5px;
+        font-size: 1.4em;
+        margin-right: 5px;
+        color: #0000cd;
     }
 `;
 
@@ -32,8 +34,13 @@ const TaskContentInputField = styled.input`
     height: 100%;
     width: 90%;
     font-size: 0.9em;
+    background-color: #F8F8FD;
     border: 0;
     outline: none;
+    &::placeholder{
+        color:#b7b7b7;
+        font-weight:bold;
+    }
 `;
 
 const TaskTimeInputDiv = styled.div`
@@ -41,19 +48,29 @@ const TaskTimeInputDiv = styled.div`
     align-items: center;
     height: 90%;
     width: 25%;
+    color: #b7b7b7;
     span {
-        font-size: 0.7em;
-        color:rgb(118,118,118);
+        font-size: 0.8em;
+        font-weight:bold;
+    }
+    svg {
+        font-size:1.3em;
+        color: #0000cd;
     }
 `;
 
 const TaskTimeInputField = styled.input`
     height: 100%;
-    width: 40%;
+    width: 30%;
     font-size: 0.9em;
-    text-align:center;
+    text-align: center;
+    background-color: #F8F8FD;
     border: 0;
     outline: none;
+    &::placeholder{
+        color:#b7b7b7;
+        font-weight:bold;
+    }
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -90,7 +107,7 @@ export default function TaskInput() {
                 isCompleted: false,
                 createdAt: new Date().toISOString(),
             };
-            if(meta.focussedTaskIndex!==-1)dispatch(focusOnTask(meta.focussedTaskIndex + 1));
+            if (meta.focussedTaskIndex !== -1) dispatch(focusOnTask(meta.focussedTaskIndex + 1));
             dispatch(create(newTask));
             dispatch(incrementGlobalKey());
             setTask("");
@@ -104,7 +121,7 @@ export default function TaskInput() {
     return (
         <TaskInputContainer>
             <TaskContentInputDiv>
-                <MdAddCircle />
+                <IoAddCircleOutline />
                 <TaskContentInputField
                     type="text"
                     placeholder="i have to focus on ..."
@@ -114,7 +131,7 @@ export default function TaskInput() {
                 />
             </TaskContentInputDiv>
             <TaskTimeInputDiv>
-                <ImClock2 />
+                <AiOutlineClockCircle />
                 <TaskTimeInputField
                     type="number"
                     placeholder="20"
