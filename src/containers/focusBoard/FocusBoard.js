@@ -1,14 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, resetTaskTimer, tick, updateTask, updateTaskTimeByVal } from "../taskBoard/taskBoardSlice";
+import { toggleIsRunning, resetTaskTimer, tick, updateTaskTimeByVal } from "../taskBoard/taskBoardSlice";
 import useTimer from "../../hooks/useTimer";
-import { formattedTimeString } from "../../helpers";
+import { formattedTimeStringv2 } from "../../helpers";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { ImLoop2 } from "react-icons/im";
 import dingSound from "./../../sounds/ding.mp3";
+import tasks from "./../../images/tasks.svg";
+import glowBulb from "./../../images/glowBulb.svg";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -17,74 +19,139 @@ const FocusBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    /* background-color: #f8f8ff; */
+    border-right: 2px black solid;
+`;
+
+const FocussedTaskContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 276px;
+    height: 346px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
+    background-color: #f7f7fa;
 `;
 
 const FocussedTaskDiv = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    justify-content: space-around;
-    width: 400px;
-    height: 400px;
-    margin: 20px;
-    box-shadow: 0 0 6px rgba(0, 0, 2, 0.3);
-    /* background-color: #fffccc; */
+    width: 100%;
+    height: 100%;
 `;
 
 const FocussedTaskTimer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90%;
-    height: 40%;
-    /* background-color: #ffeaca; */
+    height: 50%;
 `;
 
-const TimerDiv = styled.div`
+const CountdownTimerDiv = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
-    /* background-color: #ff1c1c; */
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+    width: 90px;
+    height: 90px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
+    p {
+        font-size: 0.9em;
+        font-weight: bold;
+    }
 `;
 
-const ButtonContainer = styled.div`
+const PlayButtonDiv = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
-    /* background-color: #ffaa1c; */
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    width: 55px;
+    height: 55px;
+    background-color: #0000cd;
     border-radius: 50%;
-    margin: 15px;
+    margin: 10px 20px;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
+    svg {
+        color: #fff;
+        font-size: 1.8em;
+    }
+    cursor: pointer;
+`;
+
+const UpdateTimeButtonDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+`;
+
+const ResetButtonDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #0000cd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+    svg {
+        color: #fff;
+        font-size: 0.6em;
+    }
 `;
 
 const FocussedTaskContent = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
     text-align: center;
-    width: 90%;
+    margin: 5px;
     height: 30%;
+    width: 90%;
     word-wrap: break-word;
-    /* background-color: #ffea1c; */
+    p {
+        min-width: 0;
+        font-weight: bold;
+        margin: 3px;
+    }
 `;
 
 const FocussedTaskController = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 90%;
     height: 20%;
-    /* background-color: #efaaa1; */
+    margin-bottom: 10px;
+`;
+
+const EmptyFocusBox = styled.div`
+    display: flex;
+    justify-content: center;
+    width:90%;
+    align-items: center;
+    p{
+        margin-bottom:10px;
+        display:inline-block;
+        font-weight:bold;
+        font-size:1.3em;
+        color: #c1c1d7;
+    }
+    img {
+        display:inline-block;
+        width: 35px;
+        margin:3px;
+    }
 `;
 
 export function FocusBoard() {
@@ -113,45 +180,58 @@ export function FocusBoard() {
 
     return (
         <FocusBoardContainer>
-            {focussedTask != null && (
-                <div>
+            <FocussedTaskContainer>
+                {focussedTask != null && (
                     <FocussedTaskDiv>
                         <FocussedTaskTimer>
-                            <ButtonContainer onClick={() => updateTaskTimeHandler(-5)}>
-                                <h4>-5</h4>
-                            </ButtonContainer>
-                            <div style={{ width: 140, height: 140 }}>
+                            <div style={{ width: 120, height: 120 }}>
                                 <CircularProgressbarWithChildren
                                     value={focussedTask.time !== 0 ? Math.floor((focussedTask.remainingTime / focussedTask.time) * 100) : 0}
                                     styles={buildStyles({
                                         strokeLinecap: "butt",
-                                        pathColor: "black",
-                                        trailColor: "white",
+
+                                        pathColor: "#0000cd",
+                                        trailColor: "#EFF7FF",
                                     })}
+                                    strokeWidth={6}
                                 >
-                                    <TimerDiv>
-                                        <h3>{formattedTimeString(focussedTask.remainingTime)}</h3>
-                                    </TimerDiv>
+                                    <CountdownTimerDiv>
+                                        <p>{formattedTimeStringv2(focussedTask.remainingTime)}</p>
+                                    </CountdownTimerDiv>
                                 </CircularProgressbarWithChildren>
                             </div>
-                            <ButtonContainer onClick={() => updateTaskTimeHandler(5)}>
-                                <h4>+5</h4>
-                            </ButtonContainer>
                         </FocussedTaskTimer>
                         <FocussedTaskContent>
-                            <h4 style={{ minWidth: 0 }}>{focussedTask.content}</h4>
+                            <p>{focussedTask.content}</p>
                         </FocussedTaskContent>
                         <FocussedTaskController>
-                            <ButtonContainer onClick={() => dispatch(toggleIsRunning(focussedTaskIndex))} style={{ fontSize: "1.5em" }}>
+                            <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(-5)}>
+                                <h4>-5</h4>
+                            </UpdateTimeButtonDiv>
+                            <PlayButtonDiv onClick={() => dispatch(toggleIsRunning(focussedTaskIndex))}>
                                 {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
-                            </ButtonContainer>
-                            <ButtonContainer onClick={() => dispatch(resetTaskTimer(focussedTaskIndex))}>
-                                <ImLoop2 />
-                            </ButtonContainer>
+                            </PlayButtonDiv>
+
+                            <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(5)}>
+                                <h4>+5</h4>
+                            </UpdateTimeButtonDiv>
                         </FocussedTaskController>
+                        <ResetButtonDiv onClick={() => dispatch(resetTaskTimer(focussedTaskIndex))}>
+                            <ImLoop2 />
+                        </ResetButtonDiv>
                     </FocussedTaskDiv>
-                </div>
-            )}
+                )}
+                {focussedTask === null && (
+                    <EmptyFocusBox>
+                        <div>
+                            <p>pick a </p>
+                            <img src={tasks} alt="task" />
+                            <p>and</p>
+                            <img src={glowBulb} alt="focus" />
+                        </div>
+                    </EmptyFocusBox>
+                )}
+            </FocussedTaskContainer>
         </FocusBoardContainer>
     );
 }

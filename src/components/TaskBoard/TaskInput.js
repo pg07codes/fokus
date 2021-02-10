@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { create, incrementGlobalKey, focusOnTask } from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
-import { AiFillPlusCircle,  AiFillClockCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiFillClockCircle } from "react-icons/ai";
 
 const TaskInputContainer = styled.div`
     display: flex;
@@ -13,8 +13,8 @@ const TaskInputContainer = styled.div`
     border-radius: 10px;
     background-color: #fff;
     height: 50px;
-    -webkit-box-shadow:0  5px 10px rgba(166,173,201,0.2);
-    box-shadow:0  5px 10px rgba(166,173,201,0.2);
+    -webkit-box-shadow: 0 5px 10px rgba(166, 173, 201, 0.2);
+    box-shadow: 0 5px 10px rgba(166, 173, 201, 0.2);
 `;
 
 const TaskContentInputDiv = styled.div`
@@ -27,7 +27,7 @@ const TaskContentInputDiv = styled.div`
     svg {
         font-size: 1.3em;
         margin-right: 5px;
-        color: #000;
+        color: #85BCFF;
     }
 `;
 
@@ -38,9 +38,9 @@ const TaskContentInputField = styled.input`
     background-color: #fff;
     border: 0;
     outline: none;
-    &::placeholder{
-        color:#777672;
-        /* font-weight:bold; */
+    font-weight: bold;
+    &::placeholder {
+        color: #c1c1d7;
     }
 `;
 
@@ -49,14 +49,14 @@ const TaskTimeInputDiv = styled.div`
     align-items: center;
     height: 90%;
     width: 25%;
-    color: #777672;
+    color: #c1c1d7;
     span {
         font-size: 0.8em;
-        /* font-weight:bold; */
+        font-weight: bold;
     }
     svg {
-        font-size:1.2em;
-        color: #000;
+        font-size: 1.2em;
+        color: #85BCFF;
     }
 `;
 
@@ -68,9 +68,9 @@ const TaskTimeInputField = styled.input`
     background-color: #fff;
     border: 0;
     outline: none;
-    &::placeholder{
-        color:#777672;
-        /* font-weight:bold; */
+    font-weight: bold;
+    &::placeholder {
+        color: #c1c1d7;
     }
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
@@ -122,7 +122,7 @@ export default function TaskInput() {
     return (
         <TaskInputContainer>
             <TaskContentInputDiv>
-                <AiFillPlusCircle onClick={()=>taskContentInputRef.focus()} />
+                <AiFillPlusCircle onClick={() => taskContentInputRef.focus()} />
                 <TaskContentInputField
                     type="text"
                     placeholder="i have to focus on ..."
@@ -132,7 +132,7 @@ export default function TaskInput() {
                 />
             </TaskContentInputDiv>
             <TaskTimeInputDiv>
-                <AiFillClockCircle onClick={()=>taskTimeInputRef.focus()}/>
+                <AiFillClockCircle onClick={() => taskTimeInputRef.focus()} />
                 <TaskTimeInputField
                     type="number"
                     placeholder="20"
