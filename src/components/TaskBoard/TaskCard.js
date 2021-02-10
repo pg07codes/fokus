@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
 import { focusOnTask, resetFocussedTask, toggleIsRunning } from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
-import { BsTrashFill } from "react-icons/bs";
+import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
 import { GrDrag } from "react-icons/gr";
 import { formattedTimeString } from "../../helpers";
@@ -43,9 +43,9 @@ const TaskCardDiv = styled.div`
     height: 100%;
     width: 376px;
     border-radius: 10px;
-    background-color:#F8F8FD;
-    -webkit-box-shadow: ${(props) => (props.isFocussed ? "0 0 7px rgb(248, 185, 23)" : "0 0 4px rgb(233, 243, 255,0.7)")};
-    box-shadow: ${(props) => (props.isFocussed ? "0 0 7px rgb(248, 185, 23)" : "0 0 4px rgb(233, 243, 255,0.7)")};
+    background-color: #fff;
+    -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
+    box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
 `;
 
 const TaskDetailsDiv = styled.div`
@@ -67,7 +67,7 @@ const TaskContentDiv = styled.div`
     /* background-color: #fffcec; */
     p {
         font-size: 0.9em;
-        font-weight:bold;
+        font-weight: bold;
         min-width: 0;
         &:hover {
             cursor: text;
@@ -82,10 +82,10 @@ const TaskEditInput = styled.textarea`
     font-size: 0.9em;
     overflow: hidden;
     vertical-align: center;
-    font-weight:bold;
+    font-weight: bold;
     &:focus {
         outline: none;
-        border: 2px #0000CD dashed;
+        border: 2px #0000cd dashed;
         border-radius: 5px;
     }
 `;
@@ -95,10 +95,10 @@ const TimeEditInput = styled.input`
     width: 30px;
     margin-top: 5px;
     text-align: center;
-    font-weight:bold;
+    font-weight: bold;
     &:focus {
         outline: none;
-        border: 2px #0000CD dashed;
+        border: 2px #0000cd dashed;
         border-radius: 2px;
     }
 `;
@@ -114,11 +114,11 @@ const TaskStatusDiv = styled.div`
     position: relative;
     p {
         margin: 5px;
-        font-weight:bold;
+        font-weight: bold;
         font-size: 0.7em;
     }
     img {
-        width: ${p=>p.isCompleted?"35px":"60px"};
+        width: ${(p) => (p.isCompleted ? "35px" : "60px")};
     }
 `;
 
@@ -131,14 +131,14 @@ const TaskActionButton = styled.div`
     margin: 5px;
     cursor: pointer;
     &:hover {
-        background-color: #0000CD;
-        p{
-            color:#fff;
+        background-color: #0000cd;
+        p {
+            color: #fff;
         }
     }
     p {
         margin: 5px;
-        font-weight:bold;
+        font-weight: bold;
         font-size: 0.6em;
     }
 `;
@@ -147,9 +147,9 @@ const TaskDeleteButton = styled.div`
     height: 80%;
     cursor: pointer;
     margin-left: auto;
-    color: #b7b7b7;
+    color: #0000cd;
     &:hover {
-        color: #e44d2e;
+        color: red;
     }
 `;
 
@@ -303,7 +303,7 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                         e.stopPropagation();
                                     }}
                                 >
-                                    <BsTrashFill />
+                                    <BsTrash />
                                 </TaskDeleteButton>
                             )}
                         </TaskControllerDiv>

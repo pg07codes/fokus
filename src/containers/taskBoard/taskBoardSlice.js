@@ -8,6 +8,8 @@ export const tasksSlice = createSlice({
             globalKey: 0,
             completedTaskStartIndex: -1,
             focussedTaskIndex: -1,
+            showCompletedTasks: true,
+            completedTasksCount: 0,
         },
     },
     reducers: {
@@ -22,6 +24,7 @@ export const tasksSlice = createSlice({
                     if (!i.isCompleted) {
                         if (tasks.meta.completedTaskStartIndex != -1) --tasks.meta.completedTaskStartIndex;
                     } else if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length - 1) {
+                        tasks.meta.completedTasksCount--;
                         tasks.meta.completedTaskStartIndex = -1;
                     }
                     return false;
@@ -46,14 +49,14 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        updateTaskTimeByVal:(tasks, { payload }) => {
-            tasks.taskArray[payload.focussedTaskIndex].remainingTime+=payload.val*60;
-            tasks.taskArray[payload.focussedTaskIndex].time+=payload.val*60;
-            if(tasks.taskArray[payload.focussedTaskIndex].remainingTime<0){
-                tasks.taskArray[payload.focussedTaskIndex].remainingTime=0;
+        updateTaskTimeByVal: (tasks, { payload }) => {
+            tasks.taskArray[payload.focussedTaskIndex].remainingTime += payload.val * 60;
+            tasks.taskArray[payload.focussedTaskIndex].time += payload.val * 60;
+            if (tasks.taskArray[payload.focussedTaskIndex].remainingTime < 0) {
+                tasks.taskArray[payload.focussedTaskIndex].remainingTime = 0;
             }
-            if(tasks.taskArray[payload.focussedTaskIndex].time<0){
-                tasks.taskArray[payload.focussedTaskIndex].time=0;
+            if (tasks.taskArray[payload.focussedTaskIndex].time < 0) {
+                tasks.taskArray[payload.focussedTaskIndex].time = 0;
             }
         },
         updateOrder: (tasks, { payload }) => {
@@ -76,13 +79,23 @@ export const tasksSlice = createSlice({
         toggleIsRunning: (tasks, { payload }) => {
             tasks.taskArray[payload].isRunning = !tasks.taskArray[payload].isRunning;
         },
-
-        toggleIsCompleted: ({ taskArray }, { payload }) => {
-            taskArray.forEach((i) => {
+        toggleShowCompletedTasks: (tasks) => {
+            tasks.meta.showCompletedTasks = !tasks.meta.showCompletedTasks;
+        },
+        toggleIsCompleted: (tasks, { payload }) => {
+            tasks.taskArray.forEach((i) => {
                 if (i.id === payload) {
+                    i.isCompleted ? --tasks.meta.completedTasksCount : ++tasks.meta.completedTasksCount;
                     i.isCompleted = !i.isCompleted;
                 }
             });
+        },
+        clearCompletedTasks: (tasks) => {
+            if (tasks.meta.completedTaskStartIndex !== -1) {
+                tasks.taskArray.length = tasks.meta.completedTaskStartIndex;
+                tasks.meta.completedTaskStartIndex = -1;
+                tasks.meta.completedTasksCount=0;
+            }
         },
         incrementGlobalKey: ({ meta }) => {
             ++meta.globalKey;
@@ -194,10 +207,12 @@ export const {
     updateTaskTimeByVal,
     focusOnTask,
     resetFocussedTask,
+    tick,
     resetTaskTimer,
     toggleIsRunning,
-    tick,
+    toggleShowCompletedTasks,
     toggleIsCompleted,
+    clearCompletedTasks,
     updateOrder,
     incrementGlobalKey,
     rearrange,

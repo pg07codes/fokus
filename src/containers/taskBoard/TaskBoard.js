@@ -13,6 +13,7 @@ const TaskBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color:#F7F7FA;
     flex: 2 1 0;
 `;
 
@@ -107,7 +108,7 @@ export function TaskBoard() {
 
                 {meta.completedTaskStartIndex !== -1 && meta.completedTaskStartIndex !== 0 && <Divider />}
 
-                {tasks.map((i, index) =>
+                {meta.showCompletedTasks && tasks.map((i, index) =>
                     i.isCompleted ? (
                         <TaskCard focussedTaskIndex={meta.focussedTaskIndex} taskIndex={index} key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)} />
                     ) : (
