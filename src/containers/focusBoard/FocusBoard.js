@@ -10,7 +10,7 @@ import { BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
 import { ImLoop2 } from "react-icons/im";
 import dingSound from "./../../sounds/ding.mp3";
 import tasks from "./../../images/tasks.svg";
-import glowBulb from "./../../images/glowBulb.svg";
+import { CgNotes } from "react-icons/cg";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -61,9 +61,10 @@ const CountdownTimerDiv = styled.div`
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
-    p {
+    & > p {
         font-size: 0.9em;
         font-weight: bold;
+        color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#000")};
     }
 `;
 
@@ -99,7 +100,7 @@ const ResetButtonDiv = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: #0000cd;
+    background-color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#0000cd")};
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -137,20 +138,31 @@ const FocussedTaskController = styled.div`
 
 const EmptyFocusBox = styled.div`
     display: flex;
-    justify-content: center;
-    width:90%;
     align-items: center;
-    p{
-        margin-bottom:10px;
-        display:inline-block;
-        font-weight:bold;
-        font-size:1.3em;
-        color: #c1c1d7;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+`;
+
+const NotesIconDiv = styled.div`
+    svg{
+        font-size:80px;
+        color:#c1c1d7
     }
-    img {
-        display:inline-block;
-        width: 35px;
-        margin:3px;
+`;
+const EmptyFocusBoxText = styled.div`
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    height: 15%;
+    width: 90%;
+    p {
+        margin-bottom: 10px;
+        display: inline-block;
+        font-weight: bold;
+        color: #c1c1d7;
     }
 `;
 
@@ -165,7 +177,7 @@ export function FocusBoard() {
             else if (focussedTask.remainingTime > 0) {
                 dispatch(tick(focussedTaskIndex));
             } else if (focussedTask.remainingTime === 0) {
-                dispatch(toggleIsRunning(focussedTaskIndex));
+                dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
                 dingSoundElement.play();
             }
         },
@@ -174,7 +186,7 @@ export function FocusBoard() {
 
     function updateTaskTimeHandler(val) {
         if (focussedTask.isCompleted) return;
-        if (focussedTask.isRunning) dispatch(toggleIsRunning(focussedTaskIndex));
+        if (focussedTask.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
     }
 
@@ -208,7 +220,7 @@ export function FocusBoard() {
                             <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(-5)}>
                                 <h4>-5</h4>
                             </UpdateTimeButtonDiv>
-                            <PlayButtonDiv onClick={() => dispatch(toggleIsRunning(focussedTaskIndex))}>
+                            <PlayButtonDiv onClick={() => dispatch(toggleIsRunning({ idx: focussedTaskIndex }))}>
                                 {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                             </PlayButtonDiv>
 
@@ -223,12 +235,32 @@ export function FocusBoard() {
                 )}
                 {focussedTask === null && (
                     <EmptyFocusBox>
-                        <div>
-                            <p>pick a </p>
-                            <img src={tasks} alt="task" />
-                            <p>and</p>
-                            <img src={glowBulb} alt="focus" />
-                        </div>
+                        <FocussedTaskTimer>
+                            <div style={{ width: 120, height: 120 }}>
+                                <CircularProgressbarWithChildren
+                                    value={100}
+                                    styles={buildStyles({
+                                        pathColor: "#c1c1d7",
+                                    })}
+                                    strokeWidth={6}
+                                >
+                                    <CountdownTimerDiv isDisabled={true}>
+                                        <p>{"20m 00s"}</p>
+                                    </CountdownTimerDiv>
+                                </CircularProgressbarWithChildren>
+                            </div>
+                        </FocussedTaskTimer>
+
+                        <NotesIconDiv>
+                            <CgNotes />
+                        </NotesIconDiv>
+
+                        <EmptyFocusBoxText>
+                            <p>Choose a task to focus on</p>
+                        </EmptyFocusBoxText>
+                        <ResetButtonDiv isDisabled={true}>
+                            <ImLoop2 />
+                        </ResetButtonDiv>
                     </EmptyFocusBox>
                 )}
             </FocussedTaskContainer>

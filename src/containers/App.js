@@ -1,6 +1,7 @@
 import React from "react";
 import { TaskBoard } from "./taskBoard/TaskBoard";
 import { FocusBoard } from "./focusBoard/FocusBoard";
+import { Menu } from "./menu/Menu";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -11,6 +12,7 @@ const Container = styled.div`
 function App() {
     return (
         <Container>
+            <Menu/>
             <FocusBoard/>
             <TaskBoard />
         </Container>

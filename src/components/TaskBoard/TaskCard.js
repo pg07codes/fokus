@@ -48,6 +48,25 @@ const TaskCardDiv = styled.div`
     box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
 `;
 
+const TaskStatusDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 15%;
+    /* background-color: #f8f8ff; */
+    position: relative;
+    p {
+        margin: 5px;
+        font-weight: bold;
+        font-size: 0.7em;
+    }
+    img {
+        width: ${(p) => (p.isCompleted ? "35px" : "60px")};
+    }
+`;
+
 const TaskDetailsDiv = styled.div`
     display: flex;
     flex-direction: column;
@@ -103,25 +122,6 @@ const TimeEditInput = styled.input`
     }
 `;
 
-const TaskStatusDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 15%;
-    /* background-color: #f8f8ff; */
-    position: relative;
-    p {
-        margin: 5px;
-        font-weight: bold;
-        font-size: 0.7em;
-    }
-    img {
-        width: ${(p) => (p.isCompleted ? "35px" : "60px")};
-    }
-`;
-
 const TaskActionButton = styled.div`
     display: flex;
     justify-content: center;
@@ -170,7 +170,7 @@ function previewTask(str) {
     else return str.substring(0, 60) + "...";
 }
 
-export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocussed, focussedTaskIndex }) {
+export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwardRBDProvided, isFocussed, focussedTaskIndex }) {
     const dispatch = useDispatch();
 
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
@@ -261,10 +261,11 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                     onClick={
                                         isFocussed
                                             ? () => {
-                                                  if (task.isRunning) dispatch(toggleIsRunning(taskIndex));
+                                                  if (task.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
                                                   dispatch(resetFocussedTask());
                                               }
                                             : () => {
+                                                  if (focussedTaskIndex !== -1) dispatch(toggleIsRunning({ idx: focussedTaskIndex, val: false }));
                                                   dispatch(focusOnTask(taskIndex));
                                               }
                                     }
@@ -278,13 +279,16 @@ export default function TaskCard({ task, taskIndex, forwardRBDProvided, isFocuss
                                 onClick={
                                     task.isCompleted
                                         ? (e) => {
+                                              if (focussedTaskIndex!==-1 && focussedTaskGlobalKey < task.globalKey) {
+                                                  dispatch(focusOnTask(focussedTaskIndex + 1));
+                                              }
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: false }));
                                               e.stopPropagation();
                                           }
                                         : (e) => {
                                               if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
-                                              if (task.isRunning) dispatch(toggleIsRunning(taskIndex));
+                                              if (task.isRunning) dispatch(toggleIsRunning({ idx: taskIndex }));
                                               if (isFocussed) dispatch(resetFocussedTask());
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));

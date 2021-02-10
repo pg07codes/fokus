@@ -13,7 +13,7 @@ const TaskBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:#F7F7FA;
+    background-color: #f7f7fa;
     flex: 2 1 0;
 `;
 
@@ -82,7 +82,7 @@ export function TaskBoard() {
 
     return (
         <TaskBoardContainer>
-            <TaskInput focussedTaskIndex={meta.focussedTaskIndex}/>
+            <TaskInput focussedTaskIndex={meta.focussedTaskIndex} />
 
             <Flipper flipKey={getFlipKey()}>
                 <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -93,7 +93,14 @@ export function TaskBoard() {
                                     !i.isCompleted ? (
                                         <Draggable isDragDisabled={i.isCompleted} key={i.id} draggableId={`${i.id}`} index={index}>
                                             {(provided2) => (
-                                                <TaskCard focussedTaskIndex={meta.focussedTaskIndex} taskIndex={index} forwardRBDProvided={provided2} task={i} isFocussed={isFocussed(i.id)} />
+                                                <TaskCard
+                                                    focussedTaskIndex={meta.focussedTaskIndex}
+                                                    focussedTaskGlobalKey={meta.focussedTaskIndex !== -1 ? tasks[meta.focussedTaskIndex].globalKey : -1}
+                                                    taskIndex={index}
+                                                    forwardRBDProvided={provided2}
+                                                    task={i}
+                                                    isFocussed={isFocussed(i.id)}
+                                                />
                                             )}
                                         </Draggable>
                                     ) : (
@@ -108,13 +115,22 @@ export function TaskBoard() {
 
                 {meta.completedTaskStartIndex !== -1 && meta.completedTaskStartIndex !== 0 && <Divider />}
 
-                {meta.showCompletedTasks && tasks.map((i, index) =>
-                    i.isCompleted ? (
-                        <TaskCard focussedTaskIndex={meta.focussedTaskIndex} taskIndex={index} key={i.id} forwardRBDProvided={{ innerRef: null }} task={i} isFocussed={isFocussed(i.id)} />
-                    ) : (
-                        ""
-                    )
-                )}
+                {meta.showCompletedTasks &&
+                    tasks.map((i, index) =>
+                        i.isCompleted ? (
+                            <TaskCard
+                                focussedTaskIndex={meta.focussedTaskIndex}
+                                focussedTaskGlobalKey={meta.focussedTaskIndex !== -1 ? tasks[meta.focussedTaskIndex].globalKey : -1}
+                                taskIndex={index}
+                                key={i.id}
+                                forwardRBDProvided={{ innerRef: null }}
+                                task={i}
+                                isFocussed={isFocussed(i.id)}
+                            />
+                        ) : (
+                            ""
+                        )
+                    )}
             </Flipper>
         </TaskBoardContainer>
     );

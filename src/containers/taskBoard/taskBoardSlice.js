@@ -77,7 +77,8 @@ export const tasksSlice = createSlice({
             tasks.taskArray[payload].remainingTime = tasks.taskArray[payload].time;
         },
         toggleIsRunning: (tasks, { payload }) => {
-            tasks.taskArray[payload].isRunning = !tasks.taskArray[payload].isRunning;
+            if (payload.val !== undefined) tasks.taskArray[payload.idx].isRunning = payload.val;
+            else tasks.taskArray[payload.idx].isRunning = !tasks.taskArray[payload.idx].isRunning;
         },
         toggleShowCompletedTasks: (tasks) => {
             tasks.meta.showCompletedTasks = !tasks.meta.showCompletedTasks;
@@ -94,7 +95,7 @@ export const tasksSlice = createSlice({
             if (tasks.meta.completedTaskStartIndex !== -1) {
                 tasks.taskArray.length = tasks.meta.completedTaskStartIndex;
                 tasks.meta.completedTaskStartIndex = -1;
-                tasks.meta.completedTasksCount=0;
+                tasks.meta.completedTasksCount = 0;
             }
         },
         incrementGlobalKey: ({ meta }) => {
