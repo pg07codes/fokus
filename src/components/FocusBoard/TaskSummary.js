@@ -12,10 +12,6 @@ const TaskSummaryDiv = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #fff;
-    border-radius:10px;
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;
 
 const SummaryDataContainer = styled.div`

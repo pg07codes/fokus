@@ -5,6 +5,7 @@ import { AiOutlineClear } from "react-icons/ai";
 import { Flipped } from "react-flip-toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCompletedTasks, toggleShowCompletedTasks } from "./../../containers/taskBoard/taskBoardSlice";
+
 const DoneTasksDivider = styled.div`
     display: flex;
     margin: 15px 0 15px 25px;

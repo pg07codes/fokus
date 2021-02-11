@@ -8,6 +8,7 @@ import { focusOnTask } from "./taskBoardSlice";
 import styled from "styled-components";
 import TaskInput from "./../../components/TaskBoard/TaskInput";
 import Divider from "./../../components/TaskBoard/Divider";
+import NoTasks from "../../components/TaskBoard/NoTasks";
 
 const TaskBoardContainer = styled.div`
     display: flex;
@@ -15,6 +16,8 @@ const TaskBoardContainer = styled.div`
     align-items: center;
     background-color: #f7f7fa;
     flex: 2 1 0;
+    -webkit-box-shadow: inset -3px 0 10px rgba(166, 173, 201, 0.3);
+    box-shadow: inset -3px 0 10px rgba(166, 173, 201, 0.3);
 `;
 
 export function TaskBoard() {
@@ -83,7 +86,7 @@ export function TaskBoard() {
     return (
         <TaskBoardContainer>
             <TaskInput focussedTaskIndex={meta.focussedTaskIndex} />
-
+            {tasks.length === 0 ? <NoTasks /> : tasks.length === meta.completedTasksCount && <NoTasks allCompleted={true} />}
             <Flipper flipKey={getFlipKey()}>
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="dropArea">
@@ -113,7 +116,7 @@ export function TaskBoard() {
                     </Droppable>
                 </DragDropContext>
 
-                {meta.completedTaskStartIndex !== -1 && meta.completedTaskStartIndex !== 0 && <Divider />}
+                {meta.completedTaskStartIndex !== -1 && <Divider />}
 
                 {meta.showCompletedTasks &&
                     tasks.map((i, index) =>

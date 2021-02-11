@@ -5,13 +5,13 @@ import "react-circular-progressbar/dist/styles.css";
 import { FocussedTask } from "./../../components/FocusBoard/FocussedTask";
 import { EmptyFocusBox } from "./../../components/FocusBoard/EmptyFocusBox";
 import { TaskSummary } from "./../../components/FocusBoard/TaskSummary";
+import { EmptyTaskSummary } from "../../components/FocusBoard/EmptyTaskSummary";
 
 const FocusBoardContainer = styled.div`
     flex: 3 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-right: 2px black solid;
 `;
 const TaskSummaryContainer = styled.div`
     display: flex;
@@ -21,9 +21,9 @@ const TaskSummaryContainer = styled.div`
     height: 90px;
     margin: 20px;
     border-radius: 10px;
-    /* box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5); */
-    background-color: #dedede;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    background-color: #fff;
 `;
 
 const FocussedTaskContainer = styled.div`
@@ -41,10 +41,11 @@ const FocussedTaskContainer = styled.div`
 
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
+    const totalTasksCount = useSelector(s=>s.tasks.taskArray.length);
     return (
         <FocusBoardContainer>
             <TaskSummaryContainer>
-                <TaskSummary/>
+                {totalTasksCount!==0?<TaskSummary/>:<EmptyTaskSummary/>}
             </TaskSummaryContainer>
             <FocussedTaskContainer>
                 {focussedTaskIndex !== -1? <FocussedTask />:<EmptyFocusBox />}
