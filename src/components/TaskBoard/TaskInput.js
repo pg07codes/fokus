@@ -27,7 +27,7 @@ const TaskContentInputDiv = styled.div`
     svg {
         font-size: 1.3em;
         margin-right: 5px;
-        color: #85BCFF;
+        color: #C1C1D7;
     }
 `;
 
@@ -56,7 +56,7 @@ const TaskTimeInputDiv = styled.div`
     }
     svg {
         font-size: 1.2em;
-        color: #85BCFF;
+        color: #C1C1D7;
     }
 `;
 

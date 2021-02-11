@@ -23,9 +23,11 @@ export const tasksSlice = createSlice({
                 else {
                     if (!i.isCompleted) {
                         if (tasks.meta.completedTaskStartIndex != -1) --tasks.meta.completedTaskStartIndex;
-                    } else if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length - 1) {
+                    } else {
                         tasks.meta.completedTasksCount--;
-                        tasks.meta.completedTaskStartIndex = -1;
+                        if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length - 1) {
+                            tasks.meta.completedTaskStartIndex = -1;
+                        }
                     }
                     return false;
                 }

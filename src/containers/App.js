@@ -4,18 +4,18 @@ import { FocusBoard } from "./focusBoard/FocusBoard";
 import { Menu } from "./menu/Menu";
 import styled from "styled-components";
 
-const Container = styled.div`
+const AppContainer = styled.div`
     display: flex;
     height:100%;
 `;
 
 function App() {
     return (
-        <Container>
+        <AppContainer>
             <Menu/>
             <FocusBoard/>
             <TaskBoard />
-        </Container>
+        </AppContainer>
     );
 }
 
