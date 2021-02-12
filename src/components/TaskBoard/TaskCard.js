@@ -70,7 +70,7 @@ const TaskStatusDiv = styled.div`
 const TaskDetailsDiv = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
     height: 100%;
     width: 75%;
     margin: 0 0 0 10px;
@@ -126,7 +126,7 @@ const TaskActionButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80%;
+    height: 100%;
     border-radius: 5px;
     margin: 5px;
     cursor: pointer;
@@ -139,7 +139,7 @@ const TaskActionButton = styled.div`
     p {
         margin: 5px;
         font-weight: bold;
-        font-size: 0.6em;
+        font-size: 0.65em;
     }
 `;
 
@@ -298,7 +298,9 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                             >
                                 <p>{task.isCompleted ? "Undone" : "Done"}</p>
                             </TaskActionButton>
-
+                            
+                            {task.label!==null?<p>{task.label}</p>:<p>add label</p>}
+                            
                             {!isFocussed && (
                                 <TaskDeleteButton
                                     onClick={(e) => {

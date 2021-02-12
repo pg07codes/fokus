@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { create, incrementGlobalKey, focusOnTask } from "./../../containers/taskBoard/taskBoardSlice";
+import { create, incrementGlobalKey, focusOnTask , addLabel} from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillClockCircle } from "react-icons/ai";
 
@@ -27,7 +27,7 @@ const TaskContentInputDiv = styled.div`
     svg {
         font-size: 1.3em;
         margin-right: 5px;
-        color: #C1C1D7;
+        color: #c1c1d7;
     }
 `;
 
@@ -56,7 +56,7 @@ const TaskTimeInputDiv = styled.div`
     }
     svg {
         font-size: 1.2em;
-        color: #C1C1D7;
+        color: #c1c1d7;
     }
 `;
 
@@ -93,11 +93,17 @@ export default function TaskInput() {
             let temp = task.trim().split(" ");
             // add a max time limit
             let taskTime = time;
-            if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
-                taskTime = parseInt(temp.pop());
+            let label = null;
+            if (temp.length !== 1) {
+                if (!isNaN(parseInt(temp[temp.length - 1]))) {
+                    taskTime = parseInt(temp.pop());
+                } else if (temp[temp.length - 1][0] === "#" && temp[temp.length - 1].length > 1) {
+                    label = temp.pop().substring(1);
+                    label=label.toLowerCase();
+                }
             }
-            temp = temp.join(" ");
 
+            temp = temp.join(" ");
             let newTask = {
                 id: Math.floor(Math.random() * 10000),
                 globalKey: meta.globalKey,
@@ -107,9 +113,11 @@ export default function TaskInput() {
                 isRunning: false,
                 isCompleted: false,
                 createdAt: new Date().toISOString(),
+                label:label
             };
             if (meta.focussedTaskIndex !== -1) dispatch(focusOnTask(meta.focussedTaskIndex + 1));
             dispatch(create(newTask));
+            if(label!==null) dispatch(addLabel(label));
             dispatch(incrementGlobalKey());
             setTask("");
             setTime(20);

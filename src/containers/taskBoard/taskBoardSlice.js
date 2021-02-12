@@ -4,6 +4,7 @@ export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
         taskArray: [],
+        labels: {},
         meta: {
             globalKey: 0,
             completedTaskStartIndex: -1,
@@ -32,6 +33,13 @@ export const tasksSlice = createSlice({
                     return false;
                 }
             });
+        },
+        addLabel: (tasks, { payload }) => {
+            if (tasks.labels[payload]!==undefined) {
+                tasks.labels[payload] = tasks.labels[payload] + 1;
+            } else {
+                tasks.labels[payload] = 1;
+            }
         },
         updateTask: (tasks, { payload }) => {
             tasks.taskArray = tasks.taskArray.map((i) => (i.id === payload.id ? payload : i));
@@ -204,6 +212,7 @@ export const tasksSlice = createSlice({
 export const {
     create,
     remove,
+    addLabel,
     updateTask,
     updateTaskContent,
     updateTaskTime,

@@ -45,11 +45,6 @@ const CountdownTimerDiv = styled.div`
     }
 `;
 
-const PlayBtnCenterStyles = css`
-    position: absolute;
-    top: 10px;
-    left: 11px;
-`;
 const PlayPauseButtonDiv = styled.div`
     display: flex;
     justify-content: center;
@@ -58,14 +53,13 @@ const PlayPauseButtonDiv = styled.div`
     height: 55px;
     background-color: #0000cd;
     border-radius: 50%;
-    position: relative;
     margin: 10px 20px;
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
     -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
     svg {
         color: #fff;
-        ${(p) => (p.isPlayBtn ? PlayBtnCenterStyles : "")}
         font-size: 1.8em;
+        margin-left:${p=>p.isPlayBtn?"3px":"0"};
     }
     cursor: pointer;
 `;
