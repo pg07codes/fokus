@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel , updateLabelCount } from "../../containers/taskBoard/taskBoardSlice";
+import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel, updateLabelCount } from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
@@ -160,7 +160,7 @@ const TaskLabelContainer = styled.div`
     }
     p {
         margin: 5px;
-        color:#c1c1d7;
+        color: ${(p) => (p.labelColor !== null ? p.labelColor : "#c1c1d7")};
         font-weight: bold;
         font-size: 0.65em;
     }
@@ -225,12 +225,11 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
         }
     }
 
-    function labelSelectOnBlurHandler(taskId,taskLabel, updatedLabel) {
+    function labelSelectOnBlurHandler(taskId, taskLabel, updatedLabel) {
         setLabelUnderEdit(false);
         updatedLabel = updatedLabel === "none" ? null : updatedLabel;
         dispatch(updateTaskLabel({ id: taskId, label: updatedLabel }));
-        if(taskLabel!==updatedLabel)
-        dispatch(updateLabelCount({oldLabel:taskLabel,newLabel:updatedLabel}));
+        if (taskLabel !== updatedLabel) dispatch(updateLabelCount({ oldLabel: taskLabel, newLabel: updatedLabel }));
     }
 
     return (
@@ -333,13 +332,11 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                 <p>{task.isCompleted ? "Undone" : "Done"}</p>
                             </TaskActionButton>
 
-                            <TaskLabelContainer onClick={() => setLabelUnderEdit(true)}>
+                            <TaskLabelContainer onClick={() => setLabelUnderEdit(true)} labelColor={task.label !== null ? labels[task.label].color : null}>
                                 {labelUnderEdit ? (
                                     <TaskLabelSelect onBlur={labelSelectOnBlurHandler} taskId={task.id} taskLabel={task.label} />
                                 ) : task.label !== null ? (
-                                    <p>
-                                        #{task.label}
-                                    </p>
+                                    <p>#{task.label}</p>
                                 ) : (
                                     <p>Add label</p>
                                 )}
@@ -350,7 +347,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                     onClick={(e) => {
                                         if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
                                         dispatch(remove(task.id));
-                                        if(task.label!==null)dispatch(updateLabelCount({oldLabel:task.label,newLabel:null}));
+                                        if (task.label !== null) dispatch(updateLabelCount({ oldLabel: task.label, newLabel: null }));
                                         e.stopPropagation();
                                     }}
                                 >

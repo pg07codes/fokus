@@ -8,10 +8,11 @@ import { TaskSummary } from "./../../components/FocusBoard/TaskSummary";
 import { EmptyTaskSummary } from "../../components/FocusBoard/EmptyTaskSummary";
 
 const FocusBoardContainer = styled.div`
-    flex: 3 1 0;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content:center;
 `;
 const TaskSummaryContainer = styled.div`
     display: flex;

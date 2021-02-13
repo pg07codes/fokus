@@ -5,12 +5,10 @@ import styled from "styled-components";
 const TaskSelectInput = styled.select`
     font-weight: bold;
     text-align: center;
-    /* outline:none; */
     border:0;
-    &:focus {
-        outline: none;
-        border: 2px #0000cd dashed;
-        background-color:#fff;
+    background-color:#fff;
+    option{
+        font-weight:bold;
     }
 `;
 
@@ -31,7 +29,7 @@ export default function TaskLabel(p) {
             <option value="none">none</option> 
             {/* keeping option:none at top makes it show up if taskLabel is null which is desired */}
             {Object.keys(labels).map((e, idx) => (
-                <option key={idx} value={e}>
+                <option style={{color:`${labels[e].color}`}} key={idx} value={e}>
                     {e}
                 </option>
             ))}

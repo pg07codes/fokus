@@ -53,7 +53,7 @@ const CompletionPercentContainer = styled.div`
     display: flex;
     align-items: center;
     position: absolute;
-    bottom: 5px;
+    bottom: 10px;
     right: 15px;
     p {
         font-weight: bold;
