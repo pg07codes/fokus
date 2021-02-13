@@ -4,7 +4,28 @@ export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
         taskArray: [],
-        labels: {},
+        labels: {
+            work:{
+                color:"#de1738",
+                count:0,
+            },
+            personal:{
+                color:"#89CFF0",
+                count:0
+            },
+            fitness:{
+                color:"#76ff7a",
+                count:0
+            },
+            metime:{
+                color:"#7442c8",
+                count:0
+            },
+            explore:{
+                color:"#efc0fe",
+                count:0
+            }
+        },
         meta: {
             globalKey: 0,
             completedTaskStartIndex: -1,
@@ -34,13 +55,6 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        addLabel: (tasks, { payload }) => {
-            if (tasks.labels[payload]!==undefined) {
-                tasks.labels[payload] = tasks.labels[payload] + 1;
-            } else {
-                tasks.labels[payload] = 1;
-            }
-        },
         updateTask: (tasks, { payload }) => {
             tasks.taskArray = tasks.taskArray.map((i) => (i.id === payload.id ? payload : i));
         },
@@ -48,6 +62,13 @@ export const tasksSlice = createSlice({
             taskArray.forEach((i) => {
                 if (i.id === payload.id) {
                     i.content = payload.updatedTaskContent;
+                }
+            });
+        },
+        updateTaskLabel:({ taskArray }, { payload }) => {
+            taskArray.forEach((i) => {
+                if (i.id === payload.id) {
+                    i.label = payload.label;
                 }
             });
         },
@@ -107,6 +128,10 @@ export const tasksSlice = createSlice({
                 tasks.meta.completedTaskStartIndex = -1;
                 tasks.meta.completedTasksCount = 0;
             }
+        },
+        updateLabelCount:(tasks, {payload}) => {
+            if(payload.oldLabel!==null)tasks.labels[payload.oldLabel].count--;
+            if(payload.newLabel!==null)tasks.labels[payload.newLabel].count++;
         },
         incrementGlobalKey: ({ meta }) => {
             ++meta.globalKey;
@@ -212,9 +237,9 @@ export const tasksSlice = createSlice({
 export const {
     create,
     remove,
-    addLabel,
     updateTask,
     updateTaskContent,
+    updateTaskLabel,
     updateTaskTime,
     updateTaskTimeByVal,
     focusOnTask,
@@ -226,6 +251,7 @@ export const {
     toggleIsCompleted,
     clearCompletedTasks,
     updateOrder,
+    updateLabelCount,
     incrementGlobalKey,
     rearrange,
 } = tasksSlice.actions;

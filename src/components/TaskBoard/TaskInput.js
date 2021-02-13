@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { create, incrementGlobalKey, focusOnTask , addLabel} from "./../../containers/taskBoard/taskBoardSlice";
+import { create, incrementGlobalKey, focusOnTask, updateLabelCount } from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillClockCircle } from "react-icons/ai";
 
@@ -85,7 +85,8 @@ export default function TaskInput() {
     const [task, setTask] = useState("");
     const [time, setTime] = useState(20);
     let taskContentInputRef, taskTimeInputRef;
-    const meta = useSelector((state) => state.tasks.meta);
+    const meta = useSelector((s) => s.tasks.meta);
+    const labels = useSelector((s) => s.tasks.labels);
     const dispatch = useDispatch();
 
     function submitTask(e) {
@@ -97,9 +98,17 @@ export default function TaskInput() {
             if (temp.length !== 1) {
                 if (!isNaN(parseInt(temp[temp.length - 1]))) {
                     taskTime = parseInt(temp.pop());
-                } else if (temp[temp.length - 1][0] === "#" && temp[temp.length - 1].length > 1) {
-                    label = temp.pop().substring(1);
-                    label=label.toLowerCase();
+                } else if (temp[temp.length - 1][0] === "#" && temp[temp.length - 1].length > 1 && "wpfme".includes(temp[temp.length - 1][1])) {
+                    let userLabel = temp[temp.length - 1].substring(1).toLowerCase();
+                    let found = false;
+                    for (let validLabel in labels) {
+                        found = validLabel.includes(userLabel);
+                        if (found) {
+                            label = validLabel;
+                            temp.pop();
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -113,12 +122,12 @@ export default function TaskInput() {
                 isRunning: false,
                 isCompleted: false,
                 createdAt: new Date().toISOString(),
-                label:label
+                label: label,
             };
             if (meta.focussedTaskIndex !== -1) dispatch(focusOnTask(meta.focussedTaskIndex + 1));
             dispatch(create(newTask));
-            if(label!==null) dispatch(addLabel(label));
             dispatch(incrementGlobalKey());
+            if (label !== null) dispatch(updateLabelCount({ oldLabel: null, newLabel: label }));
             setTask("");
             setTime(20);
             taskContentInputRef.value = "";

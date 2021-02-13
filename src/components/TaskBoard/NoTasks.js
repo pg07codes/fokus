@@ -8,7 +8,7 @@ const NoTasksDiv = styled.div`
     align-items: center;
     justify-content: space-evenly;
     width: 246px;
-    height: 140px;
+    min-height: 140px;
     background-color: #fff;
     border-radius: 10px;
     margin: 20px;

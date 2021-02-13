@@ -39,17 +39,14 @@ const FocussedTaskContainer = styled.div`
     background-color: #f7f7fa;
 `;
 
+
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
-    const totalTasksCount = useSelector(s=>s.tasks.taskArray.length);
+    const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
     return (
         <FocusBoardContainer>
-            <TaskSummaryContainer>
-                {totalTasksCount!==0?<TaskSummary/>:<EmptyTaskSummary/>}
-            </TaskSummaryContainer>
-            <FocussedTaskContainer>
-                {focussedTaskIndex !== -1? <FocussedTask />:<EmptyFocusBox />}
-            </FocussedTaskContainer>
+            <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer>
+            <FocussedTaskContainer>{focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}</FocussedTaskContainer>
         </FocusBoardContainer>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask, toggleIsRunning } from "../../containers/taskBoard/taskBoardSlice";
+import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel , updateLabelCount } from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
@@ -10,6 +10,7 @@ import { formattedTimeString } from "../../helpers";
 import bulb from "./../../images/bulb.svg";
 import glowBulb from "./../../images/glowBulb.svg";
 import tickmark from "./../../images/tickmark.svg";
+import TaskLabelSelect from "./../../components/TaskBoard/TaskLabelSelect";
 
 const TaskCardContainer = styled.div`
     display: flex;
@@ -36,6 +37,8 @@ const TaskCardDragIcon = styled.div`
     }
 `;
 
+const getTaskCardDivBorderLabelColor = (labelColor) => (labelColor !== null ? `7px solid ${labelColor}` : "none");
+
 const TaskCardDiv = styled.div`
     display: flex;
     justify-content: space-around;
@@ -43,6 +46,7 @@ const TaskCardDiv = styled.div`
     height: 100%;
     width: 376px;
     border-radius: 10px;
+    border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
     background-color: #fff;
     -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
     box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
@@ -128,7 +132,7 @@ const TaskActionButton = styled.div`
     align-items: center;
     height: 100%;
     border-radius: 5px;
-    margin: 5px;
+    margin: 4px;
     cursor: pointer;
     &:hover {
         background-color: #0000cd;
@@ -138,6 +142,25 @@ const TaskActionButton = styled.div`
     }
     p {
         margin: 5px;
+        font-weight: bold;
+        font-size: 0.65em;
+    }
+`;
+
+const TaskLabelContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 5px;
+    margin: 4px;
+    cursor: pointer;
+    &:hover {
+        background-color: #f7f7fa;
+    }
+    p {
+        margin: 5px;
+        color:#c1c1d7;
         font-weight: bold;
         font-size: 0.65em;
     }
@@ -176,8 +199,11 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [timeUnderEdit, setTimeUnderEdit] = useState(false);
+    const [labelUnderEdit, setLabelUnderEdit] = useState(false);
     const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 60));
     const [showDragIcon, setShowDragIcon] = useState(false);
+
+    const labels = useSelector((s) => s.tasks.labels);
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
@@ -199,6 +225,14 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
         }
     }
 
+    function labelSelectOnBlurHandler(taskId,taskLabel, updatedLabel) {
+        setLabelUnderEdit(false);
+        updatedLabel = updatedLabel === "none" ? null : updatedLabel;
+        dispatch(updateTaskLabel({ id: taskId, label: updatedLabel }));
+        if(taskLabel!==updatedLabel)
+        dispatch(updateLabelCount({oldLabel:taskLabel,newLabel:updatedLabel}));
+    }
+
     return (
         <Flipped flipId={`${task.id}`}>
             <TaskCardContainer
@@ -210,7 +244,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
             >
                 <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
 
-                <TaskCardDiv isFocussed={isFocussed}>
+                <TaskCardDiv isFocussed={isFocussed} labelColor={task.label !== null ? labels[task.label].color : null}>
                     <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>
                         {task.isCompleted ? (
                             <img src={tickmark} alt="Done" />
@@ -279,7 +313,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                 onClick={
                                     task.isCompleted
                                         ? (e) => {
-                                              if (focussedTaskIndex!==-1 && focussedTaskGlobalKey < task.globalKey) {
+                                              if (focussedTaskIndex !== -1 && focussedTaskGlobalKey < task.globalKey) {
                                                   dispatch(focusOnTask(focussedTaskIndex + 1));
                                               }
                                               dispatch(toggleIsCompleted(task.id));
@@ -298,14 +332,25 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                             >
                                 <p>{task.isCompleted ? "Undone" : "Done"}</p>
                             </TaskActionButton>
-                            
-                            {task.label!==null?<p>{task.label}</p>:<p>add label</p>}
-                            
+
+                            <TaskLabelContainer onClick={() => setLabelUnderEdit(true)}>
+                                {labelUnderEdit ? (
+                                    <TaskLabelSelect onBlur={labelSelectOnBlurHandler} taskId={task.id} taskLabel={task.label} />
+                                ) : task.label !== null ? (
+                                    <p>
+                                        #{task.label}
+                                    </p>
+                                ) : (
+                                    <p>Add label</p>
+                                )}
+                            </TaskLabelContainer>
+
                             {!isFocussed && (
                                 <TaskDeleteButton
                                     onClick={(e) => {
                                         if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
                                         dispatch(remove(task.id));
+                                        if(task.label!==null)dispatch(updateLabelCount({oldLabel:task.label,newLabel:null}));
                                         e.stopPropagation();
                                     }}
                                 >
