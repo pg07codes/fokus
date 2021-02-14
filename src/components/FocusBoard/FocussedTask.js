@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer } from "./../../containers/taskBoard/taskBoardSlice";
+import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer, toggleSoundscapeState } from "./../../containers/taskBoard/taskBoardSlice";
 import useTimer from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -9,6 +9,7 @@ import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { formattedTimeStringv2 } from "./../../helpers";
+import { playSound } from "../musicBox/musicUtils";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -59,7 +60,7 @@ const PlayPauseButtonDiv = styled.div`
     svg {
         color: #fff;
         font-size: 1.8em;
-        margin-left:${p=>p.isPlayBtn?"3px":"0"};
+        margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
     }
     cursor: pointer;
 `;
@@ -87,7 +88,7 @@ const ResetButtonDiv = styled.div`
     cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};
     svg {
         color: #fff;
-        width:20px;
+        width: 20px;
     }
 `;
 
@@ -138,6 +139,17 @@ export function FocussedTask() {
         dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
     }
 
+    function playPauseHandler(focussedTaskIndex, wasTaskRunning) {
+        dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
+        if (wasTaskRunning) {
+            console.log('set to pausing sound')
+            dispatch(toggleSoundscapeState(false));
+        } else {
+            console.log('set to playing sound')
+            dispatch(toggleSoundscapeState(true));
+        }
+    }
+
     return (
         <FocussedTaskDiv>
             <FocussedTaskTimer>
@@ -164,7 +176,7 @@ export function FocussedTask() {
                 <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(-5)}>
                     <h4>-5</h4>
                 </UpdateTimeButtonDiv>
-                <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => dispatch(toggleIsRunning({ idx: focussedTaskIndex }))}>
+                <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => playPauseHandler(focussedTaskIndex, focussedTask.isRunning)}>
                     {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                 </PlayPauseButtonDiv>
 

@@ -1,37 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const labelOptions = {
+    work: {
+        color: "#de1738",
+        count: 0,
+    },
+    personal: {
+        color: "#89CFF0",
+        count: 0,
+    },
+    fitness: {
+        color: "#76ff7a",
+        count: 0,
+    },
+    metime: {
+        color: "#7442c8",
+        count: 0,
+    },
+    explore: {
+        color: "#efc0fe",
+        count: 0,
+    },
+};
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
         taskArray: [],
-        labels: {
-            work:{
-                color:"#de1738",
-                count:0,
-            },
-            personal:{
-                color:"#89CFF0",
-                count:0
-            },
-            fitness:{
-                color:"#76ff7a",
-                count:0
-            },
-            metime:{
-                color:"#7442c8",
-                count:0
-            },
-            explore:{
-                color:"#efc0fe",
-                count:0
-            }
+        labels: labelOptions,
+        soundscape:{
+            track:"none", // note: none is a silent sound (which is played actually)
+            isPlaying:false,
+            volume:0.01,
         },
         meta: {
             globalKey: 0,
             completedTaskStartIndex: -1,
             focussedTaskIndex: -1,
             showCompletedTasks: true,
-            completedTasksCount: 0,
+            completedTasksCount: 0
         },
     },
     reducers: {
@@ -65,7 +71,7 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        updateTaskLabel:({ taskArray }, { payload }) => {
+        updateTaskLabel: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload.id) {
                     i.label = payload.label;
@@ -129,9 +135,9 @@ export const tasksSlice = createSlice({
                 tasks.meta.completedTasksCount = 0;
             }
         },
-        updateLabelCount:(tasks, {payload}) => {
-            if(payload.oldLabel!==null)tasks.labels[payload.oldLabel].count--;
-            if(payload.newLabel!==null)tasks.labels[payload.newLabel].count++;
+        updateLabelCount: (tasks, { payload }) => {
+            if (payload.oldLabel !== null) tasks.labels[payload.oldLabel].count--;
+            if (payload.newLabel !== null) tasks.labels[payload.newLabel].count++;
         },
         incrementGlobalKey: ({ meta }) => {
             ++meta.globalKey;
@@ -231,6 +237,15 @@ export const tasksSlice = createSlice({
                 }
             }
         },
+        changeSoundscapeTrack:({soundscape},{payload})=>{
+            soundscape.track=payload;
+        },
+        toggleSoundscapeState:({soundscape},{payload})=>{
+            soundscape.isPlaying=payload;
+        },
+        updateSoundscapeVolume:({soundscape},{payload})=>{
+            soundscape.volume=payload;
+        },
     },
 });
 
@@ -254,6 +269,9 @@ export const {
     updateLabelCount,
     incrementGlobalKey,
     rearrange,
+    changeSoundscapeTrack,
+    toggleSoundscapeState,
+    updateSoundscapeVolume
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;
