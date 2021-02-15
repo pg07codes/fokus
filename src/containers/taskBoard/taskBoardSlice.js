@@ -31,7 +31,7 @@ export const tasksSlice = createSlice({
         soundscape:  {
             track:"none",
             isPlaying:false,
-            volume:0.5
+            volume:0.6
         },
         meta: {
             globalKey: 0,

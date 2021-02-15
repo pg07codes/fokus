@@ -9,7 +9,6 @@ import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { formattedTimeStringv2 } from "./../../helpers";
-import { playSound } from "../musicBox/musicUtils";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -126,6 +125,7 @@ export function FocussedTask() {
             else if (focussedTask.remainingTime > 0) {
                 dispatch(tick(focussedTaskIndex));
             } else if (focussedTask.remainingTime === 0) {
+                dispatch(toggleSoundscapeState(false));
                 dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
                 dingSoundElement.play();
             }
@@ -137,15 +137,16 @@ export function FocussedTask() {
         if (focussedTask.isCompleted) return;
         if (focussedTask.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
+        dispatch(toggleSoundscapeState(false));
     }
 
     function playPauseHandler(focussedTaskIndex, wasTaskRunning) {
         dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         if (wasTaskRunning) {
-            console.log('set to pausing sound')
+            console.log("set to pausing sound");
             dispatch(toggleSoundscapeState(false));
         } else {
-            console.log('set to playing sound')
+            console.log("set to playing sound");
             dispatch(toggleSoundscapeState(true));
         }
     }
@@ -184,7 +185,12 @@ export function FocussedTask() {
                     <h4>+5</h4>
                 </UpdateTimeButtonDiv>
             </FocussedTaskController>
-            <ResetButtonDiv onClick={() => dispatch(resetTaskTimer(focussedTaskIndex))}>
+            <ResetButtonDiv
+                onClick={() => {
+                    dispatch(toggleSoundscapeState(false));
+                    dispatch(resetTaskTimer(focussedTaskIndex));
+                }}
+            >
                 <ResetIcon />
             </ResetButtonDiv>
         </FocussedTaskDiv>

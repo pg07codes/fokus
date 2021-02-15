@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel, updateLabelCount } from "../../containers/taskBoard/taskBoardSlice";
+import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel, updateLabelCount , toggleSoundscapeState} from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
@@ -296,6 +296,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                             ? () => {
                                                   if (task.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
                                                   dispatch(resetFocussedTask());
+                                                  dispatch(toggleSoundscapeState(false));
                                               }
                                             : () => {
                                                   if (focussedTaskIndex !== -1) dispatch(toggleIsRunning({ idx: focussedTaskIndex, val: false }));
@@ -325,6 +326,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                               if (isFocussed) dispatch(resetFocussedTask());
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+                                              if(taskIndex===focussedTaskIndex)dispatch(toggleSoundscapeState(false));
                                               e.stopPropagation();
                                           }
                                 }

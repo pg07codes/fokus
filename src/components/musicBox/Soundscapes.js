@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { soundOptions, generateAudioElement } from "./../../components/musicBox/musicUtils";
 import { changeSoundscapeTrack } from "./../../containers/taskBoard/taskBoardSlice";
+import { MusicVolumeControl } from "./MusicVolumeControl";
 
 const SoundscapesContainer = styled.div`
     display: flex;
@@ -64,24 +65,24 @@ export function Soundscapes() {
     const soundscape = useSelector((s) => s.tasks.soundscape);
     const dispatch = useDispatch();
 
-    const [soundscapeAudioElement, setSoundscapeAudioElement] = useState(generateAudioElement(soundscape.track, soundscape.volume));
+    const [soundscapeAudioElement, setSoundscapeAudioElement] = useState(() => generateAudioElement(soundscape.track, soundscape.volume));
+
+    // ---- danger zone: don't change without full surety , this code is prone to issues ---///
 
     useEffect(() => {
+        soundscapeAudioElement.src = soundOptions[soundscape.track].src;
+    }, [soundscape.track, soundscapeAudioElement, soundscape.isPlaying]);
+
+    soundscapeAudioElement.volume = soundscape.volume;
+    soundscapeAudioElement.addEventListener("canplay", () => {
         if (soundscape.isPlaying) {
             soundscapeAudioElement.play();
         } else {
             soundscapeAudioElement.pause();
         }
-    }, [soundscape.isPlaying, soundscapeAudioElement]);
+    });
 
-    useEffect(() => {
-        setSoundscapeAudioElement((prevState) => {
-            prevState.pause();
-            prevState.src = soundOptions[soundscape.track].src;
-            prevState.load();
-            return prevState;
-        });
-    }, [soundscape.track]);
+    // ---- danger zone: this might be due to my lack of knowledge of useEffect or weird Audio element behaviour ---///
 
     function isSelectedSound(track) {
         return soundscape.track === track;
@@ -100,7 +101,9 @@ export function Soundscapes() {
                     ))}
                 </SoundOptionsDiv>
             </SoundscapesDiv>
-            <SoundVolumeControl>here is volume bar</SoundVolumeControl>
+            <SoundVolumeControl>
+                <MusicVolumeControl />
+            </SoundVolumeControl>
         </SoundscapesContainer>
     );
 }
