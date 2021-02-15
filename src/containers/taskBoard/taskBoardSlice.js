@@ -22,22 +22,23 @@ const labelOptions = {
         count: 0,
     },
 };
+
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
         taskArray: [],
         labels: labelOptions,
-        soundscape:{
-            track:"none", // note: none is a silent sound (which is played actually)
+        soundscape:  {
+            track:"none",
             isPlaying:false,
-            volume:0.01,
+            volume:0.5
         },
         meta: {
             globalKey: 0,
             completedTaskStartIndex: -1,
             focussedTaskIndex: -1,
             showCompletedTasks: true,
-            completedTasksCount: 0
+            completedTasksCount: 0,
         },
     },
     reducers: {
@@ -237,14 +238,14 @@ export const tasksSlice = createSlice({
                 }
             }
         },
-        changeSoundscapeTrack:({soundscape},{payload})=>{
-            soundscape.track=payload;
+        changeSoundscapeTrack: ({ soundscape }, { payload }) => {
+            soundscape.track = payload;
         },
-        toggleSoundscapeState:({soundscape},{payload})=>{
-            soundscape.isPlaying=payload;
+        toggleSoundscapeState: ({ soundscape }, { payload }) => {
+            soundscape.isPlaying = payload;
         },
-        updateSoundscapeVolume:({soundscape},{payload})=>{
-            soundscape.volume=payload;
+        updateSoundscapeVolume: ({ soundscape }, { payload }) => {
+            soundscape.volume = payload;
         },
     },
 });
@@ -271,7 +272,7 @@ export const {
     rearrange,
     changeSoundscapeTrack,
     toggleSoundscapeState,
-    updateSoundscapeVolume
+    updateSoundscapeVolume,
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

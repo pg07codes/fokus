@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { createAudioElement, soundOptions } from "./../../components/musicBox/musicUtils";
+import { soundOptions, generateAudioElement } from "./../../components/musicBox/musicUtils";
 import { changeSoundscapeTrack } from "./../../containers/taskBoard/taskBoardSlice";
 
 const SoundscapesContainer = styled.div`
@@ -60,35 +60,28 @@ const SoundVolumeControl = styled.div`
     height: 20%;
 `;
 
-
 export function Soundscapes() {
     const soundscape = useSelector((s) => s.tasks.soundscape);
     const dispatch = useDispatch();
 
-    const [soundscapeAudioElement, setSoundscapeAudioElement] = useState(undefined);
-    console.log("this is the state rn:", soundscapeAudioElement)
-    useEffect(() => {
-        console.log("state just changed to: ", soundscapeAudioElement);
-    }, [soundscapeAudioElement]);
+    const [soundscapeAudioElement, setSoundscapeAudioElement] = useState(generateAudioElement(soundscape.track, soundscape.volume));
 
-    if (soundscape.isPlaying) {
-        if (soundscapeAudioElement !== undefined) {
-            console.log(soundscapeAudioElement,"---playing");
+    useEffect(() => {
+        if (soundscape.isPlaying) {
             soundscapeAudioElement.play();
         } else {
-            console.log("current state is: ",soundscapeAudioElement,"---calling to create element");
-            let x = (createAudioElement(soundscape.track));
-            console.log(x,"---will be set to state");
-            setSoundscapeAudioElement(state=>{
-                console.log("state before setting: ",state)
-                console.log("being set in state-->",x);
-                return x
-            });
+            soundscapeAudioElement.pause();
         }
-    } else if (soundscapeAudioElement !== undefined) {
-        console.log(soundscapeAudioElement,"---pausing");
-        soundscapeAudioElement.pause();
-    }
+    }, [soundscape.isPlaying, soundscapeAudioElement]);
+
+    useEffect(() => {
+        setSoundscapeAudioElement((prevState) => {
+            prevState.pause();
+            prevState.src = soundOptions[soundscape.track].src;
+            prevState.load();
+            return prevState;
+        });
+    }, [soundscape.track]);
 
     function isSelectedSound(track) {
         return soundscape.track === track;

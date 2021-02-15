@@ -23,14 +23,17 @@ export const soundOptions ={
     },
 }
 
-export function createAudioElement(soundname){
-    let soundElement = new Audio(soundOptions[soundname].src);
-    soundElement.setAttribute('id',Math.random());
-    soundElement.loop = true;
-    soundElement.volume=0.5;
-    console.log('created new audio element' , soundElement)
-    return soundElement;
+export function generateAudioElement(trackname,volume){
+    let audioElement = new Audio();
+    audioElement.setAttribute('id',Math.random());
+    audioElement.src = soundOptions[trackname].src;
+    audioElement.loop=true;
+    audioElement.volume=volume;
+    console.log("created-", audioElement)
+    return audioElement;
 }
+
+
 
 
 
