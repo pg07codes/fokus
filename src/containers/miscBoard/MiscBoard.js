@@ -15,8 +15,8 @@ const MusicBoxContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
-    width: 276px;
-    height: 160px;
+    width: 320px;
+    height: 180px;
     margin: 20px;
     border-radius: 10px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);

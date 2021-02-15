@@ -12,7 +12,8 @@ const SoundscapesContainer = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background-color: #000;
+    border-radius:10px;
+    /* background-color: #000; */
 `;
 
 const SoundscapesDiv = styled.div`
@@ -22,9 +23,11 @@ const SoundscapesDiv = styled.div`
     flex-direction: column;
     width: 100%;
     height: 70%;
-    background-color: #df15ad;
+    /* background-color: #df15ad; */
+    color:#c1c1d7;
     p {
         margin: 0;
+        font-weight:bold;
     }
 `;
 
@@ -34,22 +37,29 @@ const SoundOptionsDiv = styled.div`
     justify-content: center;
     width: 100%;
     height: 80%;
-    background-color: #f8faaa;
+    /* background-color: #f8faaa; */
 `;
 
 const SoundOptionsInput = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: column;
-    background-color: #b16afa;
+    /* background-color: #b16afa; */
+    height:70%;
     margin: 0 5px;
+    color:${(p) => (p.isSelectedSound ? "#0000cd" : "#c1c1d7")};
     img {
         width: 40px;
-        border: ${(p) => (p.isSelectedSound ? "2px dashed orange" : "none")};
+        margin-bottom:8px;
+        border-radius:50%;
+        border:${(p) => (p.isSelectedSound ? "3px solid #0000cd" : "none")};
     }
-    p {
+    span {
         margin: 0;
+        font-size:0.9em;
+        font-weight:bold;
+        font-style:italic;
     }
 `;
 
@@ -57,7 +67,8 @@ const SoundVolumeControl = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #cad1ff;
+    /* background-color: #cad1ff; */
+    width:85%;
     height: 20%;
 `;
 
@@ -96,13 +107,13 @@ export function Soundscapes() {
                     {Object.keys(soundOptions).map((i) => (
                         <SoundOptionsInput key={i} onClick={() => dispatch(changeSoundscapeTrack(i))} isSelectedSound={isSelectedSound(i)}>
                             <img src={soundOptions[i].img} alt={i} />
-                            <p>{soundOptions[i].label}</p>
+                            <span>{soundOptions[i].label}</span>
                         </SoundOptionsInput>
                     ))}
                 </SoundOptionsDiv>
             </SoundscapesDiv>
             <SoundVolumeControl>
-                <MusicVolumeControl />
+                <MusicVolumeControl isDisabled={soundscape.track==="none"}/>
             </SoundVolumeControl>
         </SoundscapesContainer>
     );

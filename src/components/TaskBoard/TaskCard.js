@@ -300,6 +300,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                               }
                                             : () => {
                                                   if (focussedTaskIndex !== -1) dispatch(toggleIsRunning({ idx: focussedTaskIndex, val: false }));
+                                                  dispatch(toggleSoundscapeState(false));
                                                   dispatch(focusOnTask(taskIndex));
                                               }
                                     }
