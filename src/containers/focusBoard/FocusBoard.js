@@ -6,6 +6,7 @@ import { FocussedTask } from "./../../components/FocusBoard/FocussedTask";
 import { EmptyFocusBox } from "./../../components/FocusBoard/EmptyFocusBox";
 import { TaskSummary } from "./../../components/FocusBoard/TaskSummary";
 import { EmptyTaskSummary } from "../../components/FocusBoard/EmptyTaskSummary";
+import ListTimeSummary from "../../components/TaskBoard/ListTimeSummary";
 
 const FocusBoardContainer = styled.div`
     flex: 1 1 0;
@@ -43,11 +44,15 @@ const FocussedTaskContainer = styled.div`
 
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
+    const totalTaskListTime = useSelector((state) => state.tasks.meta.totalTaskListTime);
+    const remainingTaskListTime = useSelector((state) => state.tasks.meta.remainingTaskListTime);
     const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
     return (
         <FocusBoardContainer>
             <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer>
             <FocussedTaskContainer>{focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}</FocussedTaskContainer>
+            <ListTimeSummary time={remainingTaskListTime}/>
+            <ListTimeSummary time={totalTaskListTime}/>
         </FocusBoardContainer>
     );
 }

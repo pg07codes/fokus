@@ -46,6 +46,24 @@ export function getFormattedDate() {
     };
 }
 
+export function getFormattedListTimeSummary(x){
+    let mins = Math.floor(x % 3600 / 60);
+    let hours = Math.floor(x / 3600);
+
+    if (mins == 0) {
+        mins = `00`;
+    } else if (mins < 10) {
+        mins = `0${mins}`;
+    }
+    if (hours == 0) {
+        hours = `00`;
+    } else if (hours < 10) {
+        hours = `0${hours}`;
+    }
+
+    return `${hours}h ${mins}m`;
+}
+
 export function debounce(fn, wait) {
     let t;
     return function () {

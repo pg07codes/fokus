@@ -28,10 +28,10 @@ export const tasksSlice = createSlice({
     initialState: {
         taskArray: [],
         labels: labelOptions,
-        soundscape:  {
-            track:"none",
-            isPlaying:false,
-            volume:0.6
+        soundscape: {
+            track: "none",
+            isPlaying: false,
+            volume: 0.6,
         },
         meta: {
             globalKey: 0,
@@ -39,17 +39,23 @@ export const tasksSlice = createSlice({
             focussedTaskIndex: -1,
             showCompletedTasks: true,
             completedTasksCount: 0,
+            totalTaskListTime: 0,
+            remainingTaskListTime: 0,
         },
     },
     reducers: {
         create: (tasks, { payload }) => {
             tasks.taskArray.unshift(payload);
             if (tasks.meta.completedTaskStartIndex != -1) ++tasks.meta.completedTaskStartIndex;
+            tasks.meta.totalTaskListTime += payload.time;
+            tasks.meta.remainingTaskListTime += payload.time;
         },
         remove: (tasks, { payload }) => {
+            
             tasks.taskArray = tasks.taskArray.filter((i) => {
                 if (i.id !== payload) return true;
                 else {
+
                     if (!i.isCompleted) {
                         if (tasks.meta.completedTaskStartIndex != -1) --tasks.meta.completedTaskStartIndex;
                     } else {
@@ -58,12 +64,15 @@ export const tasksSlice = createSlice({
                             tasks.meta.completedTaskStartIndex = -1;
                         }
                     }
+
+                    if (!i.isCompleted) {
+                        tasks.meta.remainingTaskListTime -= i.remainingTime;
+                    }
+                    tasks.meta.totalTaskListTime -= i.time;
+
                     return false;
                 }
             });
-        },
-        updateTask: (tasks, { payload }) => {
-            tasks.taskArray = tasks.taskArray.map((i) => (i.id === payload.id ? payload : i));
         },
         updateTaskContent: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
@@ -79,23 +88,38 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        updateTaskTime: ({ taskArray }, { payload }) => {
-            taskArray.forEach((i) => {
+        updateTaskTime: (tasks, { payload }) => {
+            tasks.taskArray.forEach((i) => {
                 if (i.id === payload.id) {
+                    tasks.meta.totalTaskListTime -= i.time;
+                    tasks.meta.remainingTaskListTime -= i.remainingTime;
+                    tasks.meta.totalTaskListTime += payload.updatedTime * 60;
+                    tasks.meta.remainingTaskListTime += payload.updatedTime * 60;
                     i.remainingTime = payload.updatedTime * 60;
                     i.time = payload.updatedTime * 60;
                 }
             });
         },
         updateTaskTimeByVal: (tasks, { payload }) => {
-            tasks.taskArray[payload.focussedTaskIndex].remainingTime += payload.val * 60;
-            tasks.taskArray[payload.focussedTaskIndex].time += payload.val * 60;
-            if (tasks.taskArray[payload.focussedTaskIndex].remainingTime < 0) {
+
+            if (tasks.taskArray[payload.focussedTaskIndex].remainingTime +payload.val*60 < 0) {
+                tasks.meta.remainingTaskListTime -= tasks.taskArray[payload.focussedTaskIndex].remainingTime;
                 tasks.taskArray[payload.focussedTaskIndex].remainingTime = 0;
+            }else{
+                tasks.meta.remainingTaskListTime -= tasks.taskArray[payload.focussedTaskIndex].remainingTime;
+                tasks.taskArray[payload.focussedTaskIndex].remainingTime += payload.val * 60;
+                tasks.meta.remainingTaskListTime += tasks.taskArray[payload.focussedTaskIndex].remainingTime;
             }
-            if (tasks.taskArray[payload.focussedTaskIndex].time < 0) {
+            
+            if (tasks.taskArray[payload.focussedTaskIndex].time +payload.val*60< 0) {
+                tasks.meta.totalTaskListTime -= tasks.taskArray[payload.focussedTaskIndex].time;
                 tasks.taskArray[payload.focussedTaskIndex].time = 0;
+            }else{
+                tasks.meta.totalTaskListTime -= tasks.taskArray[payload.focussedTaskIndex].time;
+                tasks.taskArray[payload.focussedTaskIndex].time += payload.val * 60;
+                tasks.meta.totalTaskListTime += tasks.taskArray[payload.focussedTaskIndex].time;
             }
+            
         },
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
@@ -109,9 +133,14 @@ export const tasksSlice = createSlice({
         },
         tick: (tasks, { payload }) => {
             --tasks.taskArray[payload].remainingTime;
+            --tasks.meta.remainingTaskListTime;
         },
         resetTaskTimer: (tasks, { payload }) => {
             tasks.taskArray[payload].isRunning = false;
+
+            tasks.meta.remainingTaskListTime-=tasks.taskArray[payload].remainingTime;
+            tasks.meta.remainingTaskListTime+=tasks.taskArray[payload].time;
+
             tasks.taskArray[payload].remainingTime = tasks.taskArray[payload].time;
         },
         toggleIsRunning: (tasks, { payload }) => {
@@ -124,13 +153,29 @@ export const tasksSlice = createSlice({
         toggleIsCompleted: (tasks, { payload }) => {
             tasks.taskArray.forEach((i) => {
                 if (i.id === payload) {
-                    i.isCompleted ? --tasks.meta.completedTasksCount : ++tasks.meta.completedTasksCount;
+
+                    if(i.isCompleted){
+                        tasks.meta.remainingTaskListTime+=i.remainingTime;
+                        --tasks.meta.completedTasksCount
+                    }else{
+                        tasks.meta.remainingTaskListTime-=i.remainingTime;
+                        ++tasks.meta.completedTasksCount
+                    }
+
                     i.isCompleted = !i.isCompleted;
                 }
             });
         },
         clearCompletedTasks: (tasks) => {
             if (tasks.meta.completedTaskStartIndex !== -1) {
+
+                for(let i=tasks.meta.completedTaskStartIndex;i<tasks.taskArray.length;i++){
+                    if(tasks.taskArray[i].label!==null)
+                    tasks.labels[tasks.taskArray[i].label].count--;
+
+                    tasks.meta.totalTaskListTime-=tasks.taskArray[i].time;
+                }
+
                 tasks.taskArray.length = tasks.meta.completedTaskStartIndex;
                 tasks.meta.completedTaskStartIndex = -1;
                 tasks.meta.completedTasksCount = 0;
@@ -253,7 +298,6 @@ export const tasksSlice = createSlice({
 export const {
     create,
     remove,
-    updateTask,
     updateTaskContent,
     updateTaskLabel,
     updateTaskTime,

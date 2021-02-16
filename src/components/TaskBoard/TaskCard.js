@@ -20,6 +20,7 @@ const TaskCardContainer = styled.div`
     width: 420px;
     height: 100px;
     margin-top: 15px;
+    cursor:default !important;
     /* background-color: #fff4e1; */
 `;
 
@@ -199,8 +200,8 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [timeUnderEdit, setTimeUnderEdit] = useState(false);
-    const [labelUnderEdit, setLabelUnderEdit] = useState(false);
     const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 60));
+    const [labelUnderEdit, setLabelUnderEdit] = useState(false);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
     const labels = useSelector((s) => s.tasks.labels);

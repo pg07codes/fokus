@@ -98,11 +98,12 @@ export default function TaskInput() {
             if (temp.length !== 1) {
                 if (!isNaN(parseInt(temp[temp.length - 1]))) {
                     taskTime = parseInt(temp.pop());
-                } else if (temp[temp.length - 1][0] === "#" && temp[temp.length - 1].length > 1 && "wpfme".includes(temp[temp.length - 1][1])) {
+                } else if (temp[temp.length - 1][0] === "#" && temp[temp.length - 1].length > 1 && "wpfmeWPFME".includes(temp[temp.length - 1][1])) {
                     let userLabel = temp[temp.length - 1].substring(1).toLowerCase();
                     let found = false;
                     for (let validLabel in labels) {
                         found = validLabel.includes(userLabel);
+                        console.log(userLabel,validLabel)
                         if (found) {
                             label = validLabel;
                             temp.pop();
