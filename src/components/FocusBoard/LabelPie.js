@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import { useSelector } from "react-redux";
+import ReactTooltip from "react-tooltip";
 
 export function LabelPie() {
     const labels = useSelector((s) => s.tasks.labels);
@@ -15,7 +16,7 @@ export function LabelPie() {
         if (labels[i].count > 0) {
             labelledTasksCount += labels[i].count;
             filtered.push({
-                title: i,
+                tooltip: `#${i} - ${labels[i].count} tasks`,
                 value: labels[i].count,
                 color: labels[i].color,
             });
@@ -25,7 +26,7 @@ export function LabelPie() {
 
     if (totalTasksCount - labelledTasksCount > 0) {
         labelData.push({
-            title: "No Label",
+            tooltip: `No Label - ${totalTasksCount - labelledTasksCount} tasks`,
             value: totalTasksCount - labelledTasksCount,
             color: "#c1c1d7",
         });
@@ -41,64 +42,35 @@ export function LabelPie() {
     const lineWidth = 60;
 
     return (
-        // <PieChart
-        //     data={labelData}
-        //     lineWidth={15}
-        //     paddingAngle={18}
-        //     rounded
-        //     animate
-        //     reveal
-        //     label={({ dataEntry }) => dataEntry.value}
-        //     labelStyle={(index) => ({
-        //         fill: labelData[index].color,
-        //         fontSize: "10px",
-        //         fontWeight: "bold",
-        //         fontFamily: "sans-serif",
-        //     })}
-        //     labelPosition={70}
-        // />
-        <PieChart
-            style={{
-                fontSize: "12px",
-                fontWeight: "bold",
-            }}
-            data={labelData}
-            radius={PieChart.defaultProps.radius - 6}
-            lineWidth={lineWidth}
-            segmentsStyle={{ transition: "stroke .3s", cursor: "pointer" }}
-            segmentsShift={(index) => (index === selected ? 6 : 1)}
-            animate
-            label={({ dataEntry }) => dataEntry.value}
-            labelPosition={100 - lineWidth / 2}
-            labelStyle={{
-                fill: "#fff",
-                pointerEvents: "none",
-            }}
-            onClick={(_, index) => {
-                setSelected(index === selected ? undefined : index);
-            }}
-            onMouseOver={(_, index) => {
-                setHovered(index);
-            }}
-            onMouseOut={() => {
-                setHovered(undefined);
-            }}
-        />
+        <div style={{ width: 160 }} data-tip="" data-for="LabelPieChart">
+            <PieChart
+                style={{
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                }}
+                data={labelData}
+                radius={PieChart.defaultProps.radius - 6}
+                lineWidth={lineWidth}
+                segmentsStyle={{ transition: "stroke .3s", cursor: "pointer" }}
+                segmentsShift={(index) => (index === selected ? 6 : 1)}
+                animate
+                label={({ dataEntry }) => dataEntry.value}
+                labelPosition={100 - lineWidth / 2}
+                labelStyle={{
+                    fill: "#fff",
+                    pointerEvents: "none",
+                }}
+                onClick={(_, index) => {
+                    setSelected(index === selected ? undefined : index);
+                }}
+                onMouseOver={(_, index) => {
+                    setHovered(index);
+                }}
+                onMouseOut={() => {
+                    setHovered(undefined);
+                }}
+            />
+            <ReactTooltip id="LabelPieChart" getContent={() => (typeof hovered === "number" ? labelData[hovered].tooltip : null)} />
+        </div>
     );
 }
-
-//////////////////////////
-
-// function FullOption() {
-
-//     const data = props.data.map((entry, i) => {
-//       if (hovered === i) {
-//         return {
-//           ...entry,
-//           color: 'grey',
-//         };
-//       }
-//       return entry;
-//     });
-
-//   }

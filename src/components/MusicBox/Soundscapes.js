@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { soundOptions, generateAudioElement } from "./../../components/musicBox/musicUtils";
+import { soundOptions, generateAudioElement } from "./musicUtils";
 import { changeSoundscapeTrack } from "./../../containers/taskBoard/taskBoardSlice";
 import { MusicVolumeControl } from "./MusicVolumeControl";
 

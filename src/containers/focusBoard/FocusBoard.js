@@ -49,7 +49,7 @@ export function FocusBoard() {
     const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
     return (
         <FocusBoardContainer>
-            <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer>
+            {/* <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer> */}
             <FocussedTaskContainer>{focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}</FocussedTaskContainer>
             <ListTimeSummary time={remainingTaskListTime}/>
             <ListTimeSummary time={totalTaskListTime}/>
