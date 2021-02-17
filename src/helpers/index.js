@@ -51,17 +51,17 @@ export function getFormattedListTimeSummary(x){
     let hours = Math.floor(x / 3600);
 
     if (mins == 0) {
-        mins = `00`;
+        mins = `0`;
     } else if (mins < 10) {
         mins = `0${mins}`;
     }
     if (hours == 0) {
-        hours = `00`;
+        hours = `0`;
     } else if (hours < 10) {
-        hours = `0${hours}`;
+        hours = `${hours}`;
     }
 
-    return `${hours}h ${mins}m`;
+    return {hours,mins};
 }
 
 export function debounce(fn, wait) {
