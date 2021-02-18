@@ -52,7 +52,7 @@ export function LabelPie() {
                 radius={PieChart.defaultProps.radius - 6}
                 lineWidth={lineWidth}
                 segmentsStyle={{ transition: "stroke .3s", cursor: "pointer" }}
-                segmentsShift={(index) => (index === selected ? 6 : 1)}
+                segmentsShift={1}
                 animate
                 label={({ dataEntry }) => dataEntry.value}
                 labelPosition={100 - lineWidth / 2}

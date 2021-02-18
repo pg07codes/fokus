@@ -24,7 +24,7 @@ const FocussedTaskTimer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50%;
+    height: 45%;
 `;
 
 const CountdownTimerDiv = styled.div`
@@ -102,7 +102,7 @@ const FocussedTaskContent = styled.div`
     p {
         min-width: 0;
         font-weight: bold;
-        margin: 3px;
+        /* margin: 3px; */
     }
 `;
 
@@ -154,7 +154,7 @@ export function FocussedTask() {
     return (
         <FocussedTaskDiv>
             <FocussedTaskTimer>
-                <div style={{ width: 120, height: 120 }}>
+                <div style={{ width: 110, height: 110 }}>
                     <CircularProgressbarWithChildren
                         value={focussedTask.time !== 0 ? Math.floor((focussedTask.remainingTime / focussedTask.time) * 100) : 0}
                         styles={buildStyles({

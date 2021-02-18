@@ -19,7 +19,7 @@ const ProgressRingDiv = styled.div`
     align-items: center;
     width: 90%;
     height: 55%;
-    background-color:#afa1d1;
+    /* background-color:#afa1d1; */
 `;
 
 const ProgressRingLegendDiv = styled.div`
@@ -28,7 +28,7 @@ const ProgressRingLegendDiv = styled.div`
     justify-content: center;
     width: 80%;
     height: 30%;
-    background-color: #1fadef;
+    /* background-color: #1fadef; */
     color: #c1c1d7;
     font-weight: bold;
     p {
@@ -42,7 +42,7 @@ const LegendDataDiv = styled.div`
     display: flex;
     align-items: center;
     width: 95%;
-    background-color: #fdadef;
+    /* background-color: #fdadef; */
     margin: 4px 0;
     color: #000;
 `;

@@ -30,8 +30,8 @@ const FocussedTaskContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
-    width: 276px;
-    height: 346px;
+    width: 300px;
+    height: 326px;
     margin: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
@@ -43,7 +43,7 @@ const MusicBoxContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
-    width: 320px;
+    width: 300px;
     height: 180px;
     margin: 20px;
     border-radius: 10px;
@@ -59,8 +59,6 @@ export function FocusBoard() {
         <FocusBoardContainer>
             {/* <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer> */}
             <FocussedTaskContainer>{focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}</FocussedTaskContainer>
-            {/* <ListTimeSummary time={remainingTaskListTime}/>
-            <ListTimeSummary time={totalTaskListTime}/> */}
             <MusicBoxContainer>
                 <Soundscapes />
             </MusicBoxContainer>
