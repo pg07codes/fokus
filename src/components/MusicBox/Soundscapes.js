@@ -8,11 +8,10 @@ import { MusicVolumeControl } from "./MusicVolumeControl";
 const SoundscapesContainer = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    border-radius:10px;
     /* background-color: #000; */
 `;
 
@@ -24,10 +23,10 @@ const SoundscapesDiv = styled.div`
     width: 100%;
     height: 70%;
     /* background-color: #df15ad; */
-    color:#c1c1d7;
+    color: #0000cd;
     p {
         margin: 0;
-        font-weight:bold;
+        font-weight: bold;
     }
 `;
 
@@ -36,7 +35,7 @@ const SoundOptionsDiv = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 80%;
+    height: 85%;
     /* background-color: #f8faaa; */
 `;
 
@@ -46,20 +45,22 @@ const SoundOptionsInput = styled.div`
     justify-content: space-around;
     flex-direction: column;
     /* background-color: #b16afa; */
-    height:70%;
+    height: 80%;
     margin: 0 5px;
-    color:${(p) => (p.isSelectedSound ? "#0000cd" : "#c1c1d7")};
     img {
-        width: 40px;
-        margin-bottom:8px;
-        border-radius:50%;
-        border:${(p) => (p.isSelectedSound ? "3px solid #0000cd" : "none")};
+        width: 50px;
+        cursor:pointer;
+        transition: transform .2s;
+        &:hover{
+            transform: scale(1.1);
+        }
     }
     span {
         margin: 0;
-        font-size:0.9em;
-        font-weight:bold;
-        font-style:italic;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: ${(p) => (p.isSelectedSound ? "#0000cd" : "#c1c1d7")};
+        cursor:pointer;
     }
 `;
 
@@ -68,8 +69,8 @@ const SoundVolumeControl = styled.div`
     align-items: center;
     justify-content: center;
     /* background-color: #cad1ff; */
-    width:85%;
-    height: 20%;
+    width: 95%;
+    height: 15%;
 `;
 
 export function Soundscapes() {
@@ -81,14 +82,14 @@ export function Soundscapes() {
     // ---- danger zone: don't change without full surety , this code is prone to issues ---///
 
     useEffect(() => {
-        console.log('ran')
+        console.log("ran");
         soundscapeAudioElement.src = soundOptions[soundscape.track].src;
     }, [soundscape.track, soundscapeAudioElement, soundscape.isPlaying]);
 
     soundscapeAudioElement.volume = soundscape.volume;
     soundscapeAudioElement.addEventListener("canplay", () => {
         if (soundscape.isPlaying) {
-            console.log('playing sir')
+            console.log("playing sir");
             soundscapeAudioElement.play();
         } else {
             soundscapeAudioElement.pause();
@@ -115,7 +116,7 @@ export function Soundscapes() {
                 </SoundOptionsDiv>
             </SoundscapesDiv>
             <SoundVolumeControl>
-                <MusicVolumeControl isDisabled={soundscape.track==="none"}/>
+                <MusicVolumeControl />
             </SoundVolumeControl>
         </SoundscapesContainer>
     );

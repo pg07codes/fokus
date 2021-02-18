@@ -17,8 +17,8 @@ const TaskCardContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 420px;
-    height: 100px;
+    width: 396px; // % not working here (maybe due to animation library wrappers)
+    height: 110px;
     margin-top: 15px;
     cursor:default !important;
     /* background-color: #fff4e1; */
@@ -29,7 +29,7 @@ const TaskCardDragIcon = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 25px;
+    width: 5%;
     height: 100%;
     /* background-color: #ff09ac; */
     svg {
@@ -45,7 +45,7 @@ const TaskCardDiv = styled.div`
     justify-content: space-around;
     flex-direction: row;
     height: 100%;
-    width: 376px;
+    width: 90%;
     border-radius: 10px;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
     background-color: #fff;
@@ -78,7 +78,7 @@ const TaskDetailsDiv = styled.div`
     justify-content: space-evenly;
     height: 100%;
     width: 75%;
-    margin: 0 0 0 10px;
+    /* margin: 0 0 0 10px; */
     /* background-color: #fff1fc; */
 `;
 

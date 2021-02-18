@@ -41,21 +41,25 @@ const AboutLabelPie = styled.div`
 
 const MainSummaryContainer = styled.div`
     display: flex;
-    justify-content:space-between;
-    width: 346px;
-    height: 300px;
+    align-items:center;
+    justify-content:space-around;
+    width: 80%;
+    height: 326px;
     margin: 20px;
-    /* background-color: #fadff1; */
+    border-radius:20px;
+    background-color:#f7f7fa;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;
 
 const ProgressRingContainer = styled.div`
     display: flex;
-    width: 55%;
-    height: 100%;
+    width: 45%;
+    height: 85%;
     border-radius: 10px;
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    background-color: #f7f7fa;
+    background-color: #f7f7fa; */
 `;
 
 const ProgressCardContainer = styled.div`
@@ -63,8 +67,8 @@ const ProgressCardContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 40%;
-    height: 100%;
+    width: 35%;
+    height: 85%;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */

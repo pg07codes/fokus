@@ -7,7 +7,7 @@ import styled from "styled-components";
 const ProgressRingBox = styled.div`
     display: flex;
     flex-direction:column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -59,7 +59,7 @@ const PercentTextDiv = styled.div`
     font-weight: bold;
     font-size: 0.8em;
     margin-left: auto;
-    color: #c1c1d7;
+    color: #4a4b46;
 `;
 
 const LegendColorDot = styled.div`
@@ -85,7 +85,7 @@ export function ProgressRings() {
                     <CircularProgressbarWithChildren
                         value={taskCompletionPercent}
                         styles={buildStyles({
-                            pathColor: "#ffce73",
+                            pathColor: "#77dd77",
                             trailColor: "#c1c1d7",
                         })}
                         strokeWidth={10}
@@ -94,7 +94,7 @@ export function ProgressRings() {
                             <CircularProgressbar
                                 value={timeCompletionPercent}
                                 styles={buildStyles({
-                                    pathColor: "#76ff7a",
+                                    pathColor: "#0000cd",
                                     trailColor: "#c1c1d7",
                                 })}
                                 strokeWidth={14}
@@ -106,7 +106,7 @@ export function ProgressRings() {
             <ProgressRingLegendDiv>
                 <p>Progress</p>
                 <LegendDataDiv>
-                    <LegendColorDot color="#ffce73" />
+                    <LegendColorDot color="#77dd77" />
                     <TextDiv>
                         <p>
                             tasks
@@ -118,7 +118,7 @@ export function ProgressRings() {
                     </PercentTextDiv>
                 </LegendDataDiv>
                 <LegendDataDiv>
-                    <LegendColorDot color="#76ff7a" />
+                    <LegendColorDot color="#0000cd" />
                     <TextDiv>
                         <p>time</p>
                     </TextDiv>

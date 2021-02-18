@@ -31,7 +31,7 @@ export function formattedTimeStringv2(x) {
         mins = `0${mins}`;
     }
 
-    return `${mins}m ${secs}s`;
+    return {mins,secs};
 }
 
 export function getFormattedDate() {

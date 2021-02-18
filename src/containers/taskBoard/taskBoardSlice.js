@@ -29,9 +29,9 @@ export const tasksSlice = createSlice({
         taskArray: [],
         labels: labelOptions,
         soundscape: {
-            track: "none",
+            track: "bell",
             isPlaying: false,
-            volume: 0.6,
+            volume: 0.7,
         },
         meta: {
             globalKey: 0,

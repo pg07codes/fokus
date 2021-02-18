@@ -29,27 +29,26 @@ const TaskSummaryContainer = styled.div`
 const FocussedTaskContainer = styled.div`
     display: flex;
     justify-content: center;
-    position: relative;
-    width: 300px;
+    width: 90%;
     height: 326px;
     margin: 20px;
-    border-radius: 10px;
+    /* border-radius: 10px;
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
-    background-color: #f7f7fa;
+    background-color:#f7faf7; */
 `;
 
 const MusicBoxContainer = styled.div`
     display: flex;
     justify-content: center;
     position: relative;
-    width: 300px;
-    height: 180px;
+    width: 90%;
+    height: 200px;
     margin: 20px;
-    border-radius: 10px;
+    /* border-radius: 10px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    background-color: #f7f7fa;
+    background-color: #f7f7fa; */
 `;
 
 export function FocusBoard() {

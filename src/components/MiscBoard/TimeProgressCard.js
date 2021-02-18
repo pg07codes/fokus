@@ -13,10 +13,10 @@ const ProgressCard = styled.div`
     width: 90%;
     height: 40%;
     border-radius: 10px;
-    border-left: 8px solid #76ff7a;
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    /* background-color: #f8effa; */
+    border-left: 8px solid #0000cd;
+    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
+    background-color: #F0F8FF;
 `;
 
 const ProgressCardText = styled.div`
@@ -27,6 +27,7 @@ const ProgressCardText = styled.div`
     height: 45%;
     /* background-color: #d1effa; */
     span {
+        color:#4a4b46;
         font-weight: bold;
         font-size: 0.6em;
     }

@@ -11,10 +11,11 @@ import Divider from "./../../components/TaskBoard/Divider";
 import NoTasks from "../../components/TaskBoard/NoTasks";
 
 const TaskBoardContainer = styled.div`
-    flex: 1 1 0;
+    flex: 2 1 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y:scroll; // to enable scrolling by default for this flex-container only
     background-color: #f7f7fa;
     -webkit-box-shadow: inset -3px 0 10px rgba(166, 173, 201, 0.3);
     box-shadow: inset -3px 0 10px rgba(166, 173, 201, 0.3);

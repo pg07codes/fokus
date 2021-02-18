@@ -8,8 +8,8 @@ const TaskInputContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
-    width: 420px;
+    margin: 20px 0;
+    width: 90%;
     border-radius: 10px;
     background-color: #fff;
     height: 50px;
