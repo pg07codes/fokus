@@ -29,7 +29,7 @@ const ProgressRingLegendDiv = styled.div`
     width: 80%;
     height: 30%;
     /* background-color: #1fadef; */
-    color: #c1c1d7;
+    color: #FABB18;
     font-weight: bold;
     p {
         margin: 3px 0;
@@ -59,7 +59,7 @@ const PercentTextDiv = styled.div`
     font-weight: bold;
     font-size: 0.8em;
     margin-left: auto;
-    color: #4a4b46;
+    color: #000;
 `;
 
 const LegendColorDot = styled.div`
@@ -72,11 +72,11 @@ const LegendColorDot = styled.div`
 export function ProgressRings() {
     const completedTasksCount = useSelector((s) => s.tasks.meta.completedTasksCount);
     const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
-    let taskCompletionPercent = totalTasksCount !== 0 ? Math.floor((completedTasksCount / totalTasksCount) * 100) : 100;
+    let taskCompletionPercent = totalTasksCount !== 0 ? Math.floor((completedTasksCount / totalTasksCount) * 100) : 45;
 
     const remainingTaskListTime = useSelector((s) => s.tasks.meta.remainingTaskListTime);
     const totalTaskListTime = useSelector((s) => s.tasks.meta.totalTaskListTime);
-    let timeCompletionPercent = totalTaskListTime !== 0 ? Math.floor(((totalTaskListTime - remainingTaskListTime) / totalTaskListTime) * 100) : 100;
+    let timeCompletionPercent = totalTaskListTime !== 0 ? Math.floor(((totalTaskListTime - remainingTaskListTime) / totalTaskListTime) * 100) : 60;
 
     return (
         <ProgressRingBox>
@@ -86,7 +86,7 @@ export function ProgressRings() {
                         value={taskCompletionPercent}
                         styles={buildStyles({
                             pathColor: "#77dd77",
-                            trailColor: "#c1c1d7",
+                            trailColor: "#FFE39E",
                         })}
                         strokeWidth={10}
                     >
@@ -95,7 +95,7 @@ export function ProgressRings() {
                                 value={timeCompletionPercent}
                                 styles={buildStyles({
                                     pathColor: "#0000cd",
-                                    trailColor: "#c1c1d7",
+                                    trailColor: "#FFE39E",
                                 })}
                                 strokeWidth={14}
                             />

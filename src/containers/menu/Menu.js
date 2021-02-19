@@ -4,11 +4,12 @@ import WIP from "./../../images/WIP.svg";
 
 const MenuContainer = styled.div`
     width: 15%;
+    min-width:200px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color:#0000cd;
+    background-color:#FABB18;
 `;
 
 export function Menu() {

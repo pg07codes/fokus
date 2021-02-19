@@ -15,10 +15,25 @@ let dingSoundElement = new Audio(dingSound);
 const FocussedTaskDiv = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-direction: column;
+    background-color:#FABB18;
     width: 100%;
-    height: 100%;
+    height: 80%;
+    border-radius:20px;
+`;
+
+const FocussedTaskPlayer = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 50%;
+    border-radius: 10px;
+    /* background-color: #FABB18; */
+    /* box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5); */
 `;
 
 const FocussedTaskContent = styled.div`
@@ -28,9 +43,9 @@ const FocussedTaskContent = styled.div`
     text-align: center;
     margin: 5px;
     padding: 5px;
-    height: 35%;
-    width: 100%;
-    max-width: 400px;
+    height: 30%;
+    width: 90%;
+    max-width: 376px;
     border-radius: 10px;
     word-wrap: break-word;
     p {
@@ -38,23 +53,11 @@ const FocussedTaskContent = styled.div`
         font-weight: bold;
         margin: 3px;
     }
-    -webkit-box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8);
-    box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8);
-    /* background-color: #edaaf1; */
+    /* -webkit-box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8);
+    box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8); */
+    background-color: #fff;
 `;
 
-const FocussedTaskPlayer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    height: 55%;
-    border-radius: 10px;
-    background-color: #0000cd;
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
-`;
 
 const FocussedTaskTimer = styled.div`
     display: flex;
@@ -93,7 +96,7 @@ const FocussedTaskController = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    height: 80%;
+    height: 90%;
     width: 30%;
     /* background-color: #f1f7dd; */
 `;
@@ -108,7 +111,7 @@ const PlayPauseButtonDiv = styled.div`
     border-radius: 50%;
     margin: 10px 20px;
     svg {
-        color: #0000cd;
+        color: #FABB18;
         font-size: 1.8em;
         margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
     }
@@ -134,12 +137,12 @@ const ResetButtonDiv = styled.div`
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    top: 7px;
+    top: 5px;
     left: 7px;
     background-color: #fff;
     cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};
     svg {
-        color: #0000cd;
+        color: #FABB18;
         width: 20px;
     }
 `;
@@ -187,9 +190,6 @@ export function FocussedTask() {
 
     return (
         <FocussedTaskDiv>
-            <FocussedTaskContent>
-                <p>{focussedTask.content}</p>
-            </FocussedTaskContent>
 
             <FocussedTaskPlayer>
                 <FocussedTaskTimer>
@@ -235,6 +235,9 @@ export function FocussedTask() {
                     <ResetIcon />
                 </ResetButtonDiv>
             </FocussedTaskPlayer>
+            <FocussedTaskContent>
+                <p>{focussedTask.content}</p>
+            </FocussedTaskContent>
         </FocussedTaskDiv>
     );
 }

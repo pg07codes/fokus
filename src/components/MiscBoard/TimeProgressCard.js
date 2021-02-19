@@ -10,8 +10,8 @@ const ProgressCard = styled.div`
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 90%;
-    height: 40%;
+    width: 95%;
+    height: 45%;
     border-radius: 10px;
     border-left: 8px solid #0000cd;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);

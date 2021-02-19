@@ -12,7 +12,15 @@ const SoundscapesContainer = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    /* background-color: #000; */
+    border-radius: 20px;
+    transition: box-shadow 0.2s ease-in-out,transform 0.2s ease-in-out ;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
+    &:hover {
+        transform: scale(1.02);
+        -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.8);
+        box-shadow: 0 2px 10px rgba(166, 173, 201, 0.8);
+    }
 `;
 
 const SoundscapesDiv = styled.div`
@@ -22,8 +30,8 @@ const SoundscapesDiv = styled.div`
     flex-direction: column;
     width: 100%;
     height: 70%;
-    /* background-color: #df15ad; */
-    color: #0000cd;
+    /* background-color: orange; */
+    color: #fabb18;
     p {
         margin: 0;
         font-weight: bold;
@@ -49,9 +57,9 @@ const SoundOptionsInput = styled.div`
     margin: 0 5px;
     img {
         width: 50px;
-        cursor:pointer;
-        transition: transform .2s;
-        &:hover{
+        cursor: pointer;
+        transition: transform 0.2s;
+        &:hover {
             transform: scale(1.1);
         }
     }
@@ -59,8 +67,8 @@ const SoundOptionsInput = styled.div`
         margin: 0;
         font-size: 0.8em;
         font-weight: bold;
-        color: ${(p) => (p.isSelectedSound ? "#0000cd" : "#c1c1d7")};
-        cursor:pointer;
+        color: ${(p) => (p.isSelectedSound ? "#FABB18" : "#c1c1d7")};
+        cursor: pointer;
     }
 `;
 
@@ -69,7 +77,7 @@ const SoundVolumeControl = styled.div`
     align-items: center;
     justify-content: center;
     /* background-color: #cad1ff; */
-    width: 95%;
+    width: 90%;
     height: 15%;
 `;
 

@@ -14,14 +14,14 @@ const DividerLine = styled.div`
     width: 100%;
     position: relative;
     margin: 15px;
-    border-bottom: 3px solid #0000cd;
+    border-bottom: 3px solid #FABB18;
 `;
 
 const DividerIcon = styled.div`
     width: 90px;
     position: relative;
     top: 3px;
-    color: #0000cd;
+    color: #FABB18;
     p {
         margin: 0;
         font-weight: bold;
@@ -40,7 +40,7 @@ const DividerActionDiv = styled.div`
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     svg {
-        color: #0000cd;
+        color: #FABB18;
         cursor:pointer;
     }
 `;

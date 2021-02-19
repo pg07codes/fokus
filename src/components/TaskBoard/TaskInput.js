@@ -13,8 +13,8 @@ const TaskInputContainer = styled.div`
     border-radius: 10px;
     background-color: #fff;
     height: 50px;
-    -webkit-box-shadow: 0 5px 10px rgba(166, 173, 201, 0.2);
-    box-shadow: 0 5px 10px rgba(166, 173, 201, 0.2);
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
 `;
 
 const TaskContentInputDiv = styled.div`
@@ -27,7 +27,7 @@ const TaskContentInputDiv = styled.div`
     svg {
         font-size: 1.3em;
         margin-right: 5px;
-        color: #c1c1d7;
+        color: #FABB18;
     }
 `;
 
@@ -56,7 +56,7 @@ const TaskTimeInputDiv = styled.div`
     }
     svg {
         font-size: 1.2em;
-        color: #c1c1d7;
+        color: #FABB18;
     }
 `;
 

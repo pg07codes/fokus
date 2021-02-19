@@ -1,24 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import tasksDone from "./../../images/tasksDone.svg";
+import noTasks from "./../../images/noTasks.svg";
+import ReactTooltip from "react-tooltip";
 
 const NoTasksDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    width: 246px;
-    min-height: 140px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin: 20px;
-    -webkit-box-shadow: 0 3px 6px rgba(166, 173, 201, 0.2);
-    box-shadow: 0 3px 6px rgba(166, 173, 201, 0.2);
+    width: ${(p)=>p.allCompleted?"40%":"70%"};
+    margin: 30px 10px;
 `;
 
 const NoTasksIcon = styled.div`
     img {
-        width: 60px;
+        width: 90%;
     }
 `;
 
@@ -32,11 +28,11 @@ const NoTasksText = styled.div`
 
 export default function NoTasks({ allCompleted }) {
     return (
-        <NoTasksDiv>
-            <NoTasksIcon>
-                <img src={tasksDone} alt={"Tasks Done"} />
+        <NoTasksDiv allCompleted={allCompleted}>
+            <NoTasksIcon data-tip="" data-for="taskIcon">
+                <img src={noTasks} alt={"No Tasks"} />
+                <ReactTooltip id="taskIcon" getContent={()=>allCompleted ? "create more tasks" : "create task to begin"} />
             </NoTasksIcon>
-            <NoTasksText>{allCompleted ? <p>create some more tasks</p> : <p>create a new task</p>}</NoTasksText>
         </NoTasksDiv>
     );
 }

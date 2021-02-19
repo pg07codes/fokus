@@ -49,8 +49,8 @@ const TaskCardDiv = styled.div`
     border-radius: 10px;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
     background-color: #fff;
-    -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
-    box-shadow: ${(p) => (p.isFocussed ? "0 1px 8px rgb(248,185,23,0.8)" : "0 5px 10px rgba(166,173,201,0.2)")};
+    -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23)" : "0 2px 10px rgba(166,173,201,0.4)")};
+    box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23)" : "0 2px 10px rgba(166,173,201,0.4)")};
 `;
 
 const TaskStatusDiv = styled.div`
@@ -66,6 +66,7 @@ const TaskStatusDiv = styled.div`
         margin: 5px;
         font-weight: bold;
         font-size: 0.7em;
+        cursor: text;
     }
     img {
         width: ${(p) => (p.isCompleted ? "35px" : "60px")};
@@ -93,9 +94,7 @@ const TaskContentDiv = styled.div`
         font-size: 0.9em;
         font-weight: bold;
         min-width: 0;
-        &:hover {
-            cursor: text;
-        }
+        cursor: text;
     }
 `;
 
@@ -109,7 +108,7 @@ const TaskEditInput = styled.textarea`
     font-weight: bold;
     &:focus {
         outline: none;
-        border: 2px #0000cd dashed;
+        border: 2px #4a4b46 dashed;
         border-radius: 5px;
     }
 `;
@@ -122,7 +121,7 @@ const TimeEditInput = styled.input`
     font-weight: bold;
     &:focus {
         outline: none;
-        border: 2px #0000cd dashed;
+        border: 2px #4a4b46 dashed;
         border-radius: 2px;
     }
 `;
@@ -136,7 +135,7 @@ const TaskActionButton = styled.div`
     margin: 4px;
     cursor: pointer;
     &:hover {
-        background-color: #0000cd;
+        background-color: #FABB18;
         p {
             color: #fff;
         }
@@ -171,7 +170,7 @@ const TaskDeleteButton = styled.div`
     height: 80%;
     cursor: pointer;
     margin-left: auto;
-    color: #0000cd;
+    color: #FABB18;
     &:hover {
         color: red;
     }

@@ -42,7 +42,7 @@ export function MusicVolumeControl({ isDisabled }) {
                         width: "100%",
                     },
                     active: {
-                        backgroundColor: "#0000cd",
+                        backgroundColor: "#FABB18",
                     },
                     disabled: {
                         opacity: 0.2,
