@@ -4,7 +4,6 @@ import WIP from "./../../images/WIP.svg";
 
 const MenuContainer = styled.div`
     width: 15%;
-    min-width:200px;
     display: flex;
     flex-direction: column;
     align-items: center;

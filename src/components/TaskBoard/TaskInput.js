@@ -51,7 +51,7 @@ const TaskTimeInputDiv = styled.div`
     width: 25%;
     color: #c1c1d7;
     span {
-        font-size: 0.8em;
+        font-size: 0.7em;
         font-weight: bold;
     }
     svg {

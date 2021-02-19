@@ -107,7 +107,7 @@ const PlayPauseButtonDiv = styled.div`
     align-items: center;
     width: 55px;
     height: 55px;
-    background-color: #fff;
+    background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
@@ -125,7 +125,6 @@ const UpdateTimeButtonDiv = styled.div`
     width: 30px;
     height: 30px;
     cursor: pointer;
-    color: #fff;
 `;
 
 const ResetButtonDiv = styled.div`
@@ -139,7 +138,7 @@ const ResetButtonDiv = styled.div`
     height: 30px;
     top: 5px;
     left: 7px;
-    background-color: #fff;
+    background-color: #000;
     cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};
     svg {
         color: #FABB18;

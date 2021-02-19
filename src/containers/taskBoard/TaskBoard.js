@@ -13,7 +13,7 @@ import NoTasks from "../../components/TaskBoard/NoTasks";
 const TaskBoardContainer = styled.div`
     flex: 2 1 0;
     display: flex;
-    min-width:426px;
+    min-width:396px;
     flex-direction: column;
     align-items: center;
     overflow-y:scroll; // to enable scrolling by default for this flex-container only

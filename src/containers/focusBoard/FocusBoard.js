@@ -9,7 +9,7 @@ import { DayDate } from "../../components/FocusBoard/DayDate";
 
 const FocusBoardContainer = styled.div`
     flex: 1 1 0;
-    min-width: 376px;
+    min-width: 346px;
     display: flex;
     flex-direction: column;
     justify-content: center;

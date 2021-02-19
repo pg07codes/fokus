@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { LabelPie } from "./../../components/FocusBoard/LabelPie";
+import { LabelPie } from "./../../components/MiscBoard/LabelPie";
 import { ProgressRings } from "./../../components/MiscBoard/ProgressRings";
 import {TimeProgressCard} from "./../../components/MiscBoard/TimeProgressCard";
 import {TaskProgressCard} from "./../../components/MiscBoard/TaskProgressCard";
 
 const MiscBoardContainer = styled.div`
     flex: 2 1 0;
-    min-width:426px;
+    min-width:396px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -20,23 +20,17 @@ const LabelPieContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 200px;
+    width: 50%;
+    max-width:220px;
+    height: 210px;
     margin: 20px;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
-    background-color: #f7f7fa;
-`;
-
-const AboutLabelPie = styled.div`
-    width: 100%;
-    color: #c1c1d7;
-    p {
-        float: right;
-        font-size: 0.7em;
-        font-weight: bold;
-        margin: 0;
+    background-color: #020202;
+    transition:transform 0.2s ease-in-out ;
+    &:hover {
+        transform: scale(1.02);
     }
 `;
 
@@ -49,6 +43,8 @@ const MainSummaryContainer = styled.div`
     height: 326px;
     margin: 20px;
     border-radius:20px;
+    backface-visibility: hidden;
+    transform: translateZ(0);
     transition: box-shadow 0.2s ease-in-out,transform 0.2s ease-in-out ;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
@@ -97,13 +93,6 @@ export function MiscBoard() {
 
             <LabelPieContainer>
                 <LabelPie />
-                <AboutLabelPie>
-                    <p>
-                        task/label
-                        <br />
-                        distribution
-                    </p>
-                </AboutLabelPie>
             </LabelPieContainer>
         </MiscBoardContainer>
     );

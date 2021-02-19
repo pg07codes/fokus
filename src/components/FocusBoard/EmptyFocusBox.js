@@ -98,7 +98,7 @@ const PlayPauseButtonDiv = styled.div`
     align-items: center;
     width: 55px;
     height: 55px;
-    background-color: #fff;
+    background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
@@ -114,7 +114,6 @@ const UpdateTimeButtonDiv = styled.div`
     align-items: center;
     width: 30px;
     height: 30px;
-    color: #fff;
 `;
 
 const ResetButtonDiv = styled.div`
@@ -128,7 +127,7 @@ const ResetButtonDiv = styled.div`
     height: 30px;
     top: 5px;
     left: 7px;
-    background-color: #fff;
+    background-color: #000;
     svg {
         color: #fabb18;
         width: 20px;
@@ -161,22 +160,12 @@ export function EmptyFocusBox() {
                 </FocussedTaskTimer>
 
                 <FocussedTaskController>
-                    <UpdateTimeButtonDiv>
-                        <h4>+5</h4>
-                    </UpdateTimeButtonDiv>
                     <PlayPauseButtonDiv data-tip="" data-for="Create">
                         <FaPen />
                         <ReactTooltip id="Create" getContent={()=>"Focus on task"} />
                     </PlayPauseButtonDiv>
-
-                    <UpdateTimeButtonDiv>
-                        <h4>-5</h4>
-                    </UpdateTimeButtonDiv>
                 </FocussedTaskController>
 
-                <ResetButtonDiv>
-                    <ResetIcon />
-                </ResetButtonDiv>
             </FocussedTaskPlayer>
             <FocussedTaskContent>
                 <CgNotes />
