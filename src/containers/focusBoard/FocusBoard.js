@@ -13,7 +13,9 @@ const FocusBoardContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin:0 20px;
+    margin:0 0 0 20px;
+    height:100%;
+    /* background-color:silver; */
 `;
 
 const FocussedTaskContainer = styled.div`
@@ -23,8 +25,8 @@ const FocussedTaskContainer = styled.div`
     flex-direction: column;
     width: 90%;
     max-width: 376px;
-    height: 376px;
-    margin: 10px;
+    height: 300px;
+    margin: 10px 0;
     /* background-color: green; */
 `;
 
@@ -34,7 +36,7 @@ const MusicBoxContainer = styled.div`
     width: 90%;
     max-width: 376px;
     height: 200px;
-    margin: 10px;
+    margin: 10px 0;
     /* border-radius: 10px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
@@ -46,9 +48,8 @@ export function FocusBoard() {
     const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
     return (
         <FocusBoardContainer>
-            {/* <TaskSummaryContainer>{totalTasksCount !== 0 ? <TaskSummary /> : <EmptyTaskSummary />}</TaskSummaryContainer> */}
             <FocussedTaskContainer>
-                <DayDate />
+                {/* <DayDate /> */}
                 {focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}
             </FocussedTaskContainer>
             <MusicBoxContainer>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import WIP from "./../../images/WIP.svg";
 
 const MenuContainer = styled.div`
-    width: 15%;
+    width: 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -14,9 +14,9 @@ const MenuContainer = styled.div`
 export function Menu() {
     return (
         <MenuContainer>
-            <img src={WIP} style={{ height: 200, width: 200 }} alt="work in progress"></img>
+            <img src={WIP} style={{ height: 100, width: 100 }} alt="work in progress"></img>
             <div>
-                <h3 style={{ textAlign: "center", letterSpacing: 3, color: "#f7f7fa" }}>This is a prototype. currently under development.</h3>
+                <h4 style={{ textAlign: "center", letterSpacing: 3, color: "#f7f7fa" }}>This is a prototype. currently under development.</h4>
             </div>
         </MenuContainer>
     );

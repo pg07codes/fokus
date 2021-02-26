@@ -17,7 +17,7 @@ const TaskCardContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 396px; // % not working here (maybe due to animation library wrappers)
+    width: 376px; // % not working here (maybe due to animation library wrappers)
     height: 110px;
     margin-top: 15px;
     cursor:default !important;
@@ -199,7 +199,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [timeUnderEdit, setTimeUnderEdit] = useState(false);
-    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 60));
+    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 1000/60));
     const [labelUnderEdit, setLabelUnderEdit] = useState(false);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
@@ -207,13 +207,6 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
-            let temp = updatedTaskContent.trim().split(" ");
-            // let time = 0;
-            // if (temp.length !== 1 && !isNaN(parseInt(temp[temp.length - 1]))) {
-            //     time = parseInt(temp.pop());
-            // }
-            // temp = temp.join(" ");
-            // wont be managing to update time here also
             dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
             setTaskUnderEdit(false);
         }

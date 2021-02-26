@@ -90,14 +90,12 @@ export function Soundscapes() {
     // ---- danger zone: don't change without full surety , this code is prone to issues ---///
 
     useEffect(() => {
-        console.log("ran");
         soundscapeAudioElement.src = soundOptions[soundscape.track].src;
     }, [soundscape.track, soundscapeAudioElement, soundscape.isPlaying]);
 
     soundscapeAudioElement.volume = soundscape.volume;
     soundscapeAudioElement.addEventListener("canplay", () => {
         if (soundscape.isPlaying) {
-            console.log("playing sir");
             soundscapeAudioElement.play();
         } else {
             soundscapeAudioElement.pause();

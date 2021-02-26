@@ -1,11 +1,10 @@
 import React from "react";
-import { TaskBoard } from "./taskBoard/TaskBoard";
-import { FocusBoard } from "./focusBoard/FocusBoard";
-import { MiscBoard } from "./miscBoard/MiscBoard";
 import { Menu } from "./menu/Menu";
+import Dashboard from "./dashboard";
+import { TaskBoard } from "./taskBoard/TaskBoard";
 import styled from "styled-components";
 import { isMobile } from "react-device-detect";
-import { MobileView } from "./MobileView";
+import { MobileView } from "./mobileView";
 
 const AppContainer = styled.div`
     display: flex;
@@ -17,8 +16,7 @@ function App() {
         return (
             <AppContainer>
                 <Menu />
-                <MiscBoard />
-                <FocusBoard />
+                <Dashboard />
                 <TaskBoard />
             </AppContainer>
         );

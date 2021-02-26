@@ -4,12 +4,14 @@ import { create, incrementGlobalKey, focusOnTask, updateLabelCount } from "./../
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillClockCircle } from "react-icons/ai";
 
+
 const TaskInputContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 20px 0;
     width: 90%;
+    max-width:396px;
     border-radius: 10px;
     background-color: #fff;
     height: 50px;
@@ -118,8 +120,8 @@ export default function TaskInput() {
                 id: Math.floor(Math.random() * 10000),
                 globalKey: meta.globalKey,
                 content: temp,
-                time: taskTime * 60,
-                remainingTime: taskTime * 60,
+                time: taskTime,
+                remainingTime: taskTime,
                 isRunning: false,
                 isCompleted: false,
                 createdAt: new Date().toISOString(),

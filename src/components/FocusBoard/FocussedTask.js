@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer, toggleSoundscapeState } from "./../../containers/taskBoard/taskBoardSlice";
-import useTimer from "../../hooks/useTimer";
+import useTimer , {useTimer2}from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { ResetIcon } from "./../../components/customIcons";
@@ -19,7 +19,7 @@ const FocussedTaskDiv = styled.div`
     flex-direction: column;
     background-color:#FABB18;
     width: 100%;
-    height: 80%;
+    height:100%;
     border-radius:20px;
 `;
 
@@ -150,12 +150,25 @@ export function FocussedTask() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
     let focussedTask = useSelector((state) => (focussedTaskIndex !== -1 ? state.tasks.taskArray[focussedTaskIndex] : null));
     const dispatch = useDispatch();
-    const delay = 1000;
-    useTimer(
-        () => {
+    const delay = 1010; // to account for the delay in executing code.
+    // useTimer(
+    //     () => {
+    //         if (focussedTask === null) return;
+    //         else if (focussedTask.remainingTime > 0) {
+    //             dispatch(tick(focussedTaskIndex));
+    //         } else if (focussedTask.remainingTime === 0) {
+    //             dispatch(toggleSoundscapeState(false));
+    //             dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
+    //             dingSoundElement.play();
+    //         }
+    //     },
+    //     focussedTask !== null && focussedTask.isRunning ? delay : null
+    // );
+    useTimer2(
+        (deltaMS) => {
             if (focussedTask === null) return;
             else if (focussedTask.remainingTime > 0) {
-                dispatch(tick(focussedTaskIndex));
+                dispatch(tick({focussedTaskIndex,deltaMS}));
             } else if (focussedTask.remainingTime === 0) {
                 dispatch(toggleSoundscapeState(false));
                 dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
@@ -175,10 +188,8 @@ export function FocussedTask() {
     function playPauseHandler(focussedTaskIndex, wasTaskRunning) {
         dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         if (wasTaskRunning) {
-            console.log("set to pausing sound");
             dispatch(toggleSoundscapeState(false));
         } else {
-            console.log("set to playing sound");
             dispatch(toggleSoundscapeState(true));
         }
     }

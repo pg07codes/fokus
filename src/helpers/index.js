@@ -1,6 +1,7 @@
 export function formattedTimeString(x) {
+    x = Math.floor(x/1000);
     let secs = x % 60;
-    let mins = Math.floor(x / 60);
+    let mins = Math.floor(x/ 60);
 
     if (secs == 0) {
         secs = `00`;
@@ -17,8 +18,9 @@ export function formattedTimeString(x) {
 }
 
 export function formattedTimeStringv2(x) {
+    x = Math.floor(x/1000);
     let secs = x % 60;
-    let mins = Math.floor(x / 60);
+    let mins = Math.floor(x/ 60);
 
     if (secs == 0) {
         secs = `00`;
@@ -31,7 +33,7 @@ export function formattedTimeStringv2(x) {
         mins = `0${mins}`;
     }
 
-    return {mins,secs};
+    return { mins, secs };
 }
 
 export function getFormattedDate() {
@@ -46,10 +48,11 @@ export function getFormattedDate() {
     };
 }
 
-export function getFormattedListTimeSummary(x){
-    let mins = Math.floor(x % 3600 / 60);
+export function getFormattedListTimeSummary(x) {
+    x = Math.floor(x/1000);
+    let mins = Math.floor((x % 3600) / 60);
     let hours = Math.floor(x / 3600);
-
+    
     if (mins == 0) {
         mins = `0`;
     } else if (mins < 10) {
@@ -61,7 +64,7 @@ export function getFormattedListTimeSummary(x){
         hours = `${hours}`;
     }
 
-    return {hours,mins};
+    return { hours, mins };
 }
 
 export function debounce(fn, wait) {

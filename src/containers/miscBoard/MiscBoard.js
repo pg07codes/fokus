@@ -7,41 +7,25 @@ import {TimeProgressCard} from "./../../components/MiscBoard/TimeProgressCard";
 import {TaskProgressCard} from "./../../components/MiscBoard/TaskProgressCard";
 
 const MiscBoardContainer = styled.div`
-    flex: 2 1 0;
-    min-width:396px;
+    flex: 1 1 0;
+    min-width: 346px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    height:100%;
+    /* background-color:orange; */
 `;
 
-const LabelPieContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    max-width:220px;
-    height: 210px;
-    margin: 20px;
-    border-radius: 10px;
-    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
-    background-color: #020202;
-    transition:transform 0.2s ease-in-out ;
-    &:hover {
-        transform: scale(1.02);
-    }
-`;
 
 const MainSummaryContainer = styled.div`
     display: flex;
     align-items:center;
     justify-content:space-around;
-    width: 80%;
-    max-width:400px;
-    height: 326px;
-    margin: 20px;
+    width: 90%;
+    max-width: 376px;
+    height: 300px;
+    margin: 10px 0;
     border-radius:20px;
     backface-visibility: hidden;
     transform: translateZ(0);
@@ -77,6 +61,26 @@ const ProgressCardContainer = styled.div`
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
     /* background-color: #f7adfa; */
 `;
+
+const LabelPieContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width:220px;
+    height: 200px;
+    margin: 10px 0;
+    border-radius: 10px;
+    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
+    background-color: #020202;
+    transition:transform 0.2s ease-in-out ;
+    &:hover {
+        transform: scale(1.02);
+    }
+`;
+
 
 export function MiscBoard() {
     return (
