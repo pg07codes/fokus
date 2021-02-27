@@ -44,6 +44,9 @@ export function MusicVolumeControl({ isDisabled }) {
                     active: {
                         backgroundColor: "#FABB18",
                     },
+                    thumb: {
+                        backgroundColor:"#020202"
+                      },
                     disabled: {
                         opacity: 0.2,
                     },

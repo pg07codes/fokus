@@ -25,7 +25,7 @@ const FocussedTaskContainer = styled.div`
     flex-direction: column;
     width: 90%;
     max-width: 376px;
-    height: 300px;
+    height: 276px;
     margin: 10px 0;
     /* background-color: green; */
 `;

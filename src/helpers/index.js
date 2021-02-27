@@ -54,7 +54,7 @@ export function getFormattedListTimeSummary(x) {
     let hours = Math.floor(x / 3600);
     
     if (mins == 0) {
-        mins = `0`;
+        mins = `00`;
     } else if (mins < 10) {
         mins = `0${mins}`;
     }

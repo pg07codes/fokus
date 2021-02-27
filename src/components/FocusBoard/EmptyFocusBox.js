@@ -11,7 +11,7 @@ import ReactTooltip from "react-tooltip";
 const FocussedTaskDiv = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
     background-color: #fabb18;
     width: 100%;
@@ -25,7 +25,7 @@ const FocussedTaskPlayer = styled.div`
     align-items: center;
     position: relative;
     width: 100%;
-    height: 50%;
+    height: 55%;
     border-radius: 10px;
     /* background-color: #FABB18; */
     /* box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
@@ -37,12 +37,12 @@ const FocussedTaskContent = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5px;
     padding: 5px;
     height: 30%;
     width: 90%;
     max-width: 376px;
     border-radius: 10px;
+    border:3px solid black;
     word-wrap: break-word;
     svg {
         font-size: 3em;
@@ -96,15 +96,14 @@ const PlayPauseButtonDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
     background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
         color: #fabb18;
-        font-size: 1.2em;
-        margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
+        font-size: 1em;
     }
 `;
 

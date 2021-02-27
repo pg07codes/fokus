@@ -17,7 +17,6 @@ const TaskBoardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     overflow-y:scroll; // to enable scrolling by default for this flex-container only
-    /* background-color:orange; */
 `;
 
 export function TaskBoard() {

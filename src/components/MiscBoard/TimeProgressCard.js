@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+import styled , {css} from "styled-components";
 import { useSelector } from "react-redux";
 import { getFormattedListTimeSummary } from "../../helpers";
-import {SummaryCardClock} from "./../customIcons";
+import { SummaryCardClock } from "./../customIcons";
 
 const ProgressCard = styled.div`
     display: flex;
@@ -16,7 +16,7 @@ const ProgressCard = styled.div`
     border-left: 8px solid #0000cd;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
-    background-color: #F0F8FF;
+    background-color: #f0f8ff;
 `;
 
 const ProgressCardText = styled.div`
@@ -27,7 +27,7 @@ const ProgressCardText = styled.div`
     height: 45%;
     /* background-color: #d1effa; */
     span {
-        color:#4a4b46;
+        color: #4a4b46;
         font-weight: bold;
         font-size: 0.6em;
     }
@@ -35,11 +35,11 @@ const ProgressCardText = styled.div`
 
 const FormattedTimeDiv = styled.div`
     display: flex;
-    align-items:center;
+    align-items: center;
     p {
         margin: 0;
         font-weight: bold;
-        font-size: 1.4em;
+        font-size: 1.2em;
     }
     span {
         margin: 0 3px;
@@ -47,17 +47,18 @@ const FormattedTimeDiv = styled.div`
     }
 `;
 
-const ClockIconDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
+const absoluteIconStyles = css`
     position: absolute;
-    width: 25px;
-    height: 25px;
     top: 5px;
     right: 5px;
+`;
+
+const ClockIconDiv = styled.div`
+    width:${(p) => (p.noTasks ? "45%" : "25px")};
+    ${(p) => (p.noTasks ? "" : absoluteIconStyles)}
     svg {
         color: #0000cd;
+        opacity: ${(p) => (p.noTasks ? "0.7" : 1)};
     }
 `;
 
@@ -74,27 +75,31 @@ export function TimeProgressCard() {
     let tTLTMins = tTLTObj.mins;
     return (
         <ProgressCard>
-            <ProgressCardText>
-                <FormattedTimeDiv>
-                    <p>{rTLTHours}</p>
-                    <span>h</span>
-                    <p>{rTLTMins}</p>
-                    <span>m</span>
-                </FormattedTimeDiv>
+            {totalTaskListTime !== 0 && (
+                <>
+                    <ProgressCardText>
+                        <FormattedTimeDiv>
+                            <p>{rTLTHours}</p>
+                            <span>h</span>
+                            <p>{rTLTMins}</p>
+                            <span>m</span>
+                        </FormattedTimeDiv>
 
-                <span>remaining time</span>
-            </ProgressCardText>
-            <ProgressCardText>
-                <FormattedTimeDiv>
-                    <p>{tTLTHours}</p>
-                    <span>h</span>
-                    <p>{tTLTMins}</p>
-                    <span>m</span>
-                </FormattedTimeDiv>
-                <span>total time</span>
-            </ProgressCardText>
-            <ClockIconDiv>
-                <SummaryCardClock/>
+                        <span>remaining time</span>
+                    </ProgressCardText>
+                    <ProgressCardText>
+                        <FormattedTimeDiv>
+                            <p>{tTLTHours}</p>
+                            <span>h</span>
+                            <p>{tTLTMins}</p>
+                            <span>m</span>
+                        </FormattedTimeDiv>
+                        <span>total time</span>
+                    </ProgressCardText>
+                </>
+            )}
+            <ClockIconDiv noTasks={totalTaskListTime === 0}>
+                <SummaryCardClock />
             </ClockIconDiv>
         </ProgressCard>
     );

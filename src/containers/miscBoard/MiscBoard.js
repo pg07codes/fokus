@@ -24,19 +24,19 @@ const MainSummaryContainer = styled.div`
     justify-content:space-around;
     width: 90%;
     max-width: 376px;
-    height: 300px;
+    height: 276px;
     margin: 10px 0;
     border-radius:20px;
-    backface-visibility: hidden;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    /* backface-visibility: hidden;
     transform: translateZ(0);
     transition: box-shadow 0.2s ease-in-out,transform 0.2s ease-in-out ;
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
     &:hover {
         transform: scale(1.02);
         -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.8);
         box-shadow: 0 2px 10px rgba(166, 173, 201, 0.8);
-    }
+    } */
 `;
 
 const ProgressRingContainer = styled.div`
@@ -72,13 +72,11 @@ const LabelPieContainer = styled.div`
     height: 200px;
     margin: 10px 0;
     border-radius: 10px;
-    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
     background-color: #020202;
-    transition:transform 0.2s ease-in-out ;
+    /* transition:transform 0.2s ease-in-out ;
     &:hover {
         transform: scale(1.02);
-    }
+    } */
 `;
 
 

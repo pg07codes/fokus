@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer, toggleSoundscapeState } from "./../../containers/taskBoard/taskBoardSlice";
 import useTimer , {useTimer2}from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
@@ -8,14 +8,14 @@ import "react-circular-progressbar/dist/styles.css";
 import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
-import { formattedTimeStringv2, getFormattedDate } from "./../../helpers";
+import { formattedTimeStringv2} from "./../../helpers";
 
 let dingSoundElement = new Audio(dingSound);
 
 const FocussedTaskDiv = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-direction: column;
     background-color:#FABB18;
     width: 100%;
@@ -29,11 +29,8 @@ const FocussedTaskPlayer = styled.div`
     align-items: center;
     position: relative;
     width: 100%;
-    height: 50%;
-    border-radius: 10px;
-    /* background-color: #FABB18; */
-    /* box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5);
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.5); */
+    height: 55%;
+    /* background-color: red; */
 `;
 
 const FocussedTaskContent = styled.div`
@@ -41,13 +38,14 @@ const FocussedTaskContent = styled.div`
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    margin: 5px;
     padding: 5px;
     height: 30%;
     width: 90%;
     max-width: 376px;
     border-radius: 10px;
+    border:3px solid black;
     word-wrap: break-word;
+    text-shadow:0 0 4px rgb(248,185,23,0.4);
     p {
         min-width: 0;
         font-weight: bold;
@@ -105,14 +103,14 @@ const PlayPauseButtonDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
     background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
         color: #FABB18;
-        font-size: 1.8em;
+        font-size: 1.6em;
         margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
     }
     cursor: pointer;

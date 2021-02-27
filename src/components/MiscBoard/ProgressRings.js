@@ -72,11 +72,11 @@ const LegendColorDot = styled.div`
 export function ProgressRings() {
     const completedTasksCount = useSelector((s) => s.tasks.meta.completedTasksCount);
     const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
-    let taskCompletionPercent = totalTasksCount !== 0 ? Math.floor((completedTasksCount / totalTasksCount) * 100) : 45;
+    let taskCompletionPercent = totalTasksCount !== 0 ? Math.floor((completedTasksCount / totalTasksCount) * 100) : 100;
 
     const remainingTaskListTime = useSelector((s) => s.tasks.meta.remainingTaskListTime);
     const totalTaskListTime = useSelector((s) => s.tasks.meta.totalTaskListTime);
-    let timeCompletionPercent = totalTaskListTime !== 0 ? Math.floor(((totalTaskListTime - remainingTaskListTime) / totalTaskListTime) * 100) : 60;
+    let timeCompletionPercent = totalTaskListTime !== 0 ? Math.floor(((totalTaskListTime - remainingTaskListTime) / totalTaskListTime) * 100) : 100;
 
     return (
         <ProgressRingBox>
@@ -114,7 +114,7 @@ export function ProgressRings() {
                     </TextDiv>
 
                     <PercentTextDiv>
-                        <span>{taskCompletionPercent}%</span>
+                        <span>{totalTasksCount===0? "--":`${taskCompletionPercent}%`}</span>
                     </PercentTextDiv>
                 </LegendDataDiv>
                 <LegendDataDiv>
@@ -123,7 +123,7 @@ export function ProgressRings() {
                         <p>time</p>
                     </TextDiv>
                     <PercentTextDiv>
-                        <span>{timeCompletionPercent}%</span>
+                    <span>{totalTasksCount===0? "--":`${timeCompletionPercent}%`}</span>
                     </PercentTextDiv>
                 </LegendDataDiv>
             </ProgressRingLegendDiv>

@@ -49,8 +49,8 @@ const TaskCardDiv = styled.div`
     border-radius: 10px;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
     background-color: #fff;
-    -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23)" : "0 2px 10px rgba(166,173,201,0.4)")};
-    box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23)" : "0 2px 10px rgba(166,173,201,0.4)")};
+    -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
+    box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
 `;
 
 const TaskStatusDiv = styled.div`

@@ -43,7 +43,7 @@ export function LabelPie() {
     const lineWidth = 60;
 
     return (
-        <div style={{ width: 160 }} data-tip="" data-for="LabelPieChart">
+        <div style={{ width: 180 }} data-tip="" data-for="LabelPieChart">
             {labelledTasksCount !== 0 ? (
                 <PieChart
                     style={{
