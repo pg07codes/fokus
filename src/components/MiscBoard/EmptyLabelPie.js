@@ -9,8 +9,8 @@ const EmptyLabelPieDiv = styled.div`
     align-items: center;
     width: 150px;
     svg {
-        color: #fff;
-        font-size: 6em;
+        color: #020202;
+        font-size: 5.6em;
     }
 `;
 

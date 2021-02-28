@@ -23,9 +23,9 @@ const FocussedTaskContainer = styled.div`
     align-items:center;
     justify-content: space-between;
     flex-direction: column;
-    width: 85%;
-    max-width: 346px;
-    height: 246px;
+    width: 80%;
+    max-width: 326px;
+    height: 226px;
     margin: 10px 0;
     /* background-color: green; */
 `;
@@ -33,8 +33,8 @@ const FocussedTaskContainer = styled.div`
 const MusicBoxContainer = styled.div`
     display: flex;
     justify-content: center;
-    width: 85%;
-    max-width: 346px;
+    width: 80%;
+    max-width: 326px;
     height: 186px;
     margin: 10px 0;
     /* border-radius: 10px;

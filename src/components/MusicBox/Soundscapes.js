@@ -56,16 +56,16 @@ const SoundOptionsInput = styled.div`
     height: 80%;
     margin: 0 5px;
     img {
-        width: 50px;
+        width: 40px;
         cursor: pointer;
         transition: transform 0.2s;
         &:hover {
-            transform: scale(1.2);
+            transform: scale(1.3);
         }
     }
     span {
         margin: 0;
-        font-size: 0.8em;
+        font-size: 0.7em;
         font-weight: bold;
         color: ${(p) => (p.isSelectedSound ? "#FABB18" : "#4a4b46")};
         cursor: pointer;

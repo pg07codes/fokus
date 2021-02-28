@@ -22,9 +22,9 @@ const MainSummaryContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 85%;
-    max-width: 346px;
-    height: 246px;
+    width: 80%;
+    max-width: 326px;
+    height: 226px;
     margin: 10px 0;
     border-radius: 20px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
@@ -41,12 +41,12 @@ const MainSummaryContainer = styled.div`
 
 const ProgressRingContainer = styled.div`
     display: flex;
-    width: 45%;
-    height: 85%;
+    width: 50%;
+    height: 90%;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    background-color: #f7f7fa; */
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);*/
+    /* background-color: #f7f7fa;  */
 `;
 
 const ProgressCardContainer = styled.div`
@@ -54,20 +54,20 @@ const ProgressCardContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 35%;
-    height: 85%;
+    width: 40%;
+    height: 90%;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
-    /* background-color: #f7adfa; */
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    background-color: #f7adfa; */
 `;
 
 const QuoteAndLabelContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
-    max-width: 346px;
+    width: 80%;
+    max-width: 326px;
     height: 186px;
     margin: 10px 0;
     /* background-color: purple; */
@@ -81,11 +81,12 @@ const LabelPieContainer = styled.div`
     width: 45%;
     height: 90%;
     border-radius: 10px;
-    background-color: #020202;
+    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
+    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;
 
 function getQuoteFontSize(letterCount){
-    let size = -0.0035*letterCount+1.248; // eqn of line with 40 - 1.1em and 180 - 0.6em
+    let size = -0.0035*letterCount+1.3; // eqn of line with 40 - 1.1em and 180 - 0.6em
     size = size.toPrecision(3);
     return `${size}em`
 }
@@ -101,21 +102,30 @@ const QuoteContainer = styled.div`
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     transform: translateZ(0);
+    font-weight: bold;
     p {
         margin: 0 3px;
         font-size: ${p=>getQuoteFontSize(p.length)};
-        font-weight: bold;
+        &::before{
+            color:#fabb18;
+            content:"“ ";
+        }
+        &::after{
+            color:#fabb18;
+            content:" ”";
+        }
     }
     span {
         position: absolute;
         bottom: 0;
         right: 0;
         margin: 5px;
-        font-size: 0.6em;
+        font-size: 0.7em;
+        color:#fabb18;
     }
     transition: transform 0.2s ease-in-out;
     &:hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
     }
 `;
 

@@ -29,7 +29,7 @@ export function LabelPie() {
         labelData.push({
             tooltip: `No Label - ${totalTasksCount - labelledTasksCount} tasks`,
             value: totalTasksCount - labelledTasksCount,
-            color: "#fff",
+            color: "#020202",
         });
     }
 
@@ -43,7 +43,7 @@ export function LabelPie() {
     const lineWidth = 60;
 
     return (
-        <div style={{ width: 140 }} data-tip="" data-for="LabelPieChart">
+        <div style={{ width: 130 }} data-tip="" data-for="LabelPieChart">
             {labelledTasksCount !== 0 ? (
                 <PieChart
                     style={{

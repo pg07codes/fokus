@@ -27,7 +27,7 @@ const ProgressCardText = styled.div`
     /* background-color: #d1effa; */
     font-weight: bold;
     p {
-        font-size: 1.2em;
+        font-size: 1.1em;
         margin: 0;
     }
     span {

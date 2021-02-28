@@ -25,8 +25,8 @@ const AppLogoContainer = styled.div`
     justify-content:center;
     position:absolute;
     width:100%;
-    top:20px;
-    right:0;
+    top:25px;
+    left:5px;
     img{
         width:60%;
     }

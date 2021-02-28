@@ -4,7 +4,7 @@ import { FocusBoard } from "../focusBoard/FocusBoard";
 import { MiscBoard } from "../miscBoard/MiscBoard";
 
 const DashboardMainContainer = styled.div`
-    flex: 4 1 0;
+    flex: 3 1 0;
     display: flex;
     justify-content: center;
     align-items: center;

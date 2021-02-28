@@ -18,14 +18,6 @@ const NoTasksIcon = styled.div`
     }
 `;
 
-const NoTasksText = styled.div`
-    p {
-        font-weight: bold;
-        margin: 0;
-        color: #c1c1d7;
-    }
-`;
-
 export default function NoTasks({ allCompleted }) {
     return (
         <NoTasksDiv allCompleted={allCompleted}>

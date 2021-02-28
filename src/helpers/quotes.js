@@ -46,11 +46,6 @@ const quotes = [
         author: "Dale Carnegie",
     },
     {
-        quote: "There are three ways to ultimate success: The first way is to be kind. The second way is to be kind. The third way is to be kind.",
-        length: 146,
-        author: "Mister Rogers",
-    },
-    {
         quote:
             "Success is peace of mind, which is a direct result of self-satisfaction in knowing you made the effort to become the best of which you are capable.",
         length: 162,
@@ -122,89 +117,6 @@ const quotes = [
         author: "Tony Robbins",
     },
     {
-        quote:
-            "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.",
-        length: 327,
-        author: "Steve Jobs",
-    },
-    {
-        quote: "Think like a queen. A queen is not afraid to fail. Failure is another stepping stone to greatness.",
-        length: 116,
-        author: "Oprah Winfrey",
-    },
-    {
-        quote: "The strongest actions for a woman is to love herself, be herself and shine amongst those who never believed she could.",
-        length: 130,
-        author: "Unknown",
-    },
-    {
-        quote: "Whenever you see a successful woman, look out for three men who are going out of their way to try to block her.",
-        length: 132,
-        author: "Yulia Tymoshenko",
-    },
-    {
-        quote:
-            "Some women choose to follow men, and some choose to follow their dreams. If you’re wondering which way to go, remember that your career will never wake up and tell you that it doesn’t love you anymore.",
-        length: 215,
-        author: "Lady Gaga",
-    },
-    {
-        quote: "When a woman becomes her own best friend life is easier.",
-        length: 82,
-        author: "Diane Von Furstenberg",
-    },
-    {
-        quote: "If you want something said, ask a man; if you want something done, ask a woman.",
-        length: 102,
-        author: "Margaret Thatcher",
-    },
-    {
-        quote:
-            "We need women at all levels, including the top, to change the dynamic, reshape the conversation, to make sure women’s voices are heard and heeded, not overlooked and ignored.",
-        length: 194,
-        author: "Sheryl Sandberg",
-    },
-    {
-        quote: "It took me quite a long time to develop a voice, and now that I have it, I am not going to be silent.",
-        length: 124,
-        author: "Madeleine Albright",
-    },
-    {
-        quote: "Women must learn to play the game as men do.",
-        length: 66,
-        author: "Eleanor Roosevelt",
-    },
-    {
-        quote: "I swear, by my life and my love of it, that I will never live for the sake of another man, nor ask another man to live for mine.",
-        length: 141,
-        author: "Ayn Rand",
-    },
-    {
-        quote: "He who conquers himself is the mightiest warrior.",
-        length: 64,
-        author: "Confucius",
-    },
-    {
-        quote: "Try not to become a man of success, but rather become a man of value.",
-        length: 89,
-        author: "Albert Einstein",
-    },
-    {
-        quote: "One man with courage makes a majority.",
-        length: 57,
-        author: "Andrew Jackson",
-    },
-    {
-        quote: "One secret of success in life is for a man to be ready for his opportunity when it comes.",
-        length: 111,
-        author: "Benjamin Disraeli",
-    },
-    {
-        quote: "A man who has committed a mistake and doesn’t correct it is committing another mistake.",
-        length: 108,
-        author: "Confucius Kongzi",
-    },
-    {
         quote: "The successful man will profit from his mistakes and try again in a different way.",
         length: 100,
         author: "Dale Carnegie",
@@ -233,12 +145,6 @@ const quotes = [
         quote: "The most difficult thing is the decision to act, the rest is merely tenacity.",
         length: 95,
         author: "Amelia Earhart",
-    },
-    {
-        quote:
-            "You’ll find that education is just about the only thing lying around loose in this world, and it’s about the only thing a fellow can have as much of as he’s willing to haul away.",
-        length: 193,
-        author: "John Graham",
     },
     {
         quote: "Take the attitude of a student, never be too big to ask questions, never know too much to learn something new.",
@@ -271,50 +177,9 @@ const quotes = [
         author: "Oscar Wilde",
     },
     {
-        quote: "People say nothing is impossible, but I do nothing every day.",
-        length: 81,
-        author: "Winnie the Pooh",
-    },
-    {
-        quote: "Life is like a sewer… what you get out of it depends on what you put into it.",
-        length: 92,
-        author: "Tom Lehrer",
-    },
-    {
         quote: "I always wanted to be somebody, but now I realise I should have been more specific.",
         length: 99,
         author: "Lily Tomlin",
-    },
-    {
-        quote: "Talent wins games, but teamwork and intelligence win championships.",
-        length: 86,
-        author: "Michael Jordan",
-    },
-    {
-        quote:
-            "Teamwork is the ability to work together toward a common vision. The ability to direct individual accomplishments toward organizational objectives. It is the fuel that allows common people to attain uncommon results.",
-        length: 236,
-        author: "Andrew Carnegie",
-    },
-    {
-        quote: "Coming together is a beginning. Keeping together is progress. Working together is success.",
-        length: 105,
-        author: "Henry Ford",
-    },
-    {
-        quote: "Alone we can do so little, together we can do so much.",
-        length: 71,
-        author: "Helen Keller",
-    },
-    {
-        quote: "Remember, teamwork begins by building trust. And the only way to do that is to overcome our need for invulnerability.",
-        length: 138,
-        author: "Patrick Lencioni",
-    },
-    {
-        quote: "I invite everyone to choose forgiveness rather than division, teamwork over personal ambition.",
-        length: 117,
-        author: "Jean-Francois Cope",
     },
     {
         quote: "Just one small positive thought in the morning can change your whole day.",
@@ -383,30 +248,9 @@ const quotes = [
         author: "Germany Kent",
     },
     {
-        quote: "Friday sees more smiles than any other day of the workweek!",
-        length: 74,
-        author: "Kate Summers",
-    },
-    {
-        quote: "Oh! It’s Friday again. Share the love that was missing during the week. In a worthy moment of peace and bliss.",
-        length: 123,
-        author: "S. O’Sade",
-    },
-    {
-        quote: "Every Friday, I like to high five myself for getting through another week on little more than caffeine, willpower, and inappropriate humor.",
-        length: 156,
-        author: "Nanea Hoffman",
-    },
-    {
         quote: "Make a Friday a day to celebrate work well done that you can be proud of knowing that you just didn’t put in time to the next paycheck.",
         length: 153,
         author: "Byron Pulsifer",
-    },
-    {
-        quote:
-            "When you leave work on Friday, leave work. Don’t let technology follow you throughout your weekend (answering text messages and emails) take a break you will be more refreshed to begin the workweek if you have had a break.",
-        length: 244,
-        author: "Catherine Pulsifer",
     },
     {
         quote: "You can get everything in life you want if you will just help enough other people get what they want.",
@@ -442,11 +286,6 @@ const quotes = [
         quote: "Someone's sitting in the shade today because someone planted a tree a long time ago.",
         length: 101,
         author: "Warren Buffet",
-    },
-    {
-        quote: "The only one who can tell you",
-        length: 99,
-        author: "Jessica Ennis",
     },
     {
         quote: "Set your goals high, and don’t stop till you get there.",
@@ -488,12 +327,6 @@ const quotes = [
         quote: "Do not wait for the perfect time and place to enter, for you are already onstage.",
         length: 92,
         author: "Unknown",
-    },
-    {
-        quote:
-            "Fear of what other people will think is the single most paralyzing dynamic in business and in life. The best moment of my life was the day I realized that I no longer give a damn what anybody thinks. That’s enormously liberating and freeing, and it’s the only way to live your life and do your business",
-        length: 319,
-        author: "Cindy Gallop",
     },
     {
         quote: "I will not lose, for even in defeat, there’s a valuable lesson learned, so it evens up for me.",
@@ -606,11 +439,6 @@ const quotes = [
         author: "Robin Sharma",
     },
     {
-        quote: "Make sure your worst enemy doesn’t live between your own two ears.",
-        length: 84,
-        author: "Laird Hamilton",
-    },
-    {
         quote: "It is a rough road that leads to the heights of greatness.",
         length: 83,
         author: "Lucius Annaeus Seneca",
@@ -670,21 +498,6 @@ const quotes = [
         quote: "Courage is like a muscle. We strengthen it by use.",
         length: 64,
         author: "Ruth Gordo",
-    },
-    {
-        quote: "Relentlessly prune bullshit, don't wait to do things that matter, and savor the time you have. That's what you do when life is short.",
-        length: 148,
-        author: "Paul Graham",
-    },
-    {
-        quote: "I think it’s intoxicating when somebody is so unapologetically who they are.",
-        length: 91,
-        author: "Don Cheadle",
-    },
-    {
-        quote: "You can never leave footprints that last if you are always walking on tiptoe.",
-        length: 94,
-        author: "Leymah Gbowee",
     },
     {
         quote: "If you don’t like the road you’re walking, start paving another one.",
@@ -753,29 +566,9 @@ const quotes = [
         author: "Charlie Munger",
     },
     {
-        quote: "You can’t be that kid standing at the top of the waterslide, overthinking it. You have to go down the chute.",
-        length: 120,
-        author: "Tina Fey",
-    },
-    {
-        quote: "When I believe in something, I’m like a dog with a bone.",
-        length: 76,
-        author: "Melissa McCarthy",
-    },
-    {
-        quote: "And the day came when the risk to remain tight in a bud was more painful than the risk it took to blossom.",
-        length: 119,
-        author: "Anaïs Nin",
-    },
-    {
         quote: "The standard you walk past, is the standard you accept.",
         length: 71,
         author: "David Hurley",
-    },
-    {
-        quote: "I've searched all the parks in all the cities and found no statues of committees.",
-        length: 106,
-        author: "Gilbert K. Chesterton",
     },
     {
         quote: "Perfection is not attainable. But if we chase perfection we can catch excellence.",

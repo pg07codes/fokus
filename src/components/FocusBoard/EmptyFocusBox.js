@@ -67,16 +67,16 @@ const CountdownTimerDiv = styled.div`
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
+    font-weight: bold;
     p {
         margin: 0;
-        font-weight: bold;
+        font-size:0.9em;
         color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#000")};
     }
     span {
         margin: 0 2px;
         color: #4a4b46;
-        font-size: 0.8em;
-        font-weight: bold;
+        font-size: 0.7em;
     }
 `;
 
@@ -111,7 +111,7 @@ export function EmptyFocusBox() {
         <FocussedTaskDiv>
             <FocussedTaskPlayer>
                 <FocussedTaskTimer>
-                    <div style={{ width: 110, height: 110 }}>
+                    <div style={{ width: 100, height: 100 }}>
                         <CircularProgressbarWithChildren
                             value={100}
                             styles={buildStyles({
