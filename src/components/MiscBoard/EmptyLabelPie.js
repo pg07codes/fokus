@@ -7,10 +7,10 @@ const EmptyLabelPieDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 180px;
+    width: 150px;
     svg {
         color: #fff;
-        font-size: 8em;
+        font-size: 6em;
     }
 `;
 

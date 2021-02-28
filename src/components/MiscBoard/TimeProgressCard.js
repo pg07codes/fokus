@@ -10,10 +10,10 @@ const ProgressCard = styled.div`
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 95%;
+    width: 90%;
     height: 45%;
     border-radius: 10px;
-    border-left: 8px solid #0000cd;
+    border-left: 5px solid #0000cd;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4); */
     background-color: #f0f8ff;
@@ -29,7 +29,7 @@ const ProgressCardText = styled.div`
     span {
         color: #4a4b46;
         font-weight: bold;
-        font-size: 0.6em;
+        font-size: 0.5em;
     }
 `;
 
@@ -39,11 +39,11 @@ const FormattedTimeDiv = styled.div`
     p {
         margin: 0;
         font-weight: bold;
-        font-size: 1.2em;
+        font-size: 1em;
     }
     span {
         margin: 0 3px;
-        font-size: 0.6em;
+        font-size: 0.5em;
     }
 `;
 
@@ -54,7 +54,7 @@ const absoluteIconStyles = css`
 `;
 
 const ClockIconDiv = styled.div`
-    width:${(p) => (p.noTasks ? "45%" : "25px")};
+    width:${(p) => (p.noTasks ? "45%" : "20px")};
     ${(p) => (p.noTasks ? "" : absoluteIconStyles)}
     svg {
         color: #0000cd;

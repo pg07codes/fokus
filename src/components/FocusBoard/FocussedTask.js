@@ -17,6 +17,7 @@ const FocussedTaskDiv = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    position: relative;
     background-color:#FABB18;
     width: 100%;
     height:100%;
@@ -27,7 +28,6 @@ const FocussedTaskPlayer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: relative;
     width: 100%;
     height: 55%;
     /* background-color: red; */
@@ -103,14 +103,14 @@ const PlayPauseButtonDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
         color: #FABB18;
-        font-size: 1.6em;
+        font-size: 1.5em;
         margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
     }
     cursor: pointer;
@@ -134,7 +134,7 @@ const ResetButtonDiv = styled.div`
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    top: 5px;
+    top: 7px;
     left: 7px;
     background-color: #000;
     cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};

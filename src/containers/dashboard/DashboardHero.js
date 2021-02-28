@@ -13,7 +13,7 @@ const DashboardHeroDiv = styled.div`
     display: flex;
     width: 85%;
     max-width:776px;
-    height: 85%;
+    height: 90%;
     background-color: #fff;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);

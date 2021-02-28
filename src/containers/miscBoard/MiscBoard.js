@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { LabelPie } from "./../../components/MiscBoard/LabelPie";
 import { ProgressRings } from "./../../components/MiscBoard/ProgressRings";
-import {TimeProgressCard} from "./../../components/MiscBoard/TimeProgressCard";
-import {TaskProgressCard} from "./../../components/MiscBoard/TaskProgressCard";
+import { TimeProgressCard } from "./../../components/MiscBoard/TimeProgressCard";
+import { TaskProgressCard } from "./../../components/MiscBoard/TaskProgressCard";
+import { getTodaysQuote } from "./../../helpers/quotes";
 
 const MiscBoardContainer = styled.div`
     flex: 1 1 0;
@@ -13,20 +14,19 @@ const MiscBoardContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    height:100%;
+    height: 100%;
     /* background-color:orange; */
 `;
 
-
 const MainSummaryContainer = styled.div`
     display: flex;
-    align-items:center;
-    justify-content:space-around;
-    width: 90%;
-    max-width: 376px;
-    height: 276px;
+    align-items: center;
+    justify-content: space-around;
+    width: 85%;
+    max-width: 346px;
+    height: 246px;
     margin: 10px 0;
-    border-radius:20px;
+    border-radius: 20px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     /* backface-visibility: hidden;
@@ -62,25 +62,66 @@ const ProgressCardContainer = styled.div`
     /* background-color: #f7adfa; */
 `;
 
+const QuoteAndLabelContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    max-width: 346px;
+    height: 186px;
+    margin: 10px 0;
+    /* background-color: purple; */
+`;
+
 const LabelPieContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    max-width:220px;
-    height: 200px;
-    margin: 10px 0;
+    width: 45%;
+    height: 90%;
     border-radius: 10px;
     background-color: #020202;
-    /* transition:transform 0.2s ease-in-out ;
-    &:hover {
-        transform: scale(1.02);
-    } */
 `;
 
+function getQuoteFontSize(letterCount){
+    let size = -0.0035*letterCount+1.248; // eqn of line with 40 - 1.1em and 180 - 0.6em
+    size = size.toPrecision(3);
+    return `${size}em`
+}
+const QuoteContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    p {
+        margin: 0 3px;
+        font-size: ${p=>getQuoteFontSize(p.length)};
+        font-weight: bold;
+    }
+    span {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 5px;
+        font-size: 0.6em;
+    }
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+        transform: scale(1.1);
+    }
+`;
 
 export function MiscBoard() {
+
+    let todaysQuote = getTodaysQuote();
     return (
         <MiscBoardContainer>
             <MainSummaryContainer>
@@ -88,14 +129,22 @@ export function MiscBoard() {
                     <ProgressRings />
                 </ProgressRingContainer>
                 <ProgressCardContainer>
-                    <TaskProgressCard/>
-                    <TimeProgressCard/>
+                    <TaskProgressCard />
+                    <TimeProgressCard />
                 </ProgressCardContainer>
             </MainSummaryContainer>
 
-            <LabelPieContainer>
-                <LabelPie />
-            </LabelPieContainer>
+            <QuoteAndLabelContainer>
+                <QuoteContainer length={todaysQuote.length}>
+                    <p>
+                        {todaysQuote.quote}
+                    </p>
+                    <span>&mdash; {todaysQuote.author} </span>
+                </QuoteContainer>
+                <LabelPieContainer>
+                    <LabelPie />
+                </LabelPieContainer>
+            </QuoteAndLabelContainer>
         </MiscBoardContainer>
     );
 }

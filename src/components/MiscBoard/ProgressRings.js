@@ -33,7 +33,7 @@ const ProgressRingLegendDiv = styled.div`
     font-weight: bold;
     p {
         margin: 3px 0;
-        font-size: 0.9em;
+        font-size: 0.8em;
         letter-spacing: 2;
     }
 `;
@@ -49,22 +49,22 @@ const LegendDataDiv = styled.div`
 
 const TextDiv = styled.div`
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.7em;
     p {
-        margin: 0 5px;
+        margin: 0 3px;
     }
 `;
 
 const PercentTextDiv = styled.div`
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.7em;
     margin-left: auto;
     color: #000;
 `;
 
 const LegendColorDot = styled.div`
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background-color: ${(p) => p.color};
     border-radius: 50%;
 `;
@@ -81,23 +81,23 @@ export function ProgressRings() {
     return (
         <ProgressRingBox>
             <ProgressRingDiv>
-                <div style={{ width: 130, height: 130 }}>
+                <div style={{ width: 115, height: 115 }}>
                     <CircularProgressbarWithChildren
                         value={taskCompletionPercent}
                         styles={buildStyles({
                             pathColor: "#77dd77",
                             trailColor: "#FFE39E",
                         })}
-                        strokeWidth={10}
+                        strokeWidth={11}
                     >
-                        <div style={{ width: 90, height: 90 }}>
+                        <div style={{ width: 75, height: 75 }}>
                             <CircularProgressbar
                                 value={timeCompletionPercent}
                                 styles={buildStyles({
                                     pathColor: "#0000cd",
                                     trailColor: "#FFE39E",
                                 })}
-                                strokeWidth={14}
+                                strokeWidth={16}
                             />
                         </div>
                     </CircularProgressbarWithChildren>

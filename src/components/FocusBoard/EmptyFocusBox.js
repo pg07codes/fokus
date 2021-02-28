@@ -1,9 +1,7 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { ResetIcon } from "./../../components/customIcons";
 import { FaPen } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
 import ReactTooltip from "react-tooltip";
@@ -13,6 +11,7 @@ const FocussedTaskDiv = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    position: relative;
     background-color: #fabb18;
     width: 100%;
     height: 100%;
@@ -23,7 +22,6 @@ const FocussedTaskPlayer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: relative;
     width: 100%;
     height: 55%;
     border-radius: 10px;
@@ -96,40 +94,14 @@ const PlayPauseButtonDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background-color: #000;
     border-radius: 50%;
     margin: 10px 20px;
     svg {
         color: #fabb18;
-        font-size: 1em;
-    }
-`;
-
-const UpdateTimeButtonDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-`;
-
-const ResetButtonDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    background-color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#0000cd")};
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    top: 5px;
-    left: 7px;
-    background-color: #000;
-    svg {
-        color: #fabb18;
-        width: 20px;
+        font-size: 0.9em;
     }
 `;
 
