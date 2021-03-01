@@ -10,7 +10,7 @@ const ProgressCard = styled.div`
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 90%;
+    width: 95%;
     height: 45%;
     border-radius: 10px;
     border-left: 5px solid #0000cd;
@@ -23,13 +23,13 @@ const ProgressCardText = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 85%;
+    width: 90%;
     height: 45%;
     /* background-color: #d1effa; */
     span {
         color: #4a4b46;
         font-weight: bold;
-        font-size: 0.5em;
+        font-size: 0.7em;
     }
 `;
 
@@ -39,7 +39,7 @@ const FormattedTimeDiv = styled.div`
     p {
         margin: 0;
         font-weight: bold;
-        font-size: 1em;
+        font-size: 1.1em;
     }
     span {
         margin: 0 3px;

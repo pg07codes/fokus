@@ -28,12 +28,12 @@ const ProgressRingLegendDiv = styled.div`
     justify-content: center;
     width: 80%;
     height: 30%;
-    /* background-color: #1fadef; */
+    /* background-color: cyan; */
     color: #FABB18;
     font-weight: bold;
     p {
         margin: 3px 0;
-        font-size: 0.8em;
+        font-size: 0.9em;
         letter-spacing: 2;
     }
 `;
@@ -49,7 +49,7 @@ const LegendDataDiv = styled.div`
 
 const TextDiv = styled.div`
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.8em;
     p {
         margin: 0 3px;
     }

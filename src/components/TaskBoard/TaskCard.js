@@ -69,7 +69,7 @@ const TaskStatusDiv = styled.div`
         cursor: text;
     }
     img {
-        width: ${(p) => (p.isCompleted ? "35px" : "60px")};
+        width: ${(p) => (p.isCompleted ? "40px" : "60px")};
     }
 `;
 

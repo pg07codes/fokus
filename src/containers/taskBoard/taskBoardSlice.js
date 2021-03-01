@@ -123,9 +123,38 @@ export const tasksSlice = createSlice({
         updateOrder: (tasks, { payload }) => {
             tasks.taskArray = payload;
         },
-
         focusOnTask: (tasks, { payload }) => {
-            tasks.meta.focussedTaskIndex = payload;
+            if (typeof payload === "number") {
+                tasks.meta.focussedTaskIndex = payload;
+            } else {
+                // done tasks, remaining time = 0 tasks shouldnt be picked.
+                let completedTaskStartIndex = tasks.meta.completedTaskStartIndex !== -1 ? tasks.meta.completedTaskStartIndex : tasks.taskArray.length;
+                let index = -1;
+                if (payload === "smallest") {
+                    let time,
+                        lowest = Number.POSITIVE_INFINITY;
+                    for (let i = 0; i < completedTaskStartIndex; i++) {
+                        time = tasks.taskArray[i].remainingTime;
+                        if(time<1000) continue; // rem. time less than second(1000ms)
+                        if (time < lowest) {
+                            lowest = time;
+                            index = i;
+                        }
+                    }
+                } else if (payload === "largest") {
+                    let time,
+                        highest = Number.NEGATIVE_INFINITY;
+                    for (let i = 0; i < completedTaskStartIndex; i++) {
+                        time = tasks.taskArray[i].remainingTime;
+                        if(time<1000) continue; // rem. time less than second(1000ms)
+                        if (time > highest) {
+                            highest = time;
+                            index = i;
+                        }
+                    }
+                }
+                tasks.meta.focussedTaskIndex = index;
+            }
         },
         resetFocussedTask: (tasks) => {
             tasks.meta.focussedTaskIndex = -1;

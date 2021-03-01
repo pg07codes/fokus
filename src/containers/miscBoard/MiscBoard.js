@@ -42,7 +42,7 @@ const MainSummaryContainer = styled.div`
 const ProgressRingContainer = styled.div`
     display: flex;
     width: 50%;
-    height: 90%;
+    height: 95%;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);*/
@@ -55,7 +55,7 @@ const ProgressCardContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 40%;
-    height: 90%;
+    height: 95%;
     border-radius: 10px;
     /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);

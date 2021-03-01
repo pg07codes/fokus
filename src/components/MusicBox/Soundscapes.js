@@ -65,7 +65,7 @@ const SoundOptionsInput = styled.div`
     }
     span {
         margin: 0;
-        font-size: 0.7em;
+        font-size: 0.8em;
         font-weight: bold;
         color: ${(p) => (p.isSelectedSound ? "#FABB18" : "#4a4b46")};
         cursor: pointer;

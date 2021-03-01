@@ -6,6 +6,7 @@ import { BiExclude } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import logo  from "./../../images/logo.svg";
+import namedLogoLight  from "./../../images/namedLogoDark.svg";
 
 const MenuContainer = styled.div`
     width: 10%;
@@ -14,13 +15,14 @@ const MenuContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     background-color: #020202;
-    border-radius: 0 15px 15px 0;
+    border-radius: 0 10px 10px 0;
     border-left: 15px solid #fabb18;
     position:relative;
 `;
 
 const AppLogoContainer = styled.div`
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
     position:absolute;
@@ -30,7 +32,21 @@ const AppLogoContainer = styled.div`
     img{
         width:60%;
     }
-    /* background-color:white; */
+    /* background-color:pink; */
+`;
+
+const AppTextLogoContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:absolute;
+    width:100%;
+    bottom:15px;
+    img{
+        width:75%;
+    }
+    /* background-color:purple; */
 `;
 
 const activeClassName = "nav-item-active";
@@ -87,6 +103,10 @@ export function Menu() {
                 <MdSettings data-tip="" data-for="settings" />
                 <ReactTooltip id="settings" getContent={() => "Settings"} />
             </MenuOptions>
+
+            <AppTextLogoContainer>
+                <img src={namedLogoLight} alt="fokus"/>
+            </AppTextLogoContainer>
         </MenuContainer>
     );
 }

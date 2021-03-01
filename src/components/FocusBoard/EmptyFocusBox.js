@@ -5,6 +5,8 @@ import "react-circular-progressbar/dist/styles.css";
 import { FaPen } from "react-icons/fa";
 import { CgNotes } from "react-icons/cg";
 import ReactTooltip from "react-tooltip";
+import { useDispatch } from "react-redux";
+import { focusOnTask } from "../../containers/taskBoard/taskBoardSlice";
 
 const FocussedTaskDiv = styled.div`
     display: flex;
@@ -40,7 +42,7 @@ const FocussedTaskContent = styled.div`
     width: 90%;
     max-width: 376px;
     border-radius: 10px;
-    border:3px solid black;
+    border: 3px solid black;
     word-wrap: break-word;
     svg {
         font-size: 3em;
@@ -70,7 +72,7 @@ const CountdownTimerDiv = styled.div`
     font-weight: bold;
     p {
         margin: 0;
-        font-size:0.9em;
+        font-size: 0.9em;
         color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#000")};
     }
     span {
@@ -105,7 +107,66 @@ const PlayPauseButtonDiv = styled.div`
     }
 `;
 
-export function EmptyFocusBox() {
+const HelpPickTaskContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+    /* background-color: aqua; */
+`;
+
+const HelpPickTaskLabel = styled.div`
+    display: flex;
+    align-items: center;
+    /* flex-direction: column; */
+    justify-content: center;
+    width: 45%;
+    height: 95%;
+    
+    p {
+        margin: 0 3px;
+        font-size: 0.9em;
+        font-weight: bold;
+        /* color: #fabb18; */
+    }
+    svg {
+        font-size: 1.6em;
+    }
+    /* background-color: cyan; */
+`;
+
+const HelpPickTaskButtonBox = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40%;
+    height: 95%;
+    /* background-color: lightblue; */
+`;
+
+const HelpPickTaskButton = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 40%;
+    border-radius: 5px;
+    border: 2px solid #fabb18;
+    span {
+        font-size: 0.7em;
+        font-weight: bold;
+    }
+    cursor: pointer;
+    &:hover {
+        color: white;
+        background-color: #020202;
+    }
+`;
+
+export function EmptyFocusBox({ noTasks,noChoice }) {
+    const dispatch = useDispatch();
 
     return (
         <FocussedTaskDiv>
@@ -133,13 +194,30 @@ export function EmptyFocusBox() {
                 <FocussedTaskController>
                     <PlayPauseButtonDiv data-tip="" data-for="Create">
                         <FaPen />
-                        <ReactTooltip id="Create" getContent={()=>"Focus on task"} />
+                        <ReactTooltip id="Create" getContent={() => (noTasks ? "No task" : "Focus on task")} />
                     </PlayPauseButtonDiv>
                 </FocussedTaskController>
-
             </FocussedTaskPlayer>
             <FocussedTaskContent>
-                <CgNotes />
+                {(noChoice || noTasks) ? (
+                    <CgNotes />
+                ) : (
+                    <HelpPickTaskContainer>
+                        <HelpPickTaskLabel>
+                            <CgNotes />
+                            <p>Focus on</p>
+                        </HelpPickTaskLabel>
+
+                        <HelpPickTaskButtonBox>
+                            <HelpPickTaskButton onClick={() => dispatch(focusOnTask("smallest"))}>
+                                <span>Smallest task</span>
+                            </HelpPickTaskButton>
+                            <HelpPickTaskButton onClick={() => dispatch(focusOnTask("largest"))}>
+                                <span>Biggest task</span>
+                            </HelpPickTaskButton>
+                        </HelpPickTaskButtonBox>
+                    </HelpPickTaskContainer>
+                )}
             </FocussedTaskContent>
         </FocussedTaskDiv>
     );

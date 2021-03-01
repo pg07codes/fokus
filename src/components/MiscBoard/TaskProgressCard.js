@@ -9,7 +9,7 @@ const ProgressCard = styled.div`
     justify-content: space-around;
     align-items: center;
     position: relative;
-    width: 90%;
+    width: 95%;
     height: 45%;
     border-radius: 10px;
     border-left: 5px solid #77dd77;
@@ -22,17 +22,17 @@ const ProgressCardText = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 85%;
+    width: 90%;
     height: 45%;
     /* background-color: #d1effa; */
     font-weight: bold;
     p {
-        font-size: 1.1em;
+        font-size: 1.2em;
         margin: 0;
     }
     span {
         color: #4a4b46;
-        font-size: 0.5em;
+        font-size: 0.7em;
     }
 `;
 

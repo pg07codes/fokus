@@ -43,14 +43,16 @@ const MusicBoxContainer = styled.div`
     background-color: #f7f7fa; */
 `;
 
+// this can be improved as right now whole focus board is re-rendered and not just the focus task containter
+
 export function FocusBoard() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
-    const totalTasksCount = useSelector((s) => s.tasks.taskArray.length);
+    const noTasks = useSelector((s) => s.tasks.taskArray.length===s.tasks.meta.completedTasksCount?true:false);
+    const noChoice = useSelector((s) => s.tasks.taskArray.length-s.tasks.meta.completedTasksCount<=1?true:false);
     return (
         <FocusBoardContainer>
             <FocussedTaskContainer>
-                {/* <DayDate /> */}
-                {focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox />}
+                {focussedTaskIndex !== -1 ? <FocussedTask /> : <EmptyFocusBox noChoice={noChoice} noTasks={noTasks}/>}
             </FocussedTaskContainer>
             <MusicBoxContainer>
                 <Soundscapes />
