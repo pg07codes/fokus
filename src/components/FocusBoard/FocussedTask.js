@@ -2,13 +2,14 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer, toggleSoundscapeState } from "./../../containers/taskBoard/taskBoardSlice";
-import useTimer , {useTimer2}from "../../hooks/useTimer";
+import useTimer, { useTimer2 } from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
-import { formattedTimeStringv2} from "./../../helpers";
+import { formattedTimeStringv2 } from "./../../helpers";
+import { MIN_TO_MS } from "../../helpers/constants";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -18,10 +19,10 @@ const FocussedTaskDiv = styled.div`
     justify-content: center;
     flex-direction: column;
     position: relative;
-    background-color:#FABB18;
+    background-color: #fabb18;
     width: 100%;
-    height:100%;
-    border-radius:20px;
+    height: 100%;
+    border-radius: 20px;
 `;
 
 const FocussedTaskPlayer = styled.div`
@@ -43,19 +44,35 @@ const FocussedTaskContent = styled.div`
     width: 90%;
     max-width: 376px;
     border-radius: 10px;
-    border:3px solid black;
+    border: 3px solid black;
     word-wrap: break-word;
-    text-shadow:0 0 4px rgb(248,185,23,0.4);
+    text-shadow: 0 0 4px rgb(248, 185, 23, 0.4);
     p {
         min-width: 0;
         font-weight: bold;
         margin: 3px;
     }
+    position: relative;
     /* -webkit-box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8);
     box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8); */
     background-color: #fff;
 `;
 
+const TotalTaskTimeBadge = styled.div`
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    p {
+        font-size: 0.7em;
+        margin: 3px 5px;
+    }
+    background-color: #000;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+`;
 
 const FocussedTaskTimer = styled.div`
     display: flex;
@@ -109,7 +126,7 @@ const PlayPauseButtonDiv = styled.div`
     border-radius: 50%;
     margin: 10px 20px;
     svg {
-        color: #FABB18;
+        color: #fabb18;
         font-size: 1.5em;
         margin-left: ${(p) => (p.isPlayBtn ? "3px" : "0")};
     }
@@ -122,7 +139,8 @@ const UpdateTimeButtonDiv = styled.div`
     align-items: center;
     width: 25px;
     height: 25px;
-    cursor: pointer;
+    cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};
+    color: ${(p) => (p.isDisabled ? "#777672" : "#000")};
 `;
 
 const ResetButtonDiv = styled.div`
@@ -130,16 +148,14 @@ const ResetButtonDiv = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#0000cd")};
     border-radius: 50%;
     width: 30px;
     height: 30px;
     top: 7px;
     left: 7px;
     background-color: #000;
-    cursor: ${(p) => (p.isDisabled ? "default" : "pointer")};
     svg {
-        color: #FABB18;
+        color: #fabb18;
         width: 20px;
     }
 `;
@@ -166,7 +182,7 @@ export function FocussedTask() {
         (deltaMS) => {
             if (focussedTask === null) return;
             else if (focussedTask.remainingTime > 0) {
-                dispatch(tick({focussedTaskIndex,deltaMS}));
+                dispatch(tick({ focussedTaskIndex, deltaMS }));
             } else if (focussedTask.remainingTime === 0) {
                 dispatch(toggleSoundscapeState(false));
                 dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
@@ -177,7 +193,8 @@ export function FocussedTask() {
     );
 
     function updateTaskTimeHandler(val) {
-        if (focussedTask.isCompleted) return;
+        if (focussedTask.time + val * MIN_TO_MS <= 0) return;
+        if (focussedTask.time + val * MIN_TO_MS >= 120 * MIN_TO_MS) return;
         if (focussedTask.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
         dispatch(toggleSoundscapeState(false));
@@ -196,9 +213,11 @@ export function FocussedTask() {
     let countdownMins = countdownObj.mins;
     let countdownSecs = countdownObj.secs;
 
+    const totalTaskTimeObj = formattedTimeStringv2(focussedTask.time);
+    let totalTaskMins = totalTaskTimeObj.mins;
+
     return (
         <FocussedTaskDiv>
-
             <FocussedTaskPlayer>
                 <FocussedTaskTimer>
                     <div style={{ width: 100, height: 100 }}>
@@ -222,14 +241,14 @@ export function FocussedTask() {
                 </FocussedTaskTimer>
 
                 <FocussedTaskController>
-                    <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(5)}>
+                    <UpdateTimeButtonDiv isDisabled={focussedTask.time + 5 * MIN_TO_MS >= 120 * MIN_TO_MS} onClick={() => updateTaskTimeHandler(5)}>
                         <h4>+5</h4>
                     </UpdateTimeButtonDiv>
                     <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => playPauseHandler(focussedTaskIndex, focussedTask.isRunning)}>
                         {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                     </PlayPauseButtonDiv>
 
-                    <UpdateTimeButtonDiv onClick={() => updateTaskTimeHandler(-5)}>
+                    <UpdateTimeButtonDiv isDisabled={focussedTask.time - 5 * MIN_TO_MS <= 0} onClick={() => updateTaskTimeHandler(-5)}>
                         <h4>-5</h4>
                     </UpdateTimeButtonDiv>
                 </FocussedTaskController>
@@ -245,6 +264,9 @@ export function FocussedTask() {
             </FocussedTaskPlayer>
             <FocussedTaskContent>
                 <p>{focussedTask.content}</p>
+                <TotalTaskTimeBadge>
+                    <p>{totalTaskMins} m</p>
+                </TotalTaskTimeBadge>
             </FocussedTaskContent>
         </FocussedTaskDiv>
     );

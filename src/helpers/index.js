@@ -1,7 +1,7 @@
 export function formattedTimeString(x) {
-    x = Math.floor(x/1000);
+    x = Math.floor(x / 1000);
     let secs = x % 60;
-    let mins = Math.floor(x/ 60);
+    let mins = Math.floor(x / 60);
 
     if (secs == 0) {
         secs = `00`;
@@ -18,9 +18,9 @@ export function formattedTimeString(x) {
 }
 
 export function formattedTimeStringv2(x) {
-    x = Math.floor(x/1000);
+    x = Math.floor(x / 1000);
     let secs = x % 60;
-    let mins = Math.floor(x/ 60);
+    let mins = Math.floor(x / 60);
 
     if (secs == 0) {
         secs = `00`;
@@ -49,10 +49,10 @@ export function getFormattedDate() {
 }
 
 export function getFormattedListTimeSummary(x) {
-    x = Math.floor(x/1000);
+    x = Math.floor(x / 1000);
     let mins = Math.floor((x % 3600) / 60);
     let hours = Math.floor(x / 3600);
-    
+
     if (mins == 0) {
         mins = `00`;
     } else if (mins < 10) {
@@ -73,4 +73,19 @@ export function debounce(fn, wait) {
         clearTimeout(t);
         t = setTimeout(() => fn.apply(this, arguments), wait);
     };
+}
+
+export function getOrdinalSuffix(i) {
+    let j = i % 10,
+        k = i % 100;
+    if (j == 1 && k != 11) {
+        return "st";
+    }
+    if (j == 2 && k != 12) {
+        return "nd";
+    }
+    if (j == 3 && k != 13) {
+        return "rd";
+    }
+    return "th";
 }

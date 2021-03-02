@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.f4280e06.chunk.css",
-    "main.js": "/static/js/main.a60f1135.chunk.js",
-    "main.js.map": "/static/js/main.a60f1135.chunk.js.map",
+    "main.js": "/static/js/main.fce76172.chunk.js",
+    "main.js.map": "/static/js/main.fce76172.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.aefb92de.js",
     "runtime-main.js.map": "/static/js/runtime-main.aefb92de.js.map",
     "static/css/2.6c0f60ba.chunk.css": "/static/css/2.6c0f60ba.chunk.css",
@@ -16,6 +16,7 @@
     "static/media/alphaWave.d69179ba.svg": "/static/media/alphaWave.d69179ba.svg",
     "static/media/bell.08f34c07.svg": "/static/media/bell.08f34c07.svg",
     "static/media/bell.91678370.mp3": "/static/media/bell.91678370.mp3",
+    "static/media/betaLogo.3b10d8d5.svg": "/static/media/betaLogo.3b10d8d5.svg",
     "static/media/bulb.b245cbae.svg": "/static/media/bulb.b245cbae.svg",
     "static/media/ding.48474537.mp3": "/static/media/ding.48474537.mp3",
     "static/media/forest.3adc2705.mp3": "/static/media/forest.3adc2705.mp3",
@@ -35,6 +36,6 @@
     "static/css/2.6c0f60ba.chunk.css",
     "static/js/2.1e6f0944.chunk.js",
     "static/css/main.f4280e06.chunk.css",
-    "static/js/main.a60f1135.chunk.js"
+    "static/js/main.fce76172.chunk.js"
   ]
 }

@@ -52,7 +52,7 @@ const ProgressRingContainer = styled.div`
 const ProgressCardContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 40%;
     height: 95%;

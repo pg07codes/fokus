@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BsCalendarFill } from "react-icons/bs";
-import { getFormattedDate } from "./../../helpers";
+import { getFormattedDate  , getOrdinalSuffix} from "../../helpers";
 
 const DayDateDiv = styled.div`
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: space-around;
-    width: 100%;
-    height: 15%;
-    background-color: #000;
-    border-radius: 10px;
+    width: 25%;
+    height: 55%;
+    /* background-color:grey; */
 `;
 
 const CalendarIconDiv = styled.div`
@@ -19,23 +19,26 @@ const CalendarIconDiv = styled.div`
     align-items: center;
     width: 20%;
     svg {
-        color: #fff;
-        font-size: 1.7em;
+        color: #fabb18;
+        font-size: 1.4em;
     }
 `;
 
 const DayDateText = styled.div`
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
     width: 65%;
     font-weight: bold;
-    font-size: 0.9em;
-    color:#fff;
+    font-size: 0.8em;
     span {
     }
     p {
         margin: 0;
+    }
+    sup{
+        font-size:0.5em;
     }
 `;
 
@@ -43,17 +46,17 @@ export function DayDate() {
     const DateObj = getFormattedDate();
     return (
         <DayDateDiv>
+            <CalendarIconDiv>
+                <BsCalendarFill />
+            </CalendarIconDiv>
             <DayDateText>
                 <span>
-                    {DateObj.day} {DateObj.date}
+                    {DateObj.day} {DateObj.date}<sup>{getOrdinalSuffix(DateObj.date)}</sup>
                 </span>
                 <p>
                     {DateObj.month} {DateObj.year}
                 </p>
             </DayDateText>
-            <CalendarIconDiv>
-                <BsCalendarFill />
-            </CalendarIconDiv>
         </DayDateDiv>
     );
 }

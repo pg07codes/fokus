@@ -5,7 +5,6 @@ import "react-circular-progressbar/dist/styles.css";
 import { FocussedTask } from "./../../components/FocusBoard/FocussedTask";
 import { EmptyFocusBox } from "./../../components/FocusBoard/EmptyFocusBox";
 import { Soundscapes } from "./../../components/MusicBox/Soundscapes";
-import { DayDate } from "../../components/FocusBoard/DayDate";
 
 const FocusBoardContainer = styled.div`
     flex: 1 1 0;
