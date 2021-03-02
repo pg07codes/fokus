@@ -3,16 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Slider from "react-input-slider";
 import { updateSoundscapeVolume } from "./../../containers/taskBoard/taskBoardSlice";
 import { debounce } from "./../../helpers";
-import styled from "styled-components";
 
-const VolumeFeedbackText = styled.div`
-    span{
-        font-weight:bold;
-        font-size:0.7em;
-    }
-`;
-
-export function MusicVolumeControl({ isDisabled }) {
+export function MusicVolumeControl() {
     const ssVolume = useSelector((s) => s.tasks.soundscape.volume);
     const dispatch = useDispatch();
     const [volume, setVolume] = useState(ssVolume * 100);
@@ -30,7 +22,6 @@ export function MusicVolumeControl({ isDisabled }) {
         <>
             <Slider
                 axis="x"
-                disabled={isDisabled}
                 xstep={5}
                 xmin={0}
                 xmax={100}
@@ -40,21 +31,19 @@ export function MusicVolumeControl({ isDisabled }) {
                     track: {
                         backgroundColor: "#c1c1d7",
                         width: "100%",
+                        cursor: "pointer",
                     },
                     active: {
                         backgroundColor: "#FABB18",
                     },
                     thumb: {
-                        backgroundColor:"#020202"
-                      },
+                        backgroundColor: "#020202",
+                    },
                     disabled: {
                         opacity: 0.2,
                     },
                 }}
             />
-            {/* <VolumeFeedbackText>
-                <span>{volume}</span>
-            </VolumeFeedbackText> */}
         </>
     );
 }

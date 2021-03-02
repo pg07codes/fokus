@@ -120,7 +120,7 @@ const QuoteContainer = styled.div`
         bottom: 0;
         right: 0;
         margin: 5px;
-        font-size: 0.7em;
+        font-size: 0.65em;
         color:#fabb18;
     }
     transition: transform 0.2s ease-in-out;

@@ -10,6 +10,7 @@ import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { formattedTimeStringv2 } from "./../../helpers";
 import { MIN_TO_MS } from "../../helpers/constants";
+import ReactTooltip from "react-tooltip";
 
 let dingSoundElement = new Audio(dingSound);
 
@@ -50,6 +51,7 @@ const FocussedTaskContent = styled.div`
     p {
         min-width: 0;
         font-weight: bold;
+        font-size:0.9em;
         margin: 3px;
     }
     position: relative;
@@ -62,16 +64,19 @@ const TotalTaskTimeBadge = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
-    color: #fff;
     border-radius: 3px;
     p {
         font-size: 0.7em;
         margin: 3px 5px;
     }
-    background-color: #000;
+    background-color: #fabb18;
     position: absolute;
     top: 3px;
     right: 3px;
+    opacity:0.6;
+    &:hover{
+        opacity:1;
+    }
 `;
 
 const FocussedTaskTimer = styled.div`
@@ -153,6 +158,7 @@ const ResetButtonDiv = styled.div`
     height: 30px;
     top: 7px;
     left: 7px;
+    cursor:pointer;
     background-color: #000;
     svg {
         color: #fabb18;
@@ -193,8 +199,8 @@ export function FocussedTask() {
     );
 
     function updateTaskTimeHandler(val) {
-        if (focussedTask.time + val * MIN_TO_MS <= 0) return;
-        if (focussedTask.time + val * MIN_TO_MS >= 120 * MIN_TO_MS) return;
+        if (focussedTask.time + val * MIN_TO_MS < 0) return;
+        if (focussedTask.time + val * MIN_TO_MS > 120 * MIN_TO_MS) return;
         if (focussedTask.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         dispatch(updateTaskTimeByVal({ focussedTaskIndex, val }));
         dispatch(toggleSoundscapeState(false));
@@ -241,14 +247,14 @@ export function FocussedTask() {
                 </FocussedTaskTimer>
 
                 <FocussedTaskController>
-                    <UpdateTimeButtonDiv isDisabled={focussedTask.time + 5 * MIN_TO_MS >= 120 * MIN_TO_MS} onClick={() => updateTaskTimeHandler(5)}>
+                    <UpdateTimeButtonDiv isDisabled={focussedTask.time + 5 * MIN_TO_MS > 120 * MIN_TO_MS} onClick={() => updateTaskTimeHandler(5)}>
                         <h4>+5</h4>
                     </UpdateTimeButtonDiv>
                     <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => playPauseHandler(focussedTaskIndex, focussedTask.isRunning)}>
                         {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
                     </PlayPauseButtonDiv>
 
-                    <UpdateTimeButtonDiv isDisabled={focussedTask.time - 5 * MIN_TO_MS <= 0} onClick={() => updateTaskTimeHandler(-5)}>
+                    <UpdateTimeButtonDiv isDisabled={focussedTask.time - 5 * MIN_TO_MS < 0} onClick={() => updateTaskTimeHandler(-5)}>
                         <h4>-5</h4>
                     </UpdateTimeButtonDiv>
                 </FocussedTaskController>
@@ -258,14 +264,18 @@ export function FocussedTask() {
                         dispatch(toggleSoundscapeState(false));
                         dispatch(resetTaskTimer(focussedTaskIndex));
                     }}
+                    data-for="reset"
+                    data-tip=""
                 >
                     <ResetIcon />
+                    <ReactTooltip id="reset" getContent={() =>"Reset"} />
                 </ResetButtonDiv>
             </FocussedTaskPlayer>
             <FocussedTaskContent>
                 <p>{focussedTask.content}</p>
-                <TotalTaskTimeBadge>
-                    <p>{totalTaskMins} m</p>
+                <TotalTaskTimeBadge data-tip="" data-for="totalTimeBadge">
+                    <p>{totalTaskMins}m</p>
+                    <ReactTooltip id="totalTimeBadge" getContent={() =>"Task's total time"} />
                 </TotalTaskTimeBadge>
             </FocussedTaskContent>
         </FocussedTaskDiv>

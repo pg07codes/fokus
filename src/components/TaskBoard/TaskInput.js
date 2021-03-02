@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { create, incrementGlobalKey, focusOnTask, updateLabelCount } from "./../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillClockCircle } from "react-icons/ai";
-
+import { TaskFeedback } from "./TaskFeedback";
+import { debounce } from "../../helpers";
 
 const TaskInputContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0;
+    margin: 20px 0 10px 0;
     width: 90%;
-    max-width:396px;
+    max-width: 396px;
     border-radius: 10px;
     background-color: #fff;
     height: 50px;
@@ -29,7 +30,7 @@ const TaskContentInputDiv = styled.div`
     svg {
         font-size: 1.3em;
         margin-right: 5px;
-        color: #FABB18;
+        color: #fabb18;
     }
 `;
 
@@ -58,7 +59,7 @@ const TaskTimeInputDiv = styled.div`
     }
     svg {
         font-size: 1.2em;
-        color: #FABB18;
+        color: #fabb18;
     }
 `;
 
@@ -84,15 +85,21 @@ const TaskTimeInputField = styled.input`
 `;
 
 export default function TaskInput() {
+
     const [task, setTask] = useState("");
     const [time, setTime] = useState(20);
+
+    const [generateFeedbackForTask, setGenerateFeedbackForTask] = useState(undefined);
+    const [generateFeedbackForTime, setGenerateFeedbackForTime] = useState(undefined);
+    const [isInputValid,setInputValid] = useState(false);
+
     let taskContentInputRef, taskTimeInputRef;
     const meta = useSelector((s) => s.tasks.meta);
     const labels = useSelector((s) => s.tasks.labels);
     const dispatch = useDispatch();
 
     function submitTask(e) {
-        if (e.key === "Enter" && task.trim().length >= 1) {
+        if (e.key === "Enter" && task.trim().length >= 1 && isInputValid) {
             let temp = task.trim().split(" ");
             // add a max time limit
             let taskTime = time;
@@ -105,7 +112,7 @@ export default function TaskInput() {
                     let found = false;
                     for (let validLabel in labels) {
                         found = validLabel.includes(userLabel);
-                        console.log(userLabel,validLabel)
+                        console.log(userLabel, validLabel);
                         if (found) {
                             label = validLabel;
                             temp.pop();
@@ -139,29 +146,51 @@ export default function TaskInput() {
         }
     }
 
+    const debouncedGenerateInputFeedback = useCallback(
+        debounce((task, time) => {
+            if (task !== undefined) setGenerateFeedbackForTask(task);
+            if (time !== undefined) setGenerateFeedbackForTime(time);
+        }, 150),
+        []
+    );
+
+    function onTaskInputChangeHandler(task) {
+        setTask(task);
+        debouncedGenerateInputFeedback(task, undefined);
+    }
+
+    function onTimeInputChangeHandler(time) {
+        setTime(time);
+        debouncedGenerateInputFeedback(undefined, time);
+    }
+
+    // improve logic - both onKeyDown and onChange executing - combining will be better.
     return (
-        <TaskInputContainer>
-            <TaskContentInputDiv>
-                <AiFillPlusCircle onClick={() => taskContentInputRef.focus()} />
-                <TaskContentInputField
-                    type="text"
-                    placeholder="i have to focus on ..."
-                    ref={(el) => (taskContentInputRef = el)}
-                    onChange={(e) => setTask(e.target.value)}
-                    onKeyDown={submitTask}
-                />
-            </TaskContentInputDiv>
-            <TaskTimeInputDiv>
-                <AiFillClockCircle onClick={() => taskTimeInputRef.focus()} />
-                <TaskTimeInputField
-                    type="number"
-                    placeholder="20"
-                    ref={(el) => (taskTimeInputRef = el)}
-                    onChange={(e) => setTime(e.target.value)}
-                    onKeyDown={submitTask}
-                />
-                <span>mins</span>
-            </TaskTimeInputDiv>
-        </TaskInputContainer>
+        <>
+            <TaskInputContainer>
+                <TaskContentInputDiv>
+                    <AiFillPlusCircle onClick={() => taskContentInputRef.focus()} />
+                    <TaskContentInputField
+                        type="text"
+                        placeholder="i have to focus on ..."
+                        ref={(el) => (taskContentInputRef = el)}
+                        onChange={(e) => onTaskInputChangeHandler(e.target.value)}
+                        onKeyDown={submitTask}
+                    />
+                </TaskContentInputDiv>
+                <TaskTimeInputDiv>
+                    <AiFillClockCircle onClick={() => taskTimeInputRef.focus()} />
+                    <TaskTimeInputField
+                        type="number"
+                        placeholder="20"
+                        ref={(el) => (taskTimeInputRef = el)}
+                        onChange={(e) => onTimeInputChangeHandler(e.target.value)}
+                        onKeyDown={submitTask}
+                    />
+                    <span>mins</span>
+                </TaskTimeInputDiv>
+            </TaskInputContainer>
+            <TaskFeedback task={generateFeedbackForTask} time={generateFeedbackForTime} setInputValid={setInputValid}/>
+        </>
     );
 }

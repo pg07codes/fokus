@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { FaPen } from "react-icons/fa";
+import { HiClock } from "react-icons/hi";
 import { CgNotes } from "react-icons/cg";
 import ReactTooltip from "react-tooltip";
 import { useDispatch } from "react-redux";
@@ -70,15 +71,9 @@ const CountdownTimerDiv = styled.div`
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
     font-weight: bold;
-    p {
-        margin: 0;
-        font-size: 0.9em;
-        color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#000")};
-    }
-    span {
-        margin: 0 2px;
-        color: #4a4b46;
-        font-size: 0.7em;
+    svg{
+        color:#fabb18;
+        font-size:1.6em;
     }
 `;
 
@@ -182,10 +177,7 @@ export function EmptyFocusBox({ noTasks,noChoice }) {
                             strokeWidth={8}
                         >
                             <CountdownTimerDiv>
-                                <p>00</p>
-                                <span>m</span>
-                                <p>00</p>
-                                <span>s</span>
+                                <HiClock/>
                             </CountdownTimerDiv>
                         </CircularProgressbarWithChildren>
                     </div>

@@ -13,10 +13,18 @@ import NoTasks from "../../components/TaskBoard/NoTasks";
 const TaskBoardContainer = styled.div`
     flex: 1 1 0;
     display: flex;
-    min-width:396px;
+    min-width: 396px;
     flex-direction: column;
     align-items: center;
-    overflow-y:scroll; // to enable scrolling by default for this flex-container only
+    overflow-y: scroll; // to enable scrolling by default for this flex-container only
+`;
+
+const EmptySpace = styled.div`
+    display: flex;
+    background-color: #fffff3;
+    min-width: 10px;
+    min-height:10px;
+    margin:10px;
 `;
 
 export function TaskBoard() {
@@ -134,6 +142,7 @@ export function TaskBoard() {
                         )
                     )}
             </Flipper>
+            <EmptySpace />
         </TaskBoardContainer>
     );
 }

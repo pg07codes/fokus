@@ -54,7 +54,7 @@ export function DayDate() {
                     {DateObj.day} {DateObj.date}<sup>{getOrdinalSuffix(DateObj.date)}</sup>
                 </span>
                 <p>
-                    {DateObj.month} {DateObj.year}
+                    {DateObj.month}, {DateObj.year}
                 </p>
             </DayDateText>
         </DayDateDiv>

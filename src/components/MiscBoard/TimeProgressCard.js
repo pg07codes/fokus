@@ -65,8 +65,8 @@ const ClockIconDiv = styled.div`
 export function TimeProgressCard() {
     const totalTaskListTime = useSelector((state) => state.tasks.meta.totalTaskListTime);
     const remainingTaskListTime = useSelector((state) => state.tasks.meta.remainingTaskListTime);
-
-    const rTLTObj = getFormattedListTimeSummary(remainingTaskListTime);
+    const focusedTime = totalTaskListTime - remainingTaskListTime;
+    const rTLTObj = getFormattedListTimeSummary(focusedTime);
     let rTLTHours = rTLTObj.hours;
     let rTLTMins = rTLTObj.mins;
 
@@ -85,7 +85,7 @@ export function TimeProgressCard() {
                             <span>m</span>
                         </FormattedTimeDiv>
 
-                        <span>remaining time</span>
+                        <span>completed time</span>
                     </ProgressCardText>
                     <ProgressCardText>
                         <FormattedTimeDiv>

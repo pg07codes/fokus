@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import noTasks from "./../../images/noTasks.svg";
-import ReactTooltip from "react-tooltip";
 
 const NoTasksDiv = styled.div`
     display: flex;
@@ -23,7 +22,6 @@ export default function NoTasks({ allCompleted }) {
         <NoTasksDiv allCompleted={allCompleted}>
             <NoTasksIcon data-tip="" data-for="taskIcon">
                 <img src={noTasks} alt={"No Tasks"} />
-                <ReactTooltip id="taskIcon" getContent={()=>allCompleted ? "create more tasks" : "create task to begin"} />
             </NoTasksIcon>
         </NoTasksDiv>
     );

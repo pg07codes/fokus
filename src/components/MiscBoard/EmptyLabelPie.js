@@ -1,16 +1,21 @@
 import React from "react";
-import ReactTooltip from "react-tooltip";
 import { AiOutlinePieChart } from "react-icons/ai";
 import styled from "styled-components";
 
 const EmptyLabelPieDiv = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction:column;
     align-items: center;
     width: 100%;
+    text-align:right;
     svg {
         color: #020202;
         font-size: 5.6em;
+    }
+    p{
+        margin:0;
+        font-size:0.6em;
+        font-weight:bold;
     }
     /* background-color:pink; */
 `;
@@ -19,7 +24,7 @@ export function EmptyLabelPie() {
     return (
         <EmptyLabelPieDiv data-tip="" data-for="EmptyLabelPie">
             <AiOutlinePieChart />
-            <ReactTooltip id="EmptyLabelPie" getContent={() => "Tasks/Labels Pie"} />
+            <p>Tasks/Labels Pie</p>
         </EmptyLabelPieDiv>
     );
 }
