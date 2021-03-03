@@ -47,6 +47,8 @@ const FocussedTaskContent = styled.div`
     border-radius: 10px;
     border: 3px solid black;
     word-wrap: break-word;
+    background-color:${p=>p.theme.backgroundMain};
+    color:${p=>p.theme.primaryText};
     text-shadow: 0 0 4px rgb(248, 185, 23, 0.4);
     p {
         min-width: 0;
@@ -57,7 +59,6 @@ const FocussedTaskContent = styled.div`
     position: relative;
     /* -webkit-box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8);
     box-shadow: 0 1px 8px rgb(248, 185, 23, 0.8); */
-    background-color: #fff;
 `;
 
 const TotalTaskTimeBadge = styled.div`
@@ -67,6 +68,7 @@ const TotalTaskTimeBadge = styled.div`
     border-radius: 3px;
     p {
         font-size: 0.7em;
+        color:${p=>p.theme.secondaryText};
         margin: 3px 5px;
     }
     background-color: #fabb18;
@@ -94,19 +96,19 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color: #fff;
+    background-color:${p=>p.theme.backgroundMain};
+    color:${p=>p.theme.primaryText};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
     font-weight: bold;
+    color:${p=>p.theme.primaryText};
     p {
         margin: 0;
         font-size: 0.9em;
-        color: ${(p) => (p.isDisabled ? "#c1c1d7" : "#000")};
     }
     span {
         margin: 0 2px;
-        color: #4a4b46;
         font-size: 0.7em;
     }
 `;

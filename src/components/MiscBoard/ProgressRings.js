@@ -44,7 +44,7 @@ const LegendDataDiv = styled.div`
     width: 95%;
     /* background-color: #fdadef; */
     margin: 4px 0;
-    color: #000;
+    color:${p=>p.theme.primaryText};
 `;
 
 const TextDiv = styled.div`
@@ -59,7 +59,7 @@ const PercentTextDiv = styled.div`
     font-weight: bold;
     font-size: 0.7em;
     margin-left: auto;
-    color: #000;
+    color:${p=>p.theme.primaryText};
 `;
 
 const LegendColorDot = styled.div`

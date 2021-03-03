@@ -103,6 +103,7 @@ const QuoteContainer = styled.div`
     -webkit-backface-visibility: hidden;
     transform: translateZ(0);
     font-weight: bold;
+    color:${p=>p.theme.primaryText};
     p {
         margin: 0 3px;
         font-size: ${p=>getQuoteFontSize(p.length)};

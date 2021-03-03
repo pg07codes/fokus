@@ -21,7 +21,6 @@ const TaskBoardContainer = styled.div`
 
 const EmptySpace = styled.div`
     display: flex;
-    background-color: #fffff3;
     min-width: 10px;
     min-height:10px;
     margin:10px;

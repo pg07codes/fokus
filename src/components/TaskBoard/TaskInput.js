@@ -14,7 +14,7 @@ const TaskInputContainer = styled.div`
     width: 90%;
     max-width: 396px;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: ${(p) => p.theme.backgroundMain};
     height: 50px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
@@ -38,7 +38,8 @@ const TaskContentInputField = styled.input`
     height: 100%;
     width: 90%;
     font-size: 0.9em;
-    background-color: #fff;
+    background-color: ${(p) => p.theme.backgroundMain};
+    color: ${(p) => p.theme.primaryText};
     border: 0;
     outline: none;
     font-weight: bold;
@@ -68,7 +69,8 @@ const TaskTimeInputField = styled.input`
     width: 30%;
     font-size: 0.9em;
     text-align: center;
-    background-color: #fff;
+    background-color: ${(p) => p.theme.backgroundMain};
+    color: ${(p) => p.theme.primaryText};
     border: 0;
     outline: none;
     font-weight: bold;

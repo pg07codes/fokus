@@ -16,6 +16,7 @@ const RemainingTaskListTimeDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    color:${p=>p.theme.primaryText};
     p {
         margin: 0 3px;
         font-weight: bold;
@@ -45,30 +46,56 @@ export function TaskFeedback({ task, time, setInputValid }) {
     let [error, setError] = useState(undefined);
 
     useEffect(() => {
-        // if time is there, it should be stripped and validated first before the actual task content
-        let temp = task?.trim().split(" ");
-        if (temp !== undefined && !isNaN(parseInt(temp[temp.length - 1]))) {
-            let taskTime = parseInt(temp.pop());
-            if (taskTime <= 0 || taskTime > 120) {
-                setError("Time should be between 0-120 mins");
+        let errorGenerated = false;
+        if (task !== undefined) {
+            // if time is there, it should be stripped and validated first before the actual task content
+            let temp = task?.trim().split(" ");
+            if (temp !== undefined && !isNaN(parseInt(temp[temp.length - 1]))) {
+                let taskTime = parseInt(temp.pop());
+                if (taskTime <= 0) {
+                    setError("Hmmm. Time for this task seems weird,no?");
+                    errorGenerated = true;
+                    setInputValid(false);
+                    return;
+                } else if (taskTime > 120) {
+                    setError("Time should be <120mins for better focus !");
+                    errorGenerated = true;
+                    setInputValid(false);
+                    return;
+                }
+            }
+            temp = temp?.join(" ");
+
+            if (temp?.length === 0) {
+                setError(undefined);
+                errorGenerated = true;
                 setInputValid(false);
-                return;
+            } else if (temp?.length < 3) {
+                setError("Task should be atleast 3 characters long.");
+                errorGenerated = true;
+                setInputValid(false);
+            } else if (temp?.length > 100) {
+                setError("Hey, that's too long. Keep it short and simple.");
+                errorGenerated = true;
+                setInputValid(false);
+            } else {
+                setError(undefined);
+                setInputValid(true);
             }
         }
-        temp = temp?.join(" ");
 
-        if (temp?.length === 0) {
-            setError(undefined);
-            setInputValid(false);
-        } else if (temp?.length < 3) {
-            setError("Task cannot be smaller than 3 characters");
-            setInputValid(false);
-        } else if (temp?.length > 100) {
-            setError("Task cannot be greater than 100 characters");
-            setInputValid(false);
-        } else {
-            setError(undefined);
-            setInputValid(true);
+        if (!errorGenerated) {
+            // will check for error in time only if no error in task
+            if (time !== undefined && time !== "") {
+                let numericTime = parseInt(time);
+                if (numericTime <= 0 || numericTime > 120) {
+                    setError("Time should be between 1-120 mins");
+                    setInputValid(false);
+                } else {
+                    setError(undefined);
+                    setInputValid(true);
+                }
+            }
         }
     }, [task, time, setInputValid]);
 

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { remove, updateTaskContent, toggleIsCompleted, rearrange, updateTaskTime } from "../../containers/taskBoard/taskBoardSlice";
-import { focusOnTask, resetFocussedTask, toggleIsRunning, updateTaskLabel, updateLabelCount , toggleSoundscapeState} from "../../containers/taskBoard/taskBoardSlice";
+import {
+    focusOnTask,
+    resetFocussedTask,
+    toggleIsRunning,
+    updateTaskLabel,
+    updateLabelCount,
+    toggleSoundscapeState,
+} from "../../containers/taskBoard/taskBoardSlice";
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
@@ -20,7 +27,7 @@ const TaskCardContainer = styled.div`
     width: 376px; // % not working here (maybe due to animation library wrappers)
     height: 110px;
     margin-top: 15px;
-    cursor:default !important;
+    cursor: default !important;
     /* background-color: #fff4e1; */
 `;
 
@@ -48,7 +55,7 @@ const TaskCardDiv = styled.div`
     width: 90%;
     border-radius: 10px;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
-    background-color: #fff;
+    background-color: ${(p) => p.theme.backgroundMain};
     -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
     box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
 `;
@@ -62,6 +69,7 @@ const TaskStatusDiv = styled.div`
     width: 15%;
     /* background-color: #f8f8ff; */
     position: relative;
+    color: ${(p) => p.theme.primaryText};
     p {
         margin: 5px;
         font-weight: bold;
@@ -89,6 +97,7 @@ const TaskContentDiv = styled.div`
     height: 65%;
     margin: 0 0 0 5px;
     word-wrap: break-word;
+    color: ${(p) => p.theme.primaryText};
     /* background-color: #fffcec; */
     p {
         font-size: 0.9em;
@@ -106,9 +115,11 @@ const TaskEditInput = styled.textarea`
     overflow: hidden;
     vertical-align: center;
     font-weight: bold;
+    background-color: ${(p) => p.theme.backgroundMain};
+    color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
-        border: 2px #4a4b46 dashed;
+        border: ${(p) => `2px ${p.theme.primaryText} dashed`};
         border-radius: 5px;
     }
 `;
@@ -119,10 +130,19 @@ const TimeEditInput = styled.input`
     margin-top: 5px;
     text-align: center;
     font-weight: bold;
+    background-color: ${(p) => p.theme.backgroundMain};
+    color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
-        border: 2px #4a4b46 dashed;
+        border: ${(p) => `2px ${p.theme.primaryText} dashed`};
         border-radius: 2px;
+    }
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0;
     }
 `;
 
@@ -134,10 +154,11 @@ const TaskActionButton = styled.div`
     border-radius: 5px;
     margin: 4px;
     cursor: pointer;
+    color: ${(p) => p.theme.primaryText};
     &:hover {
-        background-color: #FABB18;
+        background-color: #fabb18;
         p {
-            color: #fff;
+            color: ${(p) => p.theme.secondaryText};
         }
     }
     p {
@@ -170,7 +191,7 @@ const TaskDeleteButton = styled.div`
     height: 80%;
     cursor: pointer;
     margin-left: auto;
-    color: #FABB18;
+    color: #fabb18;
     &:hover {
         color: red;
     }
@@ -199,7 +220,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
     const [taskUnderEdit, setTaskUnderEdit] = useState(false);
     const [updatedTaskContent, setUpdatedTaskContent] = useState(task.content);
     const [timeUnderEdit, setTimeUnderEdit] = useState(false);
-    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 1000/60));
+    const [updatedTime, setUpdatedTime] = useState(Math.floor(task.time / 1000 / 60));
     const [labelUnderEdit, setLabelUnderEdit] = useState(false);
     const [showDragIcon, setShowDragIcon] = useState(false);
 
@@ -248,6 +269,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                         {!task.isCompleted &&
                             (timeUnderEdit ? (
                                 <TimeEditInput
+                                    type="number"
                                     autoFocus
                                     value={updatedTime}
                                     onBlur={() => {
@@ -266,6 +288,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                         <TaskContentDiv>
                             {taskUnderEdit ? (
                                 <TaskEditInput
+                                    type="text"
                                     autoFocus
                                     value={updatedTaskContent}
                                     onBlur={() => {
@@ -320,7 +343,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                               if (isFocussed) dispatch(resetFocussedTask());
                                               dispatch(toggleIsCompleted(task.id));
                                               dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                              if(taskIndex===focussedTaskIndex)dispatch(toggleSoundscapeState(false));
+                                              if (taskIndex === focussedTaskIndex) dispatch(toggleSoundscapeState(false));
                                               e.stopPropagation();
                                           }
                                 }

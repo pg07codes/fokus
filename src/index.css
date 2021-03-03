@@ -4,7 +4,6 @@ body,
     margin: 0;
     height: 100%; /*otherwise content wraps*/
     width: 100%;
-    background-color:#FFFFF3;
 }
 
 body {

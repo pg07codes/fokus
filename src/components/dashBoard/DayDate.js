@@ -32,8 +32,7 @@ const DayDateText = styled.div`
     width: 65%;
     font-weight: bold;
     font-size: 0.8em;
-    span {
-    }
+    color:${p=>p.theme.primaryText};
     p {
         margin: 0;
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DarkModeToggle } from "./DarkModeToggle";
+import { DarkThemeToggle } from "./DarkThemeToggle";
 const SettingsContainer = styled.div`
     display: flex;
     align-items: center;
@@ -17,6 +17,7 @@ const SettingsDiv = styled.div`
     background-color: #fff;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.6);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.6);
+    background-color: ${(p) => p.theme.backgroundMain};
     width: 70%;
     height: 90%;
     border-radius: 20px;
@@ -27,7 +28,7 @@ export default function Settings() {
         <SettingsContainer>
             <SettingsDiv>
                 Settings
-                <DarkModeToggle />
+                <DarkThemeToggle />
             </SettingsDiv>
         </SettingsContainer>
     );

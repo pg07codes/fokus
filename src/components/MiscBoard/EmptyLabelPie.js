@@ -8,8 +8,8 @@ const EmptyLabelPieDiv = styled.div`
     align-items: center;
     width: 100%;
     text-align:right;
+    color:${p=>p.theme.primaryText};
     svg {
-        color: #020202;
         font-size: 5.6em;
     }
     p{

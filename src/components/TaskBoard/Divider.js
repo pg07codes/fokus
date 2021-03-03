@@ -36,7 +36,7 @@ const DividerActionDiv = styled.div`
     justify-content: space-around;
     align-items: center;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: ${(p) => p.theme.backgroundMain};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     svg {

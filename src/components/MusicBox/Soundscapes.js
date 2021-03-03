@@ -67,7 +67,7 @@ const SoundOptionsInput = styled.div`
         margin: 0;
         font-size: 0.8em;
         font-weight: bold;
-        color: ${(p) => (p.isSelectedSound ? "#FABB18" : "#4a4b46")};
+        color: ${(p) => (p.isSelectedSound ? "#FABB18" : p.theme.primaryText)};
         cursor: pointer;
     }
 `;

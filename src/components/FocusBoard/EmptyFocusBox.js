@@ -45,10 +45,11 @@ const FocussedTaskContent = styled.div`
     border-radius: 10px;
     border: 3px solid black;
     word-wrap: break-word;
+    background-color:${p=>p.theme.backgroundMain};
+    color:${p=>p.theme.primaryText};
     svg {
         font-size: 3em;
     }
-    background-color: #fff;
 `;
 
 const FocussedTaskTimer = styled.div`
@@ -66,7 +67,8 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color: #fff;
+    background-color:${p=>p.theme.backgroundMain};
+    color:${p=>p.theme.primaryText};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
@@ -154,9 +156,11 @@ const HelpPickTaskButton = styled.div`
         font-weight: bold;
     }
     cursor: pointer;
+    background-color:${p=>p.theme.backgroundMain};
+    color:${p=>p.theme.primaryText};
     &:hover {
-        color: white;
-        background-color: #020202;
+        color:${p=>p.theme.secondaryText};
+        background-color:${p=>p.theme.backgroundSecondary};
     }
 `;
 
