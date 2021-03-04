@@ -12,7 +12,7 @@ import {
 import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
-import { GrDrag } from "react-icons/gr";
+import { DragIcon } from "./../customIcons";
 import { formattedTimeString } from "../../helpers";
 import bulb from "./../../images/bulb.svg";
 import glowBulb from "./../../images/glowBulb.svg";
@@ -41,7 +41,7 @@ const TaskCardDragIcon = styled.div`
     /* background-color: #ff09ac; */
     svg {
         cursor: url("https://ssl.gstatic.com/ui/v1/icons/mail/images/2/openhand.cur"), default !important;
-        opacity: 0.7;
+        color:${p=>p.theme.primaryText};
     }
 `;
 
@@ -55,7 +55,7 @@ const TaskCardDiv = styled.div`
     width: 90%;
     border-radius: 10px;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
     box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
 `;
@@ -115,7 +115,7 @@ const TaskEditInput = styled.textarea`
     overflow: hidden;
     vertical-align: center;
     font-weight: bold;
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
@@ -130,7 +130,7 @@ const TimeEditInput = styled.input`
     margin-top: 5px;
     text-align: center;
     font-weight: bold;
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
@@ -177,7 +177,7 @@ const TaskLabelContainer = styled.div`
     margin: 4px;
     cursor: pointer;
     &:hover {
-        background-color: #f7f7fa;
+        background-color: ${(p) => (p.theme.type === "l" ? "#f7f7fa" : "#121212")};
     }
     p {
         margin: 5px;
@@ -255,7 +255,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                 onMouseEnter={() => setShowDragIcon(!task.isCompleted && true)}
                 onMouseLeave={() => setShowDragIcon(!task.isCompleted && false)}
             >
-                <TaskCardDragIcon>{showDragIcon && <GrDrag />}</TaskCardDragIcon>
+                <TaskCardDragIcon>{showDragIcon && <DragIcon />}</TaskCardDragIcon>
 
                 <TaskCardDiv isFocussed={isFocussed} labelColor={task.label !== null ? labels[task.label].color : null}>
                     <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>

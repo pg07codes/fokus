@@ -37,7 +37,7 @@ export function MusicVolumeControl() {
                         backgroundColor: "#FABB18",
                     },
                     thumb: {
-                        backgroundColor: "#020202",
+                        backgroundColor: "#121212",
                     },
                     disabled: {
                         opacity: 0.2,

@@ -22,8 +22,8 @@ const TaskBoardContainer = styled.div`
 const EmptySpace = styled.div`
     display: flex;
     min-width: 10px;
-    min-height:10px;
-    margin:10px;
+    min-height: 10px;
+    margin: 10px;
 `;
 
 export function TaskBoard() {

@@ -49,3 +49,11 @@ export const SummaryCardClock = () => {
         </svg>
     );
 };
+
+export const DragIcon = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" fill="currentColor">
+            <path d="M 10 6 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z M 10 12 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z M 10 18 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z M 20 6 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z M 20 12 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z M 20 18 a 2 2 0 1 1 0 -4 a 2 2 0 0 1 0 4 z" />
+        </svg>
+    );
+};

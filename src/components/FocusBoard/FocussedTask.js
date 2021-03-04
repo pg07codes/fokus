@@ -47,7 +47,7 @@ const FocussedTaskContent = styled.div`
     border-radius: 10px;
     border: 3px solid black;
     word-wrap: break-word;
-    background-color:${p=>p.theme.backgroundMain};
+    background-color:${p=>p.theme.backgroundSecondary};
     color:${p=>p.theme.primaryText};
     text-shadow: 0 0 4px rgb(248, 185, 23, 0.4);
     p {
@@ -96,7 +96,7 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color:${p=>p.theme.backgroundMain};
+    background-color:${p=>p.theme.backgroundSecondary};
     color:${p=>p.theme.primaryText};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
@@ -233,10 +233,10 @@ export function FocussedTask() {
                             value={focussedTask.time !== 0 ? Math.floor((focussedTask.remainingTime / focussedTask.time) * 100) : 0}
                             styles={buildStyles({
                                 strokeLinecap: "butt",
-                                pathColor: "#020202",
+                                pathColor: "#121212",
                                 trailColor: "#F0F8FF",
                             })}
-                            strokeWidth={8}
+                            strokeWidth={9}
                         >
                             <CountdownTimerDiv>
                                 <p>{countdownMins}</p>

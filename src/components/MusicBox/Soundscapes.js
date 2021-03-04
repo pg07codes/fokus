@@ -12,9 +12,6 @@ const SoundscapesContainer = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    border-radius: 20px;
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     /* transition: box-shadow 0.2s ease-in-out,transform 0.2s ease-in-out ;
     &:hover {
         transform: scale(1.02);

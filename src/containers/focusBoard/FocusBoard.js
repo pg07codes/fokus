@@ -36,10 +36,10 @@ const MusicBoxContainer = styled.div`
     max-width: 326px;
     height: 186px;
     margin: 10px 0;
-    /* border-radius: 10px;
+    background-color:${p=>p.theme.backgroundSecondary};
+    border-radius: 20px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
-    background-color: #f7f7fa; */
 `;
 
 // this can be improved as right now whole focus board is re-rendered and not just the focus task containter

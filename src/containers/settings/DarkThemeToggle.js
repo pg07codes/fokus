@@ -10,7 +10,7 @@ const DarkModeDiv = styled.div`
     justify-content: space-around;
     width: 80%;
     height: 70px;
-    background-color: silver;
+    background-color: ${(p) => p.theme.backgroundSecondary};
 `;
 
 export function DarkThemeToggle() {

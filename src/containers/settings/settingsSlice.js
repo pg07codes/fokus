@@ -14,9 +14,12 @@ export const settingsSlice = createSlice({
             if (payload !== undefined) settings.darkTheme = payload;
             else settings.darkTheme = settings.darkTheme ? false : true;
         },
+        updateDefaultTime(settings, { payload }) {
+            settings.defaultTime = payload;
+        },
     },
 });
 
-export const { toggleDarkTheme } = settingsSlice.actions;
+export const { toggleDarkTheme , updateDefaultTime} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

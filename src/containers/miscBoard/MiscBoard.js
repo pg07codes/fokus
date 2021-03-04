@@ -27,6 +27,7 @@ const MainSummaryContainer = styled.div`
     height: 226px;
     margin: 10px 0;
     border-radius: 20px;
+    background-color:${p=>p.theme.backgroundSecondary};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     /* backface-visibility: hidden;
@@ -81,6 +82,7 @@ const LabelPieContainer = styled.div`
     width: 45%;
     height: 90%;
     border-radius: 10px;
+    background-color:${p=>p.theme.backgroundSecondary};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;

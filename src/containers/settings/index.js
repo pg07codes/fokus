@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { DarkThemeToggle } from "./DarkThemeToggle";
+import { DefaultTaskTime } from "./DefaultTaskTime";
+
 const SettingsContainer = styled.div`
     display: flex;
     align-items: center;
@@ -17,18 +19,24 @@ const SettingsDiv = styled.div`
     background-color: #fff;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.6);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.6);
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     width: 70%;
     height: 90%;
     border-radius: 20px;
+    color:${p=>p.theme.primaryText};
+    font-weight:bold;
+    h1{
+        margin:25px;
+    }
 `;
 
 export default function Settings() {
     return (
         <SettingsContainer>
             <SettingsDiv>
-                Settings
+                <h1>Settings</h1>
                 <DarkThemeToggle />
+                <DefaultTaskTime/>
             </SettingsDiv>
         </SettingsContainer>
     );

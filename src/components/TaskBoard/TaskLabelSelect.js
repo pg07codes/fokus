@@ -6,7 +6,8 @@ const TaskSelectInput = styled.select`
     font-weight: bold;
     text-align: center;
     border:0;
-    background-color:#fff;
+    background-color:${p=>p.theme.backgroundSecondary};
+    color:${p=>p.theme.primaryText};
     option{
         font-weight:bold;
     }

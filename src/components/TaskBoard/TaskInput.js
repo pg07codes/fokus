@@ -14,7 +14,7 @@ const TaskInputContainer = styled.div`
     width: 90%;
     max-width: 396px;
     border-radius: 10px;
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     height: 50px;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
@@ -38,7 +38,7 @@ const TaskContentInputField = styled.input`
     height: 100%;
     width: 90%;
     font-size: 0.9em;
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
     border: 0;
     outline: none;
@@ -69,7 +69,7 @@ const TaskTimeInputField = styled.input`
     width: 30%;
     font-size: 0.9em;
     text-align: center;
-    background-color: ${(p) => p.theme.backgroundMain};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
     border: 0;
     outline: none;
@@ -88,8 +88,10 @@ const TaskTimeInputField = styled.input`
 
 export default function TaskInput() {
 
+    const defaultTime = useSelector((s) => s.settings.defaultTime);
+
     const [task, setTask] = useState("");
-    const [time, setTime] = useState(20);
+    const [time, setTime] = useState(defaultTime);
 
     const [generateFeedbackForTask, setGenerateFeedbackForTask] = useState(undefined);
     const [generateFeedbackForTime, setGenerateFeedbackForTime] = useState(undefined);
@@ -141,7 +143,7 @@ export default function TaskInput() {
             dispatch(incrementGlobalKey());
             if (label !== null) dispatch(updateLabelCount({ oldLabel: null, newLabel: label }));
             setTask("");
-            setTime(20);
+            setTime(defaultTime);
             taskContentInputRef.value = "";
             taskTimeInputRef.value = "";
             taskContentInputRef.focus();
@@ -184,7 +186,7 @@ export default function TaskInput() {
                     <AiFillClockCircle onClick={() => taskTimeInputRef.focus()} />
                     <TaskTimeInputField
                         type="number"
-                        placeholder="20"
+                        placeholder={defaultTime}
                         ref={(el) => (taskTimeInputRef = el)}
                         onChange={(e) => onTimeInputChangeHandler(e.target.value)}
                         onKeyDown={submitTask}

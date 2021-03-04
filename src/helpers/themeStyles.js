@@ -9,19 +9,21 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const darkTheme = {
-    body: "#141413",
-    backgroundMain: "#150e06",
-    backgroundSecondary: "#fff",
-    primaryText:"#fff",
-    secondaryText:"#000",
-    highlightedText:"",
+    type: "d",
+    body: "#121212",
+    backgroundMain: "#1E1E1E",
+    backgroundSecondary: "#000",
+    highlight: "#fff",
+    primaryText: "#fff",
+    secondaryText: "#000",
 };
 
 export const lightTheme = {
+    type: "l",
     body: "#fffff3",
     backgroundMain: "#fff",
-    backgroundSecondary: "#000",
-    primaryText:"#000",
-    secondaryText:"#fff",
-    highlightedText:"",
+    backgroundSecondary: "#fff",
+    highlight: "#000",
+    primaryText: "#000",
+    secondaryText: "#fff",
 };

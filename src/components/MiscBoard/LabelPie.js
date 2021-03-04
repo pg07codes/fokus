@@ -29,7 +29,7 @@ export function LabelPie() {
         labelData.push({
             tooltip: `No Label - ${totalTasksCount - labelledTasksCount} tasks`,
             value: totalTasksCount - labelledTasksCount,
-            color: "#020202",
+            color: "#121212",
         });
     }
 

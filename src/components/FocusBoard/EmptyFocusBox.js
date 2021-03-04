@@ -45,7 +45,7 @@ const FocussedTaskContent = styled.div`
     border-radius: 10px;
     border: 3px solid black;
     word-wrap: break-word;
-    background-color:${p=>p.theme.backgroundMain};
+    background-color:${p=>p.theme.backgroundSecondary};
     color:${p=>p.theme.primaryText};
     svg {
         font-size: 3em;
@@ -67,7 +67,7 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color:${p=>p.theme.backgroundMain};
+    background-color:${p=>p.theme.backgroundSecondary};
     color:${p=>p.theme.primaryText};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
@@ -156,11 +156,11 @@ const HelpPickTaskButton = styled.div`
         font-weight: bold;
     }
     cursor: pointer;
-    background-color:${p=>p.theme.backgroundMain};
+    background-color:${p=>p.theme.backgroundSecondary};
     color:${p=>p.theme.primaryText};
     &:hover {
         color:${p=>p.theme.secondaryText};
-        background-color:${p=>p.theme.backgroundSecondary};
+        background-color:${p=>p.theme.highlight};
     }
 `;
 
@@ -175,10 +175,10 @@ export function EmptyFocusBox({ noTasks,noChoice }) {
                         <CircularProgressbarWithChildren
                             value={100}
                             styles={buildStyles({
-                                pathColor: "#020202",
+                                pathColor: "#121212",
                                 trailColor: "#F0F8FF",
                             })}
-                            strokeWidth={8}
+                            strokeWidth={9}
                         >
                             <CountdownTimerDiv>
                                 <HiClock/>
