@@ -5,8 +5,8 @@ import { IoMdAnalytics } from "react-icons/io";
 import { BiExclude } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
-import logo  from "./../../images/logo.svg";
-import namedLogoLight  from "./../../images/namedLogoDark.svg";
+import logo from "./../../images/logo.svg";
+import namedLogoLight from "./../../images/namedLogoDark.svg";
 
 const MenuContainer = styled.div`
     width: 10%;
@@ -17,34 +17,34 @@ const MenuContainer = styled.div`
     background-color: #020202;
     border-radius: 0 10px 10px 0;
     border-left: 15px solid #fabb18;
-    position:relative;
+    position: relative;
 `;
 
 const AppLogoContainer = styled.div`
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    width:100%;
-    top:25px;
-    left:5px;
-    img{
-        width:60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    left: 5px;
+    img {
+        width: 60%;
     }
     /* background-color:pink; */
 `;
 
 const AppTextLogoContainer = styled.div`
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    position:absolute;
-    width:100%;
-    bottom:15px;
-    img{
-        width:75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    bottom: 15px;
+    img {
+        width: 75%;
     }
     /* background-color:purple; */
 `;
@@ -77,11 +77,33 @@ const MenuOptions = styled(NavLink).attrs({ activeClassName })`
     }
 `;
 
+const DummyMenuOptions = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 7px 0;
+    border-radius: 0 5px 5px 0;
+    background-color: #020202;
+    svg {
+        font-size: 1.8em;
+        color: #fff;
+        margin: 10px 0;
+    }
+    width: 100%;
+    transition: width 0.2s;
+    &:hover {
+        svg {
+            color: #fff;
+        }
+        width: 125%;
+        background-color: #fabb18;
+    }
+`;
+
 export function Menu() {
     return (
         <MenuContainer>
             <AppLogoContainer>
-                <img src={logo} alt="logo"/>
+                <img src={logo} alt="logo" />
             </AppLogoContainer>
             <MenuOptions exact to="/">
                 <MdDashboard data-tip="" data-for="dashboard" />
@@ -89,15 +111,15 @@ export function Menu() {
                 <ReactTooltip id="dashboard" getContent={() => "Dashboard"} />
             </MenuOptions>
 
-            <MenuOptions exact to="/analytics">
+            <DummyMenuOptions>
                 <IoMdAnalytics data-tip="" data-for="analytics" />
                 <ReactTooltip id="analytics" getContent={() => "Coming Soon"} />
-            </MenuOptions>
+            </DummyMenuOptions>
 
-            <MenuOptions exact to="/notes">
+            <DummyMenuOptions>
                 <BiExclude data-tip="" data-for="notes" />
                 <ReactTooltip id="notes" getContent={() => "Coming Soon"} />
-            </MenuOptions>
+            </DummyMenuOptions>
 
             <MenuOptions exact to="/settings">
                 <MdSettings data-tip="" data-for="settings" />
@@ -105,7 +127,7 @@ export function Menu() {
             </MenuOptions>
 
             <AppTextLogoContainer>
-                <img src={namedLogoLight} alt="fokus"/>
+                <img src={namedLogoLight} alt="fokus" />
             </AppTextLogoContainer>
         </MenuContainer>
     );

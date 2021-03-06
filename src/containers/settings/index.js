@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { DarkThemeToggle } from "./DarkThemeToggle";
 import { DefaultTaskTime } from "./DefaultTaskTime";
+import { DefaultTaskLabel } from "./DefaultTaskLabel";
 
 const SettingsContainer = styled.div`
     display: flex;
@@ -23,11 +24,19 @@ const SettingsDiv = styled.div`
     width: 70%;
     height: 90%;
     border-radius: 20px;
-    color:${p=>p.theme.primaryText};
-    font-weight:bold;
-    h1{
-        margin:25px;
+    color: ${(p) => p.theme.primaryText};
+    font-weight: bold;
+    h1 {
+        margin: 25px;
     }
+`;
+
+// exported and used for input fields in settings options
+export const InputDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
 `;
 
 export default function Settings() {
@@ -36,7 +45,8 @@ export default function Settings() {
             <SettingsDiv>
                 <h1>Settings</h1>
                 <DarkThemeToggle />
-                <DefaultTaskTime/>
+                <DefaultTaskTime />
+                <DefaultTaskLabel />
             </SettingsDiv>
         </SettingsContainer>
     );

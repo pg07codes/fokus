@@ -89,6 +89,7 @@ const TaskTimeInputField = styled.input`
 export default function TaskInput() {
 
     const defaultTime = useSelector((s) => s.settings.defaultTime);
+    const defaultLabel = useSelector((s) => s.settings.defaultLabel);
 
     const [task, setTask] = useState("");
     const [time, setTime] = useState(defaultTime);
@@ -107,7 +108,7 @@ export default function TaskInput() {
             let temp = task.trim().split(" ");
             // add a max time limit
             let taskTime = time;
-            let label = null;
+            let label = defaultLabel;
             if (temp.length !== 1) {
                 if (!isNaN(parseInt(temp[temp.length - 1]))) {
                     taskTime = parseInt(temp.pop());

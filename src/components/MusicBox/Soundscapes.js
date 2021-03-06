@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { soundOptions, generateAudioElement } from "./musicUtils";
+import { soundOptions, generateAudioElement, muteOption } from "./musicUtils";
 import { changeSoundscapeTrack } from "./../../containers/taskBoard/taskBoardSlice";
 import { MusicVolumeControl } from "./MusicVolumeControl";
+import { GoUnmute, GoMute } from "react-icons/go";
 
 const SoundscapesContainer = styled.div`
     display: flex;
@@ -29,9 +30,27 @@ const SoundscapesDiv = styled.div`
     height: 70%;
     /* background-color: orange; */
     color: #fabb18;
+`;
+
+const SoundscapesHeader = styled.div`
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 90%;
+    position: relative;
     p {
         margin: 0;
         font-weight: bold;
+    }
+    svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.4em;
+        margin-left: auto;
+    }
+    svg#unmuted {
+        cursor: pointer;
     }
 `;
 
@@ -73,7 +92,6 @@ const SoundVolumeControl = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: #cad1ff; */
     width: 90%;
     height: 15%;
 `;
@@ -87,7 +105,8 @@ export function Soundscapes() {
     // ---- danger zone: don't change without full surety , this code is prone to issues ---///
 
     useEffect(() => {
-        soundscapeAudioElement.src = soundOptions[soundscape.track].src;
+        soundscapeAudioElement.src = soundscape.track !== "mute" ? soundOptions[soundscape.track].src : muteOption.src;
+        return () => soundscapeAudioElement.pause();
     }, [soundscape.track, soundscapeAudioElement, soundscape.isPlaying]);
 
     soundscapeAudioElement.volume = soundscape.volume;
@@ -108,7 +127,10 @@ export function Soundscapes() {
     return (
         <SoundscapesContainer>
             <SoundscapesDiv>
-                <p>Soundscapes</p>
+                <SoundscapesHeader>
+                    <p>Soundscapes</p>
+                    {soundscape.track === "mute" ? <GoMute id="muted" /> : <GoUnmute id="unmuted" onClick={() => dispatch(changeSoundscapeTrack("mute"))} />}
+                </SoundscapesHeader>
                 <SoundOptionsDiv>
                     {Object.keys(soundOptions).map((i) => (
                         <SoundOptionsInput key={i} onClick={() => dispatch(changeSoundscapeTrack(i))} isSelectedSound={isSelectedSound(i)}>
@@ -119,7 +141,7 @@ export function Soundscapes() {
                 </SoundOptionsDiv>
             </SoundscapesDiv>
             <SoundVolumeControl>
-                <MusicVolumeControl />
+                <MusicVolumeControl isDisabled={soundscape.track==="mute"}/>
             </SoundVolumeControl>
         </SoundscapesContainer>
     );

@@ -67,14 +67,13 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color:${p=>p.theme.backgroundSecondary};
-    color:${p=>p.theme.primaryText};
+    background-color:${p=>p.theme.type==="l"?"#FFF":"#FFE39E"};
+    color:#000;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
     font-weight: bold;
     svg{
-        color:#fabb18;
         font-size:1.6em;
     }
 `;

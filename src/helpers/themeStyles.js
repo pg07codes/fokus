@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 export const darkTheme = {
     type: "d",
     body: "#121212",
-    backgroundMain: "#1E1E1E",
+    backgroundMain: "#141414",
     backgroundSecondary: "#000",
     highlight: "#fff",
     primaryText: "#fff",

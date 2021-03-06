@@ -4,7 +4,7 @@ import Slider from "react-input-slider";
 import { updateSoundscapeVolume } from "./../../containers/taskBoard/taskBoardSlice";
 import { debounce } from "./../../helpers";
 
-export function MusicVolumeControl() {
+export function MusicVolumeControl({isDisabled}) {
     const ssVolume = useSelector((s) => s.tasks.soundscape.volume);
     const dispatch = useDispatch();
     const [volume, setVolume] = useState(ssVolume * 100);
@@ -26,6 +26,7 @@ export function MusicVolumeControl() {
                 xmin={0}
                 xmax={100}
                 x={volume}
+                disabled={isDisabled}
                 onChange={({ x }) => onVolumeChangeHandler(x)}
                 styles={{
                     track: {
@@ -37,7 +38,7 @@ export function MusicVolumeControl() {
                         backgroundColor: "#FABB18",
                     },
                     thumb: {
-                        backgroundColor: "#121212",
+                        backgroundColor: "#2F2F2F",
                     },
                     disabled: {
                         opacity: 0.2,

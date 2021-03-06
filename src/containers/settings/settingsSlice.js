@@ -17,9 +17,12 @@ export const settingsSlice = createSlice({
         updateDefaultTime(settings, { payload }) {
             settings.defaultTime = payload;
         },
+        updateDefaultLabel(settings, { payload }) {
+            settings.defaultLabel = payload;
+        },
     },
 });
 
-export const { toggleDarkTheme , updateDefaultTime} = settingsSlice.actions;
+export const { toggleDarkTheme , updateDefaultTime , updateDefaultLabel} = settingsSlice.actions;
 
 export default settingsSlice.reducer;

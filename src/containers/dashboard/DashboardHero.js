@@ -20,10 +20,6 @@ const DashboardHeroDiv = styled.div`
     width: 80%;
     max-width: 736px;
     height: 85%;
-    background-color: ${(p) => p.theme.backgroundMain};
-    /* -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3); */
-    border-radius: 20px;
     img {
         width: 45%;
     }

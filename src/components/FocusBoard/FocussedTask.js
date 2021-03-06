@@ -1,13 +1,22 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleIsRunning, tick, updateTaskTimeByVal, resetTaskTimer, toggleSoundscapeState } from "./../../containers/taskBoard/taskBoardSlice";
+import {
+    toggleIsRunning,
+    tick,
+    updateTaskTimeByVal,
+    resetTaskTimer,
+    toggleSoundscapeState,
+    toggleIsCompleted,
+    resetFocussedTask,
+} from "./../../containers/taskBoard/taskBoardSlice";
 import useTimer, { useTimer2 } from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
+import { FaClipboardCheck } from "react-icons/fa";
 import { formattedTimeStringv2 } from "./../../helpers";
 import { MIN_TO_MS } from "../../helpers/constants";
 import ReactTooltip from "react-tooltip";
@@ -47,13 +56,13 @@ const FocussedTaskContent = styled.div`
     border-radius: 10px;
     border: 3px solid black;
     word-wrap: break-word;
-    background-color:${p=>p.theme.backgroundSecondary};
-    color:${p=>p.theme.primaryText};
+    background-color: ${(p) => p.theme.backgroundSecondary};
+    color: ${(p) => p.theme.primaryText};
     text-shadow: 0 0 4px rgb(248, 185, 23, 0.4);
     p {
         min-width: 0;
         font-weight: bold;
-        font-size:0.9em;
+        font-size: 0.9em;
         margin: 3px;
     }
     position: relative;
@@ -68,16 +77,16 @@ const TotalTaskTimeBadge = styled.div`
     border-radius: 3px;
     p {
         font-size: 0.7em;
-        color:${p=>p.theme.secondaryText};
+        color: ${(p) => p.theme.secondaryText};
         margin: 3px 5px;
     }
     background-color: #fabb18;
     position: absolute;
     top: 3px;
     right: 3px;
-    opacity:0.6;
-    &:hover{
-        opacity:1;
+    opacity: 0.6;
+    &:hover {
+        opacity: 1;
     }
 `;
 
@@ -96,13 +105,12 @@ const CountdownTimerDiv = styled.div`
     align-items: center;
     width: 85%;
     height: 85%;
-    background-color:${p=>p.theme.backgroundSecondary};
-    color:${p=>p.theme.primaryText};
+    background-color: ${(p) => (p.theme.type === "l" ? "#FFF" : "#FFE39E")};
+    color: #000;
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.2);
     border-radius: 50%;
     font-weight: bold;
-    color:${p=>p.theme.primaryText};
     p {
         margin: 0;
         font-size: 0.9em;
@@ -140,6 +148,19 @@ const PlayPauseButtonDiv = styled.div`
     cursor: pointer;
 `;
 
+const TaskCompletedDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    margin: 10px 20px;
+    svg {
+        color: ${(p) => p.theme.secondaryText};
+        font-size: 2em;
+    }
+`;
+
 const UpdateTimeButtonDiv = styled.div`
     display: flex;
     justify-content: center;
@@ -160,7 +181,7 @@ const ResetButtonDiv = styled.div`
     height: 30px;
     top: 7px;
     left: 7px;
-    cursor:pointer;
+    cursor: pointer;
     background-color: #000;
     svg {
         color: #fabb18;
@@ -252,9 +273,17 @@ export function FocussedTask() {
                     <UpdateTimeButtonDiv isDisabled={focussedTask.time + 5 * MIN_TO_MS > 120 * MIN_TO_MS} onClick={() => updateTaskTimeHandler(5)}>
                         <h4>+5</h4>
                     </UpdateTimeButtonDiv>
-                    <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => playPauseHandler(focussedTaskIndex, focussedTask.isRunning)}>
-                        {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
-                    </PlayPauseButtonDiv>
+
+                    {focussedTask.remainingTime !== 0 ? (
+                        <PlayPauseButtonDiv isPlayBtn={!focussedTask.isRunning} onClick={() => playPauseHandler(focussedTaskIndex, focussedTask.isRunning)}>
+                            {focussedTask.isRunning ? <BsFillPauseFill /> : <BsFillPlayFill />}
+                        </PlayPauseButtonDiv>
+                    ) : (
+                        <TaskCompletedDiv data-tip="" data-for="taskCompleted">
+                            <FaClipboardCheck />
+                            <ReactTooltip id="taskCompleted" getContent={() => "Task Completed"} />
+                        </TaskCompletedDiv>
+                    )}
 
                     <UpdateTimeButtonDiv isDisabled={focussedTask.time - 5 * MIN_TO_MS < 0} onClick={() => updateTaskTimeHandler(-5)}>
                         <h4>-5</h4>
@@ -270,14 +299,14 @@ export function FocussedTask() {
                     data-tip=""
                 >
                     <ResetIcon />
-                    <ReactTooltip id="reset" getContent={() =>"Reset"} />
+                    <ReactTooltip id="reset" getContent={() => "Reset"} />
                 </ResetButtonDiv>
             </FocussedTaskPlayer>
             <FocussedTaskContent>
                 <p>{focussedTask.content}</p>
                 <TotalTaskTimeBadge data-tip="" data-for="totalTimeBadge">
                     <p>{totalTaskMins}m</p>
-                    <ReactTooltip id="totalTimeBadge" getContent={() =>"Task's total time"} />
+                    <ReactTooltip id="totalTimeBadge" getContent={() => "Task's total time"} />
                 </TotalTaskTimeBadge>
             </FocussedTaskContent>
         </FocussedTaskDiv>
