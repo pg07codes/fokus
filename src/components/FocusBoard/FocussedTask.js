@@ -9,15 +9,16 @@ import {
     toggleSoundscapeState,
     toggleIsCompleted,
     resetFocussedTask,
+    rearrange,
 } from "./../../containers/taskBoard/taskBoardSlice";
-import useTimer, { useTimer2 } from "../../hooks/useTimer";
+import useTimer from "../../hooks/useTimer";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { ResetIcon } from "./../../components/customIcons";
 import dingSound from "./../../sounds/ding.mp3";
 import { BsFillPauseFill, BsFillPlayFill } from "react-icons/bs";
 import { FaClipboardCheck } from "react-icons/fa";
-import { formattedTimeStringv2 } from "./../../helpers";
+import { formattedTimeStringv2, updatePageTitle } from "./../../helpers";
 import { MIN_TO_MS } from "../../helpers/constants";
 import ReactTooltip from "react-tooltip";
 
@@ -191,31 +192,25 @@ const ResetButtonDiv = styled.div`
 
 export function FocussedTask() {
     const focussedTaskIndex = useSelector((state) => state.tasks.meta.focussedTaskIndex);
+    const autoCompleteZeroTimeTask = useSelector((s) => s.settings.autoCompleteZeroTimeTask);
     let focussedTask = useSelector((state) => (focussedTaskIndex !== -1 ? state.tasks.taskArray[focussedTaskIndex] : null));
     const dispatch = useDispatch();
     const delay = 1010; // to account for the delay in executing code.
-    // useTimer(
-    //     () => {
-    //         if (focussedTask === null) return;
-    //         else if (focussedTask.remainingTime > 0) {
-    //             dispatch(tick(focussedTaskIndex));
-    //         } else if (focussedTask.remainingTime === 0) {
-    //             dispatch(toggleSoundscapeState(false));
-    //             dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
-    //             dingSoundElement.play();
-    //         }
-    //     },
-    //     focussedTask !== null && focussedTask.isRunning ? delay : null
-    // );
-    useTimer2(
+    useTimer(
         (deltaMS) => {
             if (focussedTask === null) return;
             else if (focussedTask.remainingTime > 0) {
                 dispatch(tick({ focussedTaskIndex, deltaMS }));
             } else if (focussedTask.remainingTime === 0) {
+                dingSoundElement.play();
+                if(document.hidden) updatePageTitle(`Fokus: TIMER UP!!!`);
                 dispatch(toggleSoundscapeState(false));
                 dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
-                dingSoundElement.play();
+                if (autoCompleteZeroTimeTask) {
+                    dispatch(resetFocussedTask());
+                    dispatch(toggleIsCompleted(focussedTask.id));
+                    dispatch(rearrange({ id: focussedTask.id, markedAsComplete: true }));
+                }
             }
         },
         focussedTask !== null && focussedTask.isRunning ? delay : null
@@ -232,8 +227,10 @@ export function FocussedTask() {
     function playPauseHandler(focussedTaskIndex, wasTaskRunning) {
         dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
         if (wasTaskRunning) {
+            updatePageTitle("Fokus");
             dispatch(toggleSoundscapeState(false));
         } else {
+            updatePageTitle(`Fokus: ${focussedTask.content}`);
             dispatch(toggleSoundscapeState(true));
         }
     }

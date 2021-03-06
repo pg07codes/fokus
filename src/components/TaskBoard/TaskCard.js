@@ -6,6 +6,7 @@ import {
     resetFocussedTask,
     toggleIsRunning,
     updateTaskLabel,
+    updateTaskObject,
     updateLabelCount,
     toggleSoundscapeState,
 } from "../../containers/taskBoard/taskBoardSlice";
@@ -13,11 +14,14 @@ import styled from "styled-components";
 import { BsTrash } from "react-icons/bs";
 import { Flipped } from "react-flip-toolkit";
 import { DragIcon } from "./../customIcons";
-import { formattedTimeString } from "../../helpers";
+import { formattedTimeString , updatePageTitle} from "../../helpers";
 import bulb from "./../../images/bulb.svg";
 import glowBulb from "./../../images/glowBulb.svg";
 import tickmark from "./../../images/tickmark.svg";
 import TaskLabelSelect from "./../../components/TaskBoard/TaskLabelSelect";
+import { ONE_DAY } from "./../../helpers/constants";
+import { BsExclamationCircleFill } from "react-icons/bs";
+import ReactTooltip from "react-tooltip";
 
 const TaskCardContainer = styled.div`
     display: flex;
@@ -41,7 +45,7 @@ const TaskCardDragIcon = styled.div`
     /* background-color: #ff09ac; */
     svg {
         cursor: url("https://ssl.gstatic.com/ui/v1/icons/mail/images/2/openhand.cur"), default !important;
-        color:${p=>p.theme.primaryText};
+        color: ${(p) => p.theme.primaryText};
     }
 `;
 
@@ -54,10 +58,24 @@ const TaskCardDiv = styled.div`
     height: 100%;
     width: 90%;
     border-radius: 10px;
+    position: relative;
     border-right: ${(p) => getTaskCardDivBorderLabelColor(p.labelColor)};
     background-color: ${(p) => p.theme.backgroundSecondary};
     -webkit-box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
     box-shadow: ${(p) => (p.isFocussed ? "0 0 14px rgb(248,185,23,0.8)" : "0 2px 10px rgba(166,173,201,0.4)")};
+`;
+
+const OldTaskStatus = styled.div`
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    color: #fabb18;
+    svg {
+        font-size: 1em;
+    }
 `;
 
 const TaskStatusDiv = styled.div`
@@ -209,6 +227,13 @@ const TaskControllerDiv = styled.div`
     }
 `;
 
+const OldTaskControllerDiv = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 25%;
+`;
+
 function previewTask(str) {
     if (str.length <= 60) return str;
     else return str.substring(0, 60) + "...";
@@ -226,17 +251,48 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
 
     const labels = useSelector((s) => s.tasks.labels);
 
+    let isOldTask = !task.isCompleted && new Date() - new Date(task.createdAt) > ONE_DAY;
+
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {
             dispatch(updateTaskContent({ id: task.id, updatedTaskContent }));
             setTaskUnderEdit(false);
         }
     }
+
     function submitUpdatedTime(e) {
         if (e.key === "Enter") {
             dispatch(updateTaskTime({ id: task.id, updatedTime }));
             setTimeUnderEdit(false);
         }
+    }
+
+    function markTaskAsDoneHandler() {
+        if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
+        if (task.isRunning) dispatch(toggleIsRunning({ idx: taskIndex }));
+        if (isFocussed) {
+            updatePageTitle("Fokus");
+            dispatch(resetFocussedTask());
+        }
+        dispatch(toggleIsCompleted(task.id));
+        dispatch(rearrange({ id: task.id, markedAsComplete: true }));
+        if (taskIndex === focussedTaskIndex) dispatch(toggleSoundscapeState(false));
+    }
+
+    function markTaskAsUndoneHandler() {
+        if (focussedTaskIndex !== -1 && focussedTaskGlobalKey < task.globalKey) {
+            dispatch(focusOnTask(focussedTaskIndex + 1));
+        }
+        dispatch(toggleIsCompleted(task.id));
+        dispatch(rearrange({ id: task.id, markedAsComplete: false }));
+    }
+
+    function recreateOldTask(task) {
+        let newTask = { ...task };
+        newTask.createdAt = new Date().toISOString();
+        newTask.isRunning = false;
+        newTask.isCompleted = false;
+        dispatch(updateTaskObject(newTask));
     }
 
     function labelSelectOnBlurHandler(taskId, taskLabel, updatedLabel) {
@@ -258,6 +314,13 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                 <TaskCardDragIcon>{showDragIcon && <DragIcon />}</TaskCardDragIcon>
 
                 <TaskCardDiv isFocussed={isFocussed} labelColor={task.label !== null ? labels[task.label].color : null}>
+                    {isOldTask && (
+                        <OldTaskStatus data-tip="" data-for="oldtask">
+                            <BsExclamationCircleFill />
+                            <ReactTooltip id="oldtask" getContent={() => "Task more than 24 hrs old"} />
+                        </OldTaskStatus>
+                    )}
+
                     <TaskStatusDiv isFocussed={isFocussed} isCompleted={task.isCompleted}>
                         {task.isCompleted ? (
                             <img src={tickmark} alt="Done" />
@@ -303,66 +366,17 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                             )}
                         </TaskContentDiv>
 
-                        <TaskControllerDiv>
-                            {!task.isCompleted && (
+                        {isOldTask ? (
+                            <OldTaskControllerDiv>
                                 <TaskActionButton
-                                    isDoneBtn={false}
-                                    onClick={
-                                        isFocussed
-                                            ? () => {
-                                                  if (task.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
-                                                  dispatch(resetFocussedTask());
-                                                  dispatch(toggleSoundscapeState(false));
-                                              }
-                                            : () => {
-                                                  if (focussedTaskIndex !== -1) dispatch(toggleIsRunning({ idx: focussedTaskIndex, val: false }));
-                                                  dispatch(toggleSoundscapeState(false));
-                                                  dispatch(focusOnTask(taskIndex));
-                                              }
-                                    }
+                                    onClick={(e) => {
+                                        recreateOldTask(task);
+                                        e.stopPropagation();
+                                    }}
                                 >
-                                    <p>{isFocussed ? "Unfocus" : "Focus"}</p>
+                                    <p>Create</p>
                                 </TaskActionButton>
-                            )}
-
-                            <TaskActionButton
-                                isDoneBtn={true}
-                                onClick={
-                                    task.isCompleted
-                                        ? (e) => {
-                                              if (focussedTaskIndex !== -1 && focussedTaskGlobalKey < task.globalKey) {
-                                                  dispatch(focusOnTask(focussedTaskIndex + 1));
-                                              }
-                                              dispatch(toggleIsCompleted(task.id));
-                                              dispatch(rearrange({ id: task.id, markedAsComplete: false }));
-                                              e.stopPropagation();
-                                          }
-                                        : (e) => {
-                                              if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
-                                              if (task.isRunning) dispatch(toggleIsRunning({ idx: taskIndex }));
-                                              if (isFocussed) dispatch(resetFocussedTask());
-                                              dispatch(toggleIsCompleted(task.id));
-                                              dispatch(rearrange({ id: task.id, markedAsComplete: true }));
-                                              if (taskIndex === focussedTaskIndex) dispatch(toggleSoundscapeState(false));
-                                              e.stopPropagation();
-                                          }
-                                }
-                            >
-                                <p>{task.isCompleted ? "Undone" : "Done"}</p>
-                            </TaskActionButton>
-
-                            <TaskLabelContainer onClick={() => setLabelUnderEdit(true)} labelColor={task.label !== null ? labels[task.label].color : null}>
-                                {labelUnderEdit ? (
-                                    <TaskLabelSelect onBlur={labelSelectOnBlurHandler} taskId={task.id} taskLabel={task.label} />
-                                ) : task.label !== null ? (
-                                    <p>#{task.label}</p>
-                                ) : (
-                                    <p>Add label</p>
-                                )}
-                            </TaskLabelContainer>
-
-                            {!isFocussed && (
-                                <TaskDeleteButton
+                                <TaskActionButton
                                     onClick={(e) => {
                                         if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
                                         dispatch(remove(task.id));
@@ -370,10 +384,66 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
                                         e.stopPropagation();
                                     }}
                                 >
-                                    <BsTrash />
-                                </TaskDeleteButton>
-                            )}
-                        </TaskControllerDiv>
+                                    <p>Delete</p>
+                                </TaskActionButton>
+                            </OldTaskControllerDiv>
+                        ) : (
+                            <TaskControllerDiv>
+                                {!task.isCompleted && (
+                                    <TaskActionButton
+                                        onClick={
+                                            isFocussed
+                                                ? () => {
+                                                      if (task.isRunning) dispatch(toggleIsRunning({ idx: focussedTaskIndex }));
+                                                      updatePageTitle("Fokus");
+                                                      dispatch(resetFocussedTask());
+                                                      dispatch(toggleSoundscapeState(false));
+                                                  }
+                                                : () => {
+                                                      if (focussedTaskIndex !== -1) dispatch(toggleIsRunning({ idx: focussedTaskIndex, val: false }));
+                                                      dispatch(toggleSoundscapeState(false));
+                                                      dispatch(focusOnTask(taskIndex));
+                                                  }
+                                        }
+                                    >
+                                        <p>{isFocussed ? "Unfocus" : "Focus"}</p>
+                                    </TaskActionButton>
+                                )}
+
+                                <TaskActionButton
+                                    onClick={(e) => {
+                                        if (task.isCompleted) markTaskAsUndoneHandler();
+                                        else markTaskAsDoneHandler();
+                                        e.stopPropagation();
+                                    }}
+                                >
+                                    <p>{task.isCompleted ? "Undone" : "Done"}</p>
+                                </TaskActionButton>
+
+                                <TaskLabelContainer onClick={() => setLabelUnderEdit(true)} labelColor={task.label !== null ? labels[task.label].color : null}>
+                                    {labelUnderEdit ? (
+                                        <TaskLabelSelect onBlur={labelSelectOnBlurHandler} taskId={task.id} taskLabel={task.label} />
+                                    ) : task.label !== null ? (
+                                        <p>#{task.label}</p>
+                                    ) : (
+                                        <p>Add label</p>
+                                    )}
+                                </TaskLabelContainer>
+
+                                {!isFocussed && (
+                                    <TaskDeleteButton
+                                        onClick={(e) => {
+                                            if (taskIndex < focussedTaskIndex) dispatch(focusOnTask(focussedTaskIndex - 1));
+                                            dispatch(remove(task.id));
+                                            if (task.label !== null) dispatch(updateLabelCount({ oldLabel: task.label, newLabel: null }));
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <BsTrash />
+                                    </TaskDeleteButton>
+                                )}
+                            </TaskControllerDiv>
+                        )}
                     </TaskDetailsDiv>
                 </TaskCardDiv>
             </TaskCardContainer>

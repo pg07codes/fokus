@@ -8,7 +8,7 @@ const DefaultTaskTimeBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 80%;
     height: 70px;
     background-color: ${(p) => p.theme.backgroundSecondary};
     p {

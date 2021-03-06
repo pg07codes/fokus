@@ -75,6 +75,10 @@ export function debounce(fn, wait) {
     };
 }
 
+export function updatePageTitle(title) {
+    document.title = title;
+}
+
 export function getOrdinalSuffix(i) {
     let j = i % 10,
         k = i % 100;

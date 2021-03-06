@@ -1,26 +1,26 @@
 import { useEffect, useRef } from "react";
 
+// export function useTimerOldVersion(callback, delay) {
+//     const savedCallback = useRef();
+
+//     // Remember the latest callback.
+//     useEffect(() => {
+//         savedCallback.current = callback;
+//     }, [callback]);
+
+//     // Set up the interval.
+//     useEffect(() => {
+//         function tick() {
+//             savedCallback.current();
+//         }
+//         if (delay !== null) {
+//             let id = setInterval(tick, delay);
+//             return () => clearInterval(id);
+//         }
+//     }, [delay]);
+// }
+
 export default function useTimer(callback, delay) {
-    const savedCallback = useRef();
-
-    // Remember the latest callback.
-    useEffect(() => {
-        savedCallback.current = callback;
-    }, [callback]);
-
-    // Set up the interval.
-    useEffect(() => {
-        function tick() {
-            savedCallback.current();
-        }
-        if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-        }
-    }, [delay]);
-}
-
-export function useTimer2(callback, delay) {
     const savedCallback = useRef();
 
     // Remember the latest callback.

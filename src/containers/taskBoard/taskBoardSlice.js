@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { MIN_TO_MS } from "./../../helpers/constants";
+import { updatePageTitle } from "./../../helpers";
 
 const labelOptions = {
     work: {
@@ -75,6 +76,13 @@ export const tasksSlice = createSlice({
                 }
             });
         },
+        updateTaskObject: ({ taskArray }, { payload }) => {
+            taskArray.forEach((i) => {
+                if (i.id === payload.id) {
+                    i = payload;
+                }
+            });
+        },
         updateTaskContent: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {
                 if (i.id === payload.id) {
@@ -135,7 +143,7 @@ export const tasksSlice = createSlice({
                         lowest = Number.POSITIVE_INFINITY;
                     for (let i = 0; i < completedTaskStartIndex; i++) {
                         time = tasks.taskArray[i].remainingTime;
-                        if(time<1000) continue; // rem. time less than second(1000ms)
+                        if (time < 1000) continue; // rem. time less than second(1000ms)
                         if (time < lowest) {
                             lowest = time;
                             index = i;
@@ -146,13 +154,14 @@ export const tasksSlice = createSlice({
                         highest = Number.NEGATIVE_INFINITY;
                     for (let i = 0; i < completedTaskStartIndex; i++) {
                         time = tasks.taskArray[i].remainingTime;
-                        if(time<1000) continue; // rem. time less than second(1000ms)
+                        if (time < 1000) continue; // rem. time less than second(1000ms)
                         if (time > highest) {
                             highest = time;
                             index = i;
                         }
                     }
                 }
+                updatePageTitle(`Fokus: ${tasks.taskArray[index].content}`);
                 tasks.meta.focussedTaskIndex = index;
             }
         },
@@ -330,6 +339,7 @@ export const tasksSlice = createSlice({
 export const {
     create,
     remove,
+    updateTaskObject,
     updateTaskContent,
     updateTaskLabel,
     updateTaskTime,

@@ -14,6 +14,10 @@ export const settingsSlice = createSlice({
             if (payload !== undefined) settings.darkTheme = payload;
             else settings.darkTheme = settings.darkTheme ? false : true;
         },
+        toggleAutoCompleteZeroTimeTask(settings, { payload }) {
+            if (payload !== undefined) settings.autoCompleteZeroTimeTask = payload;
+            else settings.autoCompleteZeroTimeTask = settings.autoCompleteZeroTimeTask ? false : true;
+        },
         updateDefaultTime(settings, { payload }) {
             settings.defaultTime = payload;
         },
@@ -23,6 +27,6 @@ export const settingsSlice = createSlice({
     },
 });
 
-export const { toggleDarkTheme , updateDefaultTime , updateDefaultLabel} = settingsSlice.actions;
+export const { toggleDarkTheme, toggleAutoCompleteZeroTimeTask, updateDefaultTime, updateDefaultLabel } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

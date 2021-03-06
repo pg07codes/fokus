@@ -9,7 +9,7 @@ const DarkModeDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 70%;
+    width: 80%;
     height: 70px;
     background-color: ${(p) => p.theme.backgroundSecondary};
     p {
@@ -23,9 +23,9 @@ export function DarkThemeToggle() {
 
     return (
         <DarkModeDiv>
-            <p>Focus Dark Mode</p>
+            <p>Dark Mode</p>
             <InputDiv>
-                <Switch checked={darkTheme} offColor="#000" onColor="#fabb18" onChange={() => dispatch(toggleDarkTheme())} />
+                <Switch checked={darkTheme} offColor="#c1c1d7" onColor="#77dd77" onChange={() => dispatch(toggleDarkTheme())} />
             </InputDiv>
         </DarkModeDiv>
     );
