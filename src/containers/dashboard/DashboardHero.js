@@ -32,10 +32,10 @@ const FokusUsageTips = styled.div`
     align-items: center;
     justify-content: center;
     width: 80%;
-    height: 10%;
+    height: 12%;
     p {
         margin: 0;
-        font-size:0.9em;
+        font-size:0.8em;
         font-weight:bold;
         color:${p=>p.theme.primaryText}
     }

@@ -44,7 +44,6 @@ const absoluteSetInterval = (handler, delay) => {
     let baseTime = Date.now();
     const callHandler = () => {
         let timePassedSinceLastCall = Date.now() - baseTime;
-        console.log('timePassedSinceLastCall: ',timePassedSinceLastCall)
         if (timePassedSinceLastCall > 1000) {
             baseTime = Date.now(); // must be set before calling handler to avoid time delay in executing it
             handler(timePassedSinceLastCall);
