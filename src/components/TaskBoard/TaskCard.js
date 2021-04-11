@@ -74,7 +74,7 @@ const OldTaskStatus = styled.div`
     right: 7px;
     color: #fabb18;
     svg {
-        font-size: 1em;
+        font-size: 0.9em;
     }
 `;
 
@@ -251,7 +251,7 @@ export default function TaskCard({ task, taskIndex, focussedTaskGlobalKey, forwa
 
     const labels = useSelector((s) => s.tasks.labels);
 
-    let isOldTask = !task.isCompleted && new Date() - new Date(task.createdAt) > ONE_DAY;
+    let isOldTask = false && !task.isCompleted && new Date() - new Date(task.createdAt) > ONE_DAY;
 
     function submitUpdatedTaskContent(e) {
         if (e.key === "Enter" && updatedTaskContent.trim().length >= 3) {

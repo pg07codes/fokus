@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import tasksReducer from "../containers/taskBoard/taskBoardSlice";
 import settingsReducer from "../containers/settings/settingsSlice";
 import { getStateFromLocalStorage, setStateInLocalStorage, clearIfStateInvalidated } from "./localStorageUtils";
+import { debounce } from "../helpers";
 
 let store = configureStore({
     reducer: {
@@ -11,10 +12,10 @@ let store = configureStore({
     preloadedState: getStateFromLocalStorage(),
 });
 
-store.subscribe(() => {
+store.subscribe(debounce(() => {
     // console.log("ls-used");
     setStateInLocalStorage(store.getState());
-});
+},200));
 
 clearIfStateInvalidated();
 

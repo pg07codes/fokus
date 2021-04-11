@@ -9,6 +9,12 @@ const FokusUsageTips = [
         tip: "Easily re-order tasks by drag and drop.",
     },
     {
+        tip: "Internet is down? Fokus can work just as efficiently without internet connectivity.",
+    },
+    {
+        tip: "Your data never leaves your browser as Fokus respects privacy.",
+    },
+    {
         tip: "You can set default label for tasks in the settings.",
     },
     {

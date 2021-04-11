@@ -76,12 +76,8 @@ export const tasksSlice = createSlice({
                 }
             });
         },
-        updateTaskObject: ({ taskArray }, { payload }) => {
-            taskArray.forEach((i) => {
-                if (i.id === payload.id) {
-                    i = payload;
-                }
-            });
+        updateTaskObject: (tasks, { payload }) => {
+            tasks.taskArray = tasks.taskArray.map((i) => (i.id === payload.id ? payload : i));
         },
         updateTaskContent: ({ taskArray }, { payload }) => {
             taskArray.forEach((i) => {

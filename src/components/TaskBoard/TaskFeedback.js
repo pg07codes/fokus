@@ -109,7 +109,7 @@ export function TaskFeedback({ task, time, setInputValid }) {
             {error === undefined ? (
                 <RemainingTaskListTimeDiv>
                     {remainingTaskListTime === 0 ? (
-                        <p>Create New Tasks</p>
+                        <p>Create New Task</p>
                     ) : (
                         <>
                             <FaClock />
