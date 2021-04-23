@@ -4,8 +4,8 @@
 </p>
 
 
-
-<h2 align="center"> Fokus is a web based productivity tool. Visit <a href="https://fokus-website.netlify.com">site</a> to know more.</h2>
+<h3 align="center"> Fokus is a web based productivity tool. Give Fokus App a try <a href="https://fokus-prototype.netlify.com"> here </a> </h3>
+<p align="center">  Visit <a href="https://fokus-website.netlify.com">website</a> to know more about fokus.</p>
 <p align="center">
   <img  src="https://img.shields.io/badge/name-fokus-yellow" alt="Game Ref" />
   <img  src="https://img.shields.io/badge/category-productivity-orange" alt="Application Category" />
