@@ -5,13 +5,15 @@
 
 
 
-<p align="center"> Fokus is a web based productivity tool. Visit <a href="https://google.com">site</a> to know more.</p>
+<h2 align="center"> Fokus is a web based productivity tool. Visit <a href="https://fokus-website.netlify.com">site</a> to know more.</h2>
 <p align="center">
   <img  src="https://img.shields.io/badge/name-fokus-yellow" alt="Game Ref" />
   <img  src="https://img.shields.io/badge/category-productivity-orange" alt="Application Category" />
   <img  src="https://img.shields.io/badge/language-javascript-blue" alt="Repo Main Language" />
   <img  src="https://img.shields.io/badge/bundler-webpack-blueviolet" alt="Module Bundler" />
 </p>
+
+<img src="https://user-images.githubusercontent.com/34238240/115880633-90edf500-a468-11eb-91bd-b8a9c52a678c.png" alt="Fokus App">
 
 
 # How to setup locally and run project
@@ -52,12 +54,12 @@ yarn build
 # Contributing
 Contributions in any form are encouraged and i would love to merge them back into the codebase. You can help me by:
 
-- STAR this repository,
-- Raising issues, 
-- Helping new users with issues they may encounter,
-- Improving documentation or raising your suggestions,
-- submitting PR with bug fixes or new features
-- Spreading the word and recommending it to your friends and family,
+- STAR this repository :star:
+- Raising issues or bugs :bug:
+- Helping new users with issues they may encounter :handshaking:
+- Improving documentation or raising your suggestions :bulb:
+- submitting PR with bug fixes or new features :arrow_heading_up:
+- Spreading the word and recommending it to your friends and family :speaking_head:
 
 *If you're into react development and interested in contributing, Feel free to raise a issue or PR or hit me up on my mail.*
 
