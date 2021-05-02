@@ -593,5 +593,5 @@ export function getTodaysQuote() {
     var diff = now - start + (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
     var oneDay = 1000 * 60 * 60 * 24;
     var day = Math.floor(diff / oneDay);
-    return quotes[day % 150];
+    return quotes[day % quotes.length];
 }
