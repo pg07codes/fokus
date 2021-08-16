@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdDashboard, MdSettings } from "react-icons/md";
 import { IoMdAnalytics } from "react-icons/io";
-import { BiExclude } from "react-icons/bi";
+import { BiExclude , BiNotepad} from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import logo from "./../../images/logo.svg";
@@ -107,18 +107,17 @@ export function Menu() {
             </AppLogoContainer>
             <MenuOptions exact to="/">
                 <MdDashboard data-tip="" data-for="dashboard" />
-
                 <ReactTooltip id="dashboard" getContent={() => "Dashboard"} />
             </MenuOptions>
 
-            <DummyMenuOptions>
-                <IoMdAnalytics data-tip="" data-for="analytics" />
-                <ReactTooltip id="analytics" getContent={() => "Coming Soon"} />
-            </DummyMenuOptions>
+            <MenuOptions exact to="/notes">
+                <BiNotepad data-tip="" data-for="notes" />
+                <ReactTooltip id="notes" getContent={() => "Notes"} />
+            </MenuOptions>
 
             <DummyMenuOptions>
-                <BiExclude data-tip="" data-for="notes" />
-                <ReactTooltip id="notes" getContent={() => "Coming Soon"} />
+                <BiExclude data-tip="" data-for="analytics" />
+                <ReactTooltip id="analytics" getContent={() => "Coming Soon"} />
             </DummyMenuOptions>
 
             <MenuOptions exact to="/settings">

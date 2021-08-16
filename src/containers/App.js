@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "./../helpers/themeStyles";
 import { useSelector } from "react-redux";
+import Notes from "./notes";
 
 const AppContainer = styled.div`
     display: flex;
@@ -28,6 +29,9 @@ function App() {
                         <Router>
                             <Menu />
                             <Switch>
+                            <Route path="/notes">
+                                    <Notes />
+                                </Route>
                                 <Route path="/settings">
                                     <Settings />
                                 </Route>
