@@ -14,10 +14,10 @@ let store = configureStore({
     preloadedState: getStateFromLocalStorage(),
 });
 
-store.subscribe(debounce(() => {
-    // console.log("ls-used");
-    setStateInLocalStorage(store.getState());
-},200));
+// store.subscribe(debounce(() => {
+//     // console.log("ls-used");
+//     setStateInLocalStorage(store.getState());
+// },200));
 
 clearIfStateInvalidated();
 

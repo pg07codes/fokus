@@ -4,14 +4,17 @@ import { createSlice } from "@reduxjs/toolkit";
 export const notesSlice = createSlice({
     name: "notes",
     initialState: {
-        notesArray:["1.some note","2.one other note","3.note for me"]
+        notesArray:[]
     },
     reducers: {
+        create: (notes, { payload }) => {
+            notes.notesArray.push(payload);
+        },
     }
 });
 
 export const {
-    
+    create
 } = notesSlice.actions;
 
 export default notesSlice.reducer;
