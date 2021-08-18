@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import NoteModal from "./NoteModal";
+import ReactTooltip from "react-tooltip";
 
 const AddButtonContainer = styled.div`
     width: 60px;
@@ -34,11 +35,12 @@ export function AddNoteButton() {
 
     return (
         <>
-            <AddButtonContainer>
+            <AddButtonContainer data-for="addNote" data-tip="">
                 <AddIcon onClick={() => setShowModal(true)}>
                     <AiOutlinePlus />
                 </AddIcon>
             </AddButtonContainer>
+            <ReactTooltip id="addNote" getContent={()=>"Add Note"}/>
             {showModal && <NoteModal isUpdateNoteModal={false} setShowModal={setShowModal} />}
         </>
     );

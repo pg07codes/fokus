@@ -1,22 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const colorOptions = {
-    red:"red",
-    green:"green",
-    blue:"blue",
-    pink:"pink",
-    yellow:"yellow",
-    white:"white"
+    yellow: "#FABB18",
+    orange: "#FBCEB1",
+    pink: "#FFF0F5",
+    green: "#D0F0C0",
+    blue: "#E0FFFF",
+    white: "#F8F8FF"
 };
-
 
 export const notesSlice = createSlice({
     name: "notes",
     initialState: {
-        notesArray:[],
+        notesArray: [],
         meta: {
             globalKey: 0,
-            totalNoteCount: 0
+            totalNoteCount: 0,
         },
     },
     reducers: {
@@ -28,23 +27,20 @@ export const notesSlice = createSlice({
             notesArray.forEach((i) => {
                 if (i.id === payload.id) {
                     i.content = payload.noteContent;
-                    i.color=payload.noteColor
+                    i.color = payload.noteColor;
                 }
             });
         },
         remove: (notes, { payload }) => {
             notes.notesArray = notes.notesArray.filter((i) => {
                 if (i.id !== payload) return true;
+                else return false;
             });
             notes.meta.totalNoteCount--;
         },
-    }
+    },
 });
 
-export const {
-    create,
-    update,
-    remove
-} = notesSlice.actions;
+export const { create, update, remove } = notesSlice.actions;
 
 export default notesSlice.reducer;

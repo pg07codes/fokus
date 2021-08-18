@@ -22,10 +22,12 @@ const ModalOverlay = styled.div`
 const ModalBox = styled(motion.div)`
     position: relative;
     z-index: 2;
-    width: 648px;
+    width: 696px;
     height: 456px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
     border-radius: 10px;
     background: ${(p) => p.noteColor};
 `;
@@ -40,22 +42,21 @@ const CloseModalButton = styled.div`
     align-items: center;
     cursor: pointer;
     svg {
-        color: #fabb18;
+        color: ${(p) => p.theme.primaryText};
         font-size: 1.6em;
-        font-weight: bolder;
+        font-weight: 900;
     }
 `;
 
 const AddNoteInput = styled.textarea`
     resize: none;
     height: 75%;
-    width: 75%;
+    width: 80%;
     font-size: 1.2em;
     vertical-align: center;
     font-weight: bold;
     border: none;
     outline: none;
-    margin: 20px;
     background-color: ${(p) => p.noteColor};
     color: ${(p) => p.theme.primaryText};
     &:focus {
@@ -63,40 +64,26 @@ const AddNoteInput = styled.textarea`
     }
 `;
 
-const SubmitModalAction = styled.div`
-    position: absolute;
-    right: 8px;
-    bottom: 5px;
+const ModalActionArea = styled.div`
+    height: 10%;
+    width: 80%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    height: 40px;
-    width: 80px;
-    border-radius: 5px;
-    margin: 4px;
-    cursor: pointer;
-    color: ${(p) => p.theme.primaryText};
-    &:hover {
-        background-color: #fabb18;
-        p {
-            color: ${(p) => p.theme.secondaryText};
-        }
-    }
-    p {
-        margin: 2px;
-        font-size: 0.75em;
-    }
 `;
 
-const DeleteAction = styled.div`
-    position: absolute;
-    right: 100px;
-    bottom: 5px;
+const ModalActionDiv = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    width: 80px;
+`;
+
+const ModalActionButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 75px;
     border-radius: 5px;
     margin: 4px;
     cursor: pointer;
@@ -109,14 +96,11 @@ const DeleteAction = styled.div`
     }
     p {
         margin: 2px;
-        font-size: 0.75em;
+        font-size: 0.7em;
     }
 `;
 
 const NoteColorSelectionBox = styled.div`
-    position: absolute;
-    left: 8px;
-    bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -125,6 +109,7 @@ const NoteColorSelectionBox = styled.div`
     width: 220px;
     margin: 4px;
     background-color: ${(p) => p.theme.backgroundSecondary};
+    background-color: #e6e6e6;
 `;
 
 const ColorOption = styled.div`
@@ -197,21 +182,25 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
                         <AiOutlineClose />
                     </CloseModalButton>
                     <AddNoteInput type="text" autoFocus value={noteContent} noteColor={noteColor} onChange={(e) => setNoteContent(e.target.value)} />
-                    <NoteColorSelectionBox>
-                        {Object.keys(colorOptions).map((color) => (
-                            <ColorOption
-                                onClick={() => handleColorUpdate(note, colorOptions[color])}
-                                isSelected={noteColor === colorOptions[color]}
-                                color={colorOptions[color]}
-                            />
-                        ))}
-                    </NoteColorSelectionBox>
-                    {isUpdateNoteModal && (
-                        <DeleteAction onClick={() => handleDeleteNoteAction(note.id)}>
-                            <p>Delete</p>
-                        </DeleteAction>
-                    )}
-                    <SubmitModalAction onClick={handleSubmitModalAction}>{isUpdateNoteModal ? <p>Update</p> : <p>Add Note</p>}</SubmitModalAction>
+                    <ModalActionArea>
+                        <NoteColorSelectionBox>
+                            {Object.keys(colorOptions).map((color) => (
+                                <ColorOption
+                                    onClick={() => handleColorUpdate(note, colorOptions[color])}
+                                    isSelected={noteColor === colorOptions[color]}
+                                    color={colorOptions[color]}
+                                />
+                            ))}
+                        </NoteColorSelectionBox>
+                        <ModalActionDiv>
+                            {isUpdateNoteModal && (
+                                <ModalActionButton onClick={() => handleDeleteNoteAction(note.id)}>
+                                    <p>Delete</p>
+                                </ModalActionButton>
+                            )}
+                            <ModalActionButton onClick={handleSubmitModalAction}>{isUpdateNoteModal ? <p>Update</p> : <p>Add Note</p>}</ModalActionButton>
+                        </ModalActionDiv>
+                    </ModalActionArea>
                 </ModalBox>
             </AnimatePresence>
         </ModalOverlay>

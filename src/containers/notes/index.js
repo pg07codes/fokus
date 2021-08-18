@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { AddNoteButton } from "../../components/notes/AddNoteButton";
+import EmptyNotes from "../../components/notes/NoNotes";
 import { NoteCard } from "./../../components/notes/NoteCard";
 
 const NotesContainer = styled.div`
@@ -11,6 +12,7 @@ const NotesContainer = styled.div`
     width: 100%;
     overflow-y: scroll;
     position: relative;
+    margin-top: 20px;
 `;
 
 const NotesDiv = styled.div`
@@ -25,11 +27,16 @@ export default function Notes() {
 
     return (
         <NotesContainer>
-            <NotesDiv>
-                {notesArray.map((note) => (
-                    <NoteCard note={note} />
-                ))}
-            </NotesDiv>
+            {notesArray.length !== 0 ? (
+                <NotesDiv>
+                    {notesArray.map((note) => (
+                        <NoteCard note={note} />
+                    ))}
+                </NotesDiv>
+            ) : (
+                <EmptyNotes />
+            )}
+
             <AddNoteButton />
         </NotesContainer>
     );
