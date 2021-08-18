@@ -9,15 +9,17 @@ let store = configureStore({
     reducer: {
         tasks: tasksReducer,
         settings: settingsReducer,
-        notes:notesReducer
+        notes: notesReducer,
     },
     preloadedState: getStateFromLocalStorage(),
 });
 
-// store.subscribe(debounce(() => {
-//     // console.log("ls-used");
-//     setStateInLocalStorage(store.getState());
-// },200));
+store.subscribe(
+    debounce(() => {
+        // console.log("ls-used");
+        setStateInLocalStorage(store.getState());
+    }, 200)
+);
 
 clearIfStateInvalidated();
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
-import NewNoteModal from "./NewNoteModal";
+import NoteModal from "./NoteModal";
 
 const AddButtonContainer = styled.div`
     width: 60px;
@@ -39,7 +39,7 @@ export function AddNoteButton() {
                     <AiOutlinePlus />
                 </AddIcon>
             </AddButtonContainer>
-            <NewNoteModal showModal={showModal} setShowModal={setShowModal} />
+            {showModal && <NoteModal isUpdateNoteModal={false} setShowModal={setShowModal} />}
         </>
     );
 }

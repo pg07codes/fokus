@@ -26,8 +26,8 @@ export default function Notes() {
     return (
         <NotesContainer>
             <NotesDiv>
-                {notesArray.map((i) => (
-                    <NoteCard content={i} />
+                {notesArray.map((note) => (
+                    <NoteCard note={note} />
                 ))}
             </NotesDiv>
             <AddNoteButton />
