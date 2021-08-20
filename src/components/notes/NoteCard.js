@@ -24,12 +24,12 @@ function previewNote(str) {
     else return str.substring(0, 120) + "...";
 }
 
-export function NoteCard({ note }) {
+export function NoteCard({ note , setNoteInPreview}) {
     const [showModal, setShowModal] = useState(false);
 
     return (
         <>
-            <NoteCardContainer noteColor={note.color} onClick={() => setShowModal(true)}>
+            <NoteCardContainer noteColor={note.color} onClick={() => setNoteInPreview(note)}>
                 <p>{previewNote(note.content)}</p>
             </NoteCardContainer>
             {showModal && <NoteModal isUpdateNoteModal={true} note={note} setShowModal={setShowModal} />}

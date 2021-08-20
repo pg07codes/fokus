@@ -1,43 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { AddNoteButton } from "../../components/notes/AddNoteButton";
 import EmptyNotes from "../../components/notes/NoNotes";
 import { NoteCard } from "./../../components/notes/NoteCard";
+import NotesListArea from "./../../components/notes/NotesListArea";
+import NotesPreview from "./../../components/notes/NotesPreview";
 
 const NotesContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-content: center;
     width: 100%;
-    overflow-y: scroll;
-    position: relative;
-    margin-top: 20px;
-`;
-
-const NotesDiv = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    width: 90%;
 `;
 
 export default function Notes() {
-    let notesArray = useSelector((state) => state.notes.notesArray);
-
+    let [noteInPreview, setNoteInPreview] = useState(null);
     return (
         <NotesContainer>
-            {notesArray.length !== 0 ? (
-                <NotesDiv>
-                    {notesArray.map((note) => (
-                        <NoteCard note={note} />
-                    ))}
-                </NotesDiv>
-            ) : (
-                <EmptyNotes />
-            )}
-
-            <AddNoteButton />
+            <NotesListArea setNoteInPreview={setNoteInPreview}/>
+            <NotesPreview setNoteInPreview={setNoteInPreview} note={noteInPreview} />
         </NotesContainer>
     );
 }

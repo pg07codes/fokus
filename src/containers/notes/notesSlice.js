@@ -6,7 +6,7 @@ export const colorOptions = {
     pink: "#FFF0F5",
     green: "#D0F0C0",
     blue: "#E0FFFF",
-    white: "#F8F8FF"
+    white: "#F8F8FF",
 };
 
 export const notesSlice = createSlice({
@@ -26,8 +26,8 @@ export const notesSlice = createSlice({
         update: ({ notesArray }, { payload }) => {
             notesArray.forEach((i) => {
                 if (i.id === payload.id) {
-                    i.content = payload.noteContent;
-                    i.color = payload.noteColor;
+                    i.content = payload.noteContent !== undefined ? payload.noteContent : i.content;
+                    i.color = payload.noteColor !== undefined ? payload.noteColor : i.color;
                 }
             });
         },
