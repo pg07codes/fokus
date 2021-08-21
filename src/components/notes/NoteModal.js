@@ -34,31 +34,33 @@ const ModalBox = styled(motion.div)`
 
 const CloseModalButton = styled.div`
     position: absolute;
-    top: 5px;
-    right: 5px;
-    margin: 5px;
+    top: 8px;
+    right: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     svg {
+        transition: transform 1s;
         color: ${(p) => p.theme.primaryText};
-        font-size: 1.6em;
-        font-weight: 900;
+        font-size: 1.2em;
+        font-weight: 700;
+        &:hover {
+            transform: rotate(180deg);
+        }
     }
 `;
 
 const AddNoteInput = styled.textarea`
     resize: none;
-    height: 75%;
-    width: 80%;
+    height: 70%;
+    width: 85%;
     font-size: 1.2em;
     vertical-align: center;
     font-weight: bold;
     border: none;
     outline: none;
     background-color: ${(p) => p.noteColor};
-    color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
     }
@@ -66,7 +68,7 @@ const AddNoteInput = styled.textarea`
 
 const ModalActionArea = styled.div`
     height: 10%;
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -82,21 +84,21 @@ const ModalActionButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30px;
-    width: 75px;
+    height: 35px;
+    width: 90px;
     border-radius: 5px;
     margin: 4px;
     cursor: pointer;
-    color: ${(p) => p.theme.primaryText};
     &:hover {
         background-color: #fabb18;
         p {
-            color: ${(p) => p.theme.secondaryText};
+            color: #fff;
         }
     }
     p {
         margin: 2px;
-        font-size: 0.7em;
+        font-weight: bold;
+        font-size: 0.8em;
     }
 `;
 
@@ -106,10 +108,9 @@ const NoteColorSelectionBox = styled.div`
     align-items: center;
     border-radius: 8px;
     height: 40px;
-    width: 220px;
+    width: 180px;
     margin: 4px;
-    background-color: ${(p) => p.theme.backgroundSecondary};
-    background-color: #e6e6e6;
+    background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const ColorOption = styled.div`
@@ -135,12 +136,12 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
     const handleSubmitModalAction = () => {
         if (noteContent.trim().length >= 1) {
             if (isUpdateNoteModal) {
-                dispatch(update({ id: note.id, noteContent, noteColor }));
+                dispatch(update({ id: note.id, noteContent: noteContent.trim() }));
             } else {
                 let newNote = {
                     id: Math.floor(Math.random() * 10000),
                     globalKey: meta.globalKey,
-                    content: noteContent,
+                    content: noteContent.trim(),
                     color: noteColor,
                 };
                 dispatch(create(newNote));
@@ -154,7 +155,6 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
             let updatePayload = {
                 id: note.id,
                 noteColor,
-                noteContent: note.content,
             };
             dispatch(update(updatePayload));
         }
@@ -183,6 +183,14 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
                     </CloseModalButton>
                     <AddNoteInput type="text" autoFocus value={noteContent} noteColor={noteColor} onChange={(e) => setNoteContent(e.target.value)} />
                     <ModalActionArea>
+                        <ModalActionDiv>
+                            {isUpdateNoteModal && (
+                                <ModalActionButton onClick={() => handleDeleteNoteAction(note.id)}>
+                                    <p>Delete</p>
+                                </ModalActionButton>
+                            )}
+                            <ModalActionButton onClick={handleSubmitModalAction}>{isUpdateNoteModal ? <p>Update</p> : <p>Add Note</p>}</ModalActionButton>
+                        </ModalActionDiv>
                         <NoteColorSelectionBox>
                             {Object.keys(colorOptions).map((color) => (
                                 <ColorOption
@@ -192,14 +200,6 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
                                 />
                             ))}
                         </NoteColorSelectionBox>
-                        <ModalActionDiv>
-                            {isUpdateNoteModal && (
-                                <ModalActionButton onClick={() => handleDeleteNoteAction(note.id)}>
-                                    <p>Delete</p>
-                                </ModalActionButton>
-                            )}
-                            <ModalActionButton onClick={handleSubmitModalAction}>{isUpdateNoteModal ? <p>Update</p> : <p>Add Note</p>}</ModalActionButton>
-                        </ModalActionDiv>
                     </ModalActionArea>
                 </ModalBox>
             </AnimatePresence>

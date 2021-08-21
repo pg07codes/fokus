@@ -2,30 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
-import { AiOutlineClose } from "react-icons/ai";
+import { FaArrowRight, FaTrash, FaClipboard } from "react-icons/fa";
 import { colorOptions, create, update, remove } from "../../containers/notes/notesSlice";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
-import { VscMarkdown } from "react-icons/vsc";
-import { FiEdit } from "react-icons/fi";
+import { AiFillEye } from "react-icons/ai";
+import { RiFileEditFill } from "react-icons/ri";
 import { debounce } from "./../../helpers";
-import { BiTrash } from "react-icons/bi";
+import ReactTooltip from "react-tooltip";
 
 const NotesPreviewContainer = styled(motion.div)`
     display: flex;
     flex-direction: column;
     flex: 0 1 0;
     position: relative;
-    border-left: solid 2px #fabb18;
-`;
-
-const NoteActionMenu = styled.div`
-    width: 100%;
-    height: 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: grey;
+    border-left: solid 1px #fabb18;
+    background-color: ${(p) => p.theme.backgroundSecondary};
 `;
 
 const NoteContentDiv = styled.div`
@@ -34,7 +26,6 @@ const NoteContentDiv = styled.div`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    background-color: #fff;
 `;
 
 const EditNoteInput = styled.textarea`
@@ -46,21 +37,47 @@ const EditNoteInput = styled.textarea`
     vertical-align: center;
     border: none;
     outline: none;
+    background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
     &:focus {
         outline: none;
     }
 `;
 
+const MarkdownWrapper = styled.div`
+    padding: 20px 0 0 25px;
+    color: ${(p) => p.theme.primaryText};
+`;
+
+const NoteActionMenu = styled.div`
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fabb18;
+`;
+
+const MenuActionButtonGroup = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`;
+
 const MenuActionButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
     cursor: pointer;
     svg {
+        padding: 1px 10px;
         color: ${(p) => p.theme.primaryText};
-        font-size: 1.6em;
-        font-weight: 900;
+        font-size: 1em;
+    }
+    &:hover {
+        background-color: white;
     }
 `;
 
@@ -69,18 +86,17 @@ const NoteColorSelectionBox = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    height: 40px;
-    width: 220px;
+    height: 100%;
+    width: 180px;
     margin: 4px;
-    background-color: ${(p) => p.theme.backgroundSecondary};
-    background-color: #e6e6e6;
 `;
 
 const ColorOption = styled.div`
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
+    cursor: pointer;
     background-color: ${(p) => p.color};
     background-clip: content-box;
     padding: 2px;
@@ -94,7 +110,7 @@ const debouncedUpdateNoteContent = debounce((dispatch, id, updatedNoteContent) =
 
 export default function NotesPreview({ note, setNoteInPreview }) {
     const dispatch = useDispatch();
-    const [editNote, setEditNote] = useState(true);
+    const [editNote, setEditNote] = useState();
     const [noteContent, setNoteContent] = useState();
     const [noteColor, setNoteColor] = useState();
 
@@ -102,7 +118,7 @@ export default function NotesPreview({ note, setNoteInPreview }) {
         if (note != null) {
             setNoteContent(note.content);
             setNoteColor(note.color);
-            setEditNote(false);
+            setEditNote(true);
         }
     }, [note]);
 
@@ -138,7 +154,25 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                 {note != null && (
                     <>
                         <NoteActionMenu>
-                            <MenuActionButton onClick={() => setEditNote(!editNote)}>{editNote ? <VscMarkdown /> : <FiEdit />}</MenuActionButton>
+                            <MenuActionButtonGroup>
+                                <MenuActionButton onClick={() => setNoteInPreview(null)}>
+                                    <FaArrowRight data-for="closeAction" data-tip="" />
+                                    <ReactTooltip id="closeAction" getContent={() => "Close Note"} />
+                                </MenuActionButton>
+                                <MenuActionButton data-for="viewOrEditAction" data-tip="" onClick={() => setEditNote(!editNote)}>
+                                    {editNote ? <AiFillEye /> : <RiFileEditFill />}
+                                    <ReactTooltip id="viewOrEditAction" getContent={() => (editNote ? "View Markdown" : "Edit Note")} />
+                                </MenuActionButton>
+                                <MenuActionButton onClick={() => navigator.clipboard.writeText(noteContent)}>
+                                    <FaClipboard data-for="copyAction" data-tip="" />
+                                    <ReactTooltip id="copyAction" getContent={() => "Copy Note"} />
+                                </MenuActionButton>
+
+                                <MenuActionButton onClick={() => handleDeleteNoteAction(note.id)}>
+                                    <FaTrash data-for="deleteAction" data-tip="" />
+                                    <ReactTooltip id="deleteAction" getContent={() => "Delete Note"} />
+                                </MenuActionButton>
+                            </MenuActionButtonGroup>
                             <NoteColorSelectionBox>
                                 {Object.keys(colorOptions).map((color) => (
                                     <ColorOption
@@ -148,20 +182,14 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                                     />
                                 ))}
                             </NoteColorSelectionBox>
-                            <MenuActionButton onClick={() => handleDeleteNoteAction(note.id)}>
-                                <BiTrash />
-                            </MenuActionButton>
-                            <MenuActionButton onClick={() => setNoteInPreview(null)}>
-                                <AiOutlineClose />
-                            </MenuActionButton>
                         </NoteActionMenu>
                         <NoteContentDiv>
                             {editNote ? (
                                 <EditNoteInput type="text" value={noteContent} onChange={(e) => handleContentChange(e.target.value)} />
                             ) : (
-                                <div style={{ padding: "20px 0 0 25px" }}>
-                                    <ReactMarkdown>{noteContent}</ReactMarkdown>
-                                </div>
+                                <MarkdownWrapper>
+                                    <ReactMarkdown children={noteContent} />
+                                </MarkdownWrapper>
                             )}
                         </NoteContentDiv>
                     </>

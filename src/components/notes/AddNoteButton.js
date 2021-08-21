@@ -30,17 +30,22 @@ const AddIcon = styled.div`
     }
 `;
 
-export function AddNoteButton() {
+export function AddNoteButton({ setNoteInPreview }) {
     const [showModal, setShowModal] = useState(false);
 
     return (
         <>
             <AddButtonContainer data-for="addNote" data-tip="">
-                <AddIcon onClick={() => setShowModal(true)}>
+                <AddIcon
+                    onClick={() => {
+                        setNoteInPreview(null);
+                        setShowModal(true);
+                    }}
+                >
                     <AiOutlinePlus />
                 </AddIcon>
             </AddButtonContainer>
-            <ReactTooltip id="addNote" getContent={()=>"Add Note"}/>
+            <ReactTooltip id="addNote" getContent={() => "Add Note"} />
             {showModal && <NoteModal isUpdateNoteModal={false} setShowModal={setShowModal} />}
         </>
     );

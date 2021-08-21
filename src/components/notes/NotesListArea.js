@@ -35,7 +35,7 @@ export default function NotesListArea({setNoteInPreview}) {
             ) : (
                 <EmptyNotes />
             )}
-            <AddNoteButton />
+            <AddNoteButton setNoteInPreview={setNoteInPreview}/>
         </NotesListAreaContainer>
     );
 }

@@ -20,11 +20,14 @@ const NoteCardContainer = styled.div`
 `;
 
 function previewNote(str) {
-    if (str.length <= 120) return str;
-    else return str.substring(0, 120) + "...";
+    let nextLineIdx = str.indexOf("\n");
+    if (nextLineIdx !== -1) str = str.substring(0, nextLineIdx);
+    if (str.length === 0) str = "Untitled Note";
+    if (str.length <= 90) return str;
+    else return str.substring(0, 90) + "...";
 }
 
-export function NoteCard({ note , setNoteInPreview}) {
+export function NoteCard({ note, setNoteInPreview }) {
     const [showModal, setShowModal] = useState(false);
 
     return (

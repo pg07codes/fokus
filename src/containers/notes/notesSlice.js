@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const colorOptions = {
-    yellow: "#FABB18",
-    orange: "#FBCEB1",
     pink: "#FFF0F5",
     green: "#D0F0C0",
     blue: "#E0FFFF",
