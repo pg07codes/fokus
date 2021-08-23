@@ -12,8 +12,8 @@ const NewNoteButtonContainer = styled.div`
     flex-direction: column;
     cursor: pointer;
     border-radius: 12px;
-    border: 2px dashed black;
-    background-color: #fff;
+    border: 2px dashed ${(p) => p.theme.primaryText};
+    background-color: ${(p) => p.theme.backgroundSecondary};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;
@@ -24,7 +24,7 @@ const AddIcon = styled.div`
     justify-content: center;
     align-items: center;
     svg {
-        color: black;
+        color: ${(p) => p.theme.primaryText};
         font-size: 2em;
         font-weight: bolder;
     }

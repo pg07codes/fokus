@@ -16,6 +16,7 @@ export const darkTheme = {
     highlight: "#fff",
     primaryText: "#fff",
     secondaryText: "#000",
+    brightness: 0.80,
 };
 
 export const lightTheme = {
@@ -26,4 +27,5 @@ export const lightTheme = {
     highlight: "#000",
     primaryText: "#000",
     secondaryText: "#fff",
+    brightness: 1,
 };

@@ -11,6 +11,7 @@ const NoteCardContainer = styled.div`
     cursor: pointer;
     border-radius: 12px;
     background-color: ${(p) => p.noteColor};
+    filter: ${(p) => `brightness(${p.theme.brightness})`};
     -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
     box-shadow: 0 2px 10px rgba(166, 173, 201, 0.4);
 `;

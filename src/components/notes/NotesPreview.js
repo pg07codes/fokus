@@ -39,6 +39,9 @@ const EditNoteInput = styled.textarea`
     outline: none;
     background-color: ${(p) => p.theme.backgroundSecondary};
     color: ${(p) => p.theme.primaryText};
+    &::placeholder {
+        color: #c1c1d7;
+    }
     &:focus {
         outline: none;
     }
@@ -77,7 +80,7 @@ const MenuActionButton = styled.div`
         font-size: 1em;
     }
     &:hover {
-        background-color: white;
+        background-color: ${(p) => p.theme.backgroundSecondary};
     }
 `;
 
@@ -142,9 +145,7 @@ export default function NotesPreview({ note, setNoteInPreview }) {
     };
 
     const handleCloseAction = () => {
-        if (noteContent.trim().length === 0) {
-            dispatch(remove(note.id));
-        }
+        dispatch(remove(null)); // clears all empty body notes
         setNoteInPreview(null);
     };
 
@@ -193,7 +194,13 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                         </NoteActionMenu>
                         <NoteContentDiv>
                             {editNote ? (
-                                <EditNoteInput autoFocus type="text" value={noteContent} onChange={(e) => handleContentChange(e.target.value)} />
+                                <EditNoteInput
+                                    placeholder="Type note here.."
+                                    autoFocus
+                                    type="text"
+                                    value={noteContent}
+                                    onChange={(e) => handleContentChange(e.target.value)}
+                                />
                             ) : (
                                 <MarkdownWrapper>
                                     <ReactMarkdown children={noteContent} />

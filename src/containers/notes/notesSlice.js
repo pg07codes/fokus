@@ -14,14 +14,13 @@ export const notesSlice = createSlice({
         meta: {
             globalKey: 0,
             totalNoteCount: 0,
-            isNewNoteUnderCreation: false,
         },
     },
     reducers: {
         create: (notes, { payload }) => {
             notes.meta.totalNoteCount++;
             notes.meta.globalKey++;
-            notes.notesArray.push(payload);
+            notes.notesArray.unshift(payload);
         },
         update: ({ notesArray }, { payload }) => {
             notesArray.forEach((i) => {
@@ -34,18 +33,14 @@ export const notesSlice = createSlice({
         },
         remove: (notes, { payload }) => {
             notes.notesArray = notes.notesArray.filter((i) => {
-                if (i.id !== payload) return true;
+                if (i.id !== payload && i.content.trim().length !== 0) return true;
                 else return false;
             });
-            notes.meta.totalNoteCount--;
-        },
-        setNoteUnderCreation: ({ meta }, { payload }) => {
-            meta.isNewNoteUnderCreation = payload;
-            meta.totalNoteCount++;
+            notes.meta.totalNoteCount = notes.notesArray.length;
         },
     },
 });
 
-export const { create, update, remove, setNoteUnderCreation } = notesSlice.actions;
+export const { create, update, remove } = notesSlice.actions;
 
 export default notesSlice.reducer;

@@ -37,10 +37,10 @@ export default function NotesListArea({ setNoteInPreview }) {
                 <EmptyNotes />
             )} */}
             <NotesDiv>
+                <NewNoteButton setNoteInPreview={setNoteInPreview} />
                 {notesArray.map((note, idx) => (
                     <NoteCard key={idx} setNoteInPreview={setNoteInPreview} note={note} />
                 ))}
-                <NewNoteButton setNoteInPreview={setNoteInPreview} />
             </NotesDiv>
         </NotesListAreaContainer>
     );
