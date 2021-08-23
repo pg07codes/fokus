@@ -105,8 +105,8 @@ const ColorOption = styled.div`
 `;
 
 const debouncedUpdateNoteContent = debounce((dispatch, id, updatedNoteContent) => {
-    dispatch(update({ id: id, noteContent: updatedNoteContent }));
-}, 600);
+    dispatch(update({ id: id, noteContent: updatedNoteContent.trim() }));
+}, 1000);
 
 export default function NotesPreview({ note, setNoteInPreview }) {
     const dispatch = useDispatch();
@@ -115,7 +115,7 @@ export default function NotesPreview({ note, setNoteInPreview }) {
     const [noteColor, setNoteColor] = useState();
 
     useEffect(() => {
-        if (note != null) {
+        if (note !== null) {
             setNoteContent(note.content);
             setNoteColor(note.color);
             setEditNote(true);
@@ -141,6 +141,13 @@ export default function NotesPreview({ note, setNoteInPreview }) {
         setNoteInPreview(null);
     };
 
+    const handleCloseAction = () => {
+        if (noteContent.trim().length === 0) {
+            dispatch(remove(note.id));
+        }
+        setNoteInPreview(null);
+    };
+
     return (
         <AnimatePresence>
             <NotesPreviewContainer
@@ -151,11 +158,11 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                     flex: note === null ? "0 1 0" : "2 1 0",
                 }}
             >
-                {note != null && (
+                {note !== null && (
                     <>
                         <NoteActionMenu>
                             <MenuActionButtonGroup>
-                                <MenuActionButton onClick={() => setNoteInPreview(null)}>
+                                <MenuActionButton onClick={() => handleCloseAction()}>
                                     <FaArrowRight data-for="closeAction" data-tip="" />
                                     <ReactTooltip id="closeAction" getContent={() => "Close Note"} />
                                 </MenuActionButton>
@@ -174,8 +181,9 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                                 </MenuActionButton>
                             </MenuActionButtonGroup>
                             <NoteColorSelectionBox>
-                                {Object.keys(colorOptions).map((color) => (
+                                {Object.keys(colorOptions).map((color, idx) => (
                                     <ColorOption
+                                        key={idx}
                                         onClick={() => handleColorUpdate(note, colorOptions[color])}
                                         isSelected={noteColor === colorOptions[color]}
                                         color={colorOptions[color]}
@@ -185,7 +193,7 @@ export default function NotesPreview({ note, setNoteInPreview }) {
                         </NoteActionMenu>
                         <NoteContentDiv>
                             {editNote ? (
-                                <EditNoteInput type="text" value={noteContent} onChange={(e) => handleContentChange(e.target.value)} />
+                                <EditNoteInput autoFocus type="text" value={noteContent} onChange={(e) => handleContentChange(e.target.value)} />
                             ) : (
                                 <MarkdownWrapper>
                                     <ReactMarkdown children={noteContent} />

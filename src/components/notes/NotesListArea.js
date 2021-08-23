@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { AddNoteButton } from "../../components/notes/AddNoteButton";
-import EmptyNotes from "../../components/notes/NoNotes";
+import EmptyNotes from "./EmptyNotes";
 import { NoteCard } from "./../../components/notes/NoteCard";
+import { NewNoteButton } from "./NewNoteButton";
 
 const NotesListAreaContainer = styled.div`
     display: flex;
-    flex:3 1 0;
+    flex: 3 1 0;
     justify-content: center;
     align-content: center;
     overflow-y: auto;
@@ -22,20 +22,26 @@ const NotesDiv = styled.div`
     width: 90%;
 `;
 
-export default function NotesListArea({setNoteInPreview}) {
+export default function NotesListArea({ setNoteInPreview }) {
     let notesArray = useSelector((state) => state.notes.notesArray);
     return (
         <NotesListAreaContainer>
-            {notesArray.length !== 0 ? (
+            {/* {notesArray.length !== 0 ? (
                 <NotesDiv>
                     {notesArray.map((note) => (
                         <NoteCard setNoteInPreview={setNoteInPreview} note={note} />
                     ))}
+                    <NewNoteButton setNoteInPreview={setNoteInPreview} />
                 </NotesDiv>
             ) : (
                 <EmptyNotes />
-            )}
-            <AddNoteButton setNoteInPreview={setNoteInPreview}/>
+            )} */}
+            <NotesDiv>
+                {notesArray.map((note, idx) => (
+                    <NoteCard key={idx} setNoteInPreview={setNoteInPreview} note={note} />
+                ))}
+                <NewNoteButton setNoteInPreview={setNoteInPreview} />
+            </NotesDiv>
         </NotesListAreaContainer>
     );
 }

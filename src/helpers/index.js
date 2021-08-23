@@ -93,3 +93,27 @@ export function getOrdinalSuffix(i) {
     }
     return "th";
 }
+
+const MILLI_IN_30_DAYS = 2592000000;
+const MILLI_IN_A_DAY = 86400000;
+const MILLI_IN_A_HOUR = 3600000;
+const MILLI_IN_A_MIN = 60000;
+
+export function getTimeDifferenceForNotes(d1, d2) {
+    let difference = d2 - d1;
+
+    if (difference < MILLI_IN_A_HOUR) {
+        let minsGap = Math.floor(difference / MILLI_IN_A_MIN);
+        return minsGap === 0 ? `recently` : `${minsGap}mins ago`;
+    } else if (difference < MILLI_IN_A_DAY) {
+        let hoursGap = Math.floor(difference / MILLI_IN_A_HOUR);
+        if (hoursGap <= 1) return `${hoursGap}hr ago`;
+        else return `${hoursGap}hrs ago`;
+    } else if (difference < MILLI_IN_30_DAYS) {
+        let daysGap = Math.floor(difference / MILLI_IN_A_DAY);
+        if (daysGap <= 1) return `${daysGap}day ago`;
+        else return `${daysGap}days ago`;
+    } else {
+        return `30+days ago`;
+    }
+}

@@ -46,7 +46,7 @@ export function AddNoteButton({ setNoteInPreview }) {
                 </AddIcon>
             </AddButtonContainer>
             <ReactTooltip id="addNote" getContent={() => "Add Note"} />
-            {showModal && <NoteModal isUpdateNoteModal={false} setShowModal={setShowModal} />}
+            {showModal && <NoteModal setShowModal={setShowModal} />}
         </>
     );
 }

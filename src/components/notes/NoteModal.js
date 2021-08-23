@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
-import { colorOptions, create, update, remove } from "../../containers/notes/notesSlice";
+import { colorOptions, create } from "../../containers/notes/notesSlice";
 
 import { motion } from "framer-motion";
 
@@ -125,45 +125,28 @@ const ColorOption = styled.div`
     border: ${(p) => (p.isSelected ? "3px solid black" : "")};
 `;
 
-export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
+export default function NoteModal({ setShowModal }) {
     const dispatch = useDispatch();
 
-    const [noteContent, setNoteContent] = useState(isUpdateNoteModal ? note.content : "");
-    const [noteColor, setNoteColor] = useState(isUpdateNoteModal ? note.color : colorOptions.white);
+    const [noteContent, setNoteContent] = useState("");
+    const [noteColor, setNoteColor] = useState(colorOptions.white);
 
     const meta = useSelector((state) => state.tasks.meta);
 
     const handleSubmitModalAction = () => {
         if (noteContent.trim().length >= 1) {
-            if (isUpdateNoteModal) {
-                dispatch(update({ id: note.id, noteContent: noteContent.trim() }));
-            } else {
-                let newNote = {
-                    id: Math.floor(Math.random() * 10000),
-                    globalKey: meta.globalKey,
-                    content: noteContent.trim(),
-                    color: noteColor,
-                };
-                dispatch(create(newNote));
-            }
+            let newNote = {
+                id: Math.floor(Math.random() * 10000),
+                globalKey: meta.globalKey,
+                content: noteContent.trim(),
+                color: noteColor,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            };
+            dispatch(create(newNote));
+
             setShowModal(false);
         }
-    };
-
-    const handleColorUpdate = (note, noteColor) => {
-        if (isUpdateNoteModal) {
-            let updatePayload = {
-                id: note.id,
-                noteColor,
-            };
-            dispatch(update(updatePayload));
-        }
-        setNoteColor(noteColor);
-    };
-
-    const handleDeleteNoteAction = (id) => {
-        dispatch(remove(note.id));
-        setShowModal(false);
     };
 
     return (
@@ -184,17 +167,14 @@ export default function NoteModal({ isUpdateNoteModal, note, setShowModal }) {
                     <AddNoteInput type="text" autoFocus value={noteContent} noteColor={noteColor} onChange={(e) => setNoteContent(e.target.value)} />
                     <ModalActionArea>
                         <ModalActionDiv>
-                            {isUpdateNoteModal && (
-                                <ModalActionButton onClick={() => handleDeleteNoteAction(note.id)}>
-                                    <p>Delete</p>
-                                </ModalActionButton>
-                            )}
-                            <ModalActionButton onClick={handleSubmitModalAction}>{isUpdateNoteModal ? <p>Update</p> : <p>Add Note</p>}</ModalActionButton>
+                            <ModalActionButton onClick={handleSubmitModalAction}>
+                                <p>Add Note</p>
+                            </ModalActionButton>
                         </ModalActionDiv>
                         <NoteColorSelectionBox>
                             {Object.keys(colorOptions).map((color) => (
                                 <ColorOption
-                                    onClick={() => handleColorUpdate(note, colorOptions[color])}
+                                    onClick={() => setNoteColor(colorOptions[color])}
                                     isSelected={noteColor === colorOptions[color]}
                                     color={colorOptions[color]}
                                 />
