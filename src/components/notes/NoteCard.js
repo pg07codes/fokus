@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getTimeDifferenceForNotes } from "../../helpers";
 
 const NoteCardContainer = styled.div`
-    width: 220px;
+    width: 210px;
     height: 160px;
     margin: 15px;
     display: flex;
@@ -37,7 +37,7 @@ const NoteCardStatus = styled.div`
         border-top: 1px solid grey;
         padding: 2px 10px;
         color: rgba(0, 0, 0, 0.6);
-        font-size: 0.7em;
+        font-size: 0.65em;
     }
 `;
 
@@ -59,10 +59,7 @@ export function NoteCard({ note, setNoteInPreview }) {
 
                 <NoteCardStatus>
                     <p>
-                        <i>
-                            {(note.createdAt === note.updatedAt ? "created " : "updated ") +
-                                getTimeDifferenceForNotes(new Date(note.updatedAt).getTime(), new Date().getTime())}
-                        </i>
+                        <i>updated {getTimeDifferenceForNotes(new Date(note.updatedAt).getTime(), new Date().getTime())}</i>
                     </p>
                 </NoteCardStatus>
             </NoteCardContainer>

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { FocusBoard } from "../focusBoard/FocusBoard";
 import { MiscBoard } from "../miscBoard/MiscBoard";
-
 const DashboardMainContainer = styled.div`
     flex: 3 1 0;
     display: flex;

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { colorOptions, create, setNoteUnderCreation } from "../../containers/notes/notesSlice";
 
 const NewNoteButtonContainer = styled.div`
-    width: 220px;
+    width: 210px;
     height: 160px;
     margin: 15px;
     display: flex;
@@ -35,19 +35,15 @@ export function NewNoteButton({ setNoteInPreview }) {
     const meta = useSelector((state) => state.notes.meta);
 
     const handleNewNoteAction = () => {
-        // if (!meta.isNewNoteUnderCreation) {
         let newNote = {
             id: Math.floor(Math.random() * 10000),
             globalKey: meta.globalKey,
             content: "",
             color: colorOptions.white,
-            createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
         dispatch(create(newNote));
         setNoteInPreview(newNote);
-        // dispatch(setNoteUnderCreation(true));
-        // }
     };
     return (
         <>

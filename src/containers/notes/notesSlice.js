@@ -4,7 +4,7 @@ export const colorOptions = {
     pink: "#FFF0F5",
     green: "#D0F0C0",
     blue: "#E0FFFF",
-    white: "#F8F8FF",
+    white: "#FFFFFF",
 };
 
 export const notesSlice = createSlice({
