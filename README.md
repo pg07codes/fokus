@@ -3,7 +3,6 @@
 </p>
 
 <h3 align="center"> Fokus is a web based productivity tool. Give Fokus App a try <a href="https://fokus-prototype.netlify.com"> here </a> </h3>
-<p align="center">  Visit <a href="https://fokus-website.netlify.com">website</a> to know more about fokus.</p>
 <p align="center">
   <img  src="https://img.shields.io/badge/name-fokus-yellow" alt="Game Ref" />
   <img  src="https://img.shields.io/badge/category-productivity-orange" alt="Application Category" />
@@ -11,7 +10,18 @@
   <img  src="https://img.shields.io/badge/bundler-webpack-blueviolet" alt="Module Bundler" />
 </p>
 
+## screenshots :heart:
+
 <img src="https://user-images.githubusercontent.com/34238240/115880633-90edf500-a468-11eb-91bd-b8a9c52a678c.png" alt="Fokus App">
+
+<img src="https://user-images.githubusercontent.com/34238240/130842979-4ab26abd-d952-44ce-9b02-e7ee9e6d0717.png" alt="Fokus App">
+
+<img src="https://user-images.githubusercontent.com/34238240/130842321-1b39a27a-93ab-4b29-8cb8-575e973c365f.png" alt="Fokus App">
+
+<img src="https://user-images.githubusercontent.com/34238240/130842324-6551deb4-f94c-4a12-8ccb-03326598cc6e.png" alt="Fokus App">
+
+<img src="https://user-images.githubusercontent.com/34238240/130842314-1c0ea2c8-58f5-4d76-a794-5dda9d398602.png" alt="Fokus App">
+
 
 > NOTE: the project is under development and i am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and i'll be happy to help. Thanks.
 

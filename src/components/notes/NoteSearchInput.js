@@ -4,8 +4,8 @@ import { FaSearch } from "react-icons/fa";
 
 const NoteSearchContainer = styled.div`
     display: flex;
-    margin: 15px;
-    min-height: 50px;
+    margin: 15px 15px 30px 15px;
+    min-height: 45px;
 `;
 
 const NoteSearchInputDiv = styled.div`
@@ -14,21 +14,17 @@ const NoteSearchInputDiv = styled.div`
     align-items: center;
     width: 60%;
     height: 100%;
-    border-radius: 12px;
-    background-color: ${(p) => p.theme.backgroundSecondary};
-    -webkit-box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
-    box-shadow: 0 2px 10px rgba(166, 173, 201, 0.3);
+    border-bottom: ${(p) => p.noSearchResults ? "2px solid red" : `2px solid ${p.theme.primaryText}`};
     svg {
         color: #fabb18;
     }
-    border: ${(p) => (p.noSearchResults ? "red 1px solid" : "")};
 `;
 
 const SearchNoteInput = styled.input`
-    height: 90%;
+    height: 95%;
     width: 75%;
     font-size: 0.9em;
-    background-color: ${(p) => p.theme.backgroundSecondary};
+    background-color: ${(p) => p.theme.body};
     color: ${(p) => p.theme.primaryText};
     border: 0;
     outline: none;
@@ -46,7 +42,7 @@ const NoSearchResultFeedback = styled.div`
     min-width: 15%;
     height: 90%;
     span {
-        font-size:0.9em;
+        font-size: 0.9em;
         color: red;
     }
 `;

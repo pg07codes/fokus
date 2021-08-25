@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { colorOptions, create, setNoteUnderCreation } from "../../containers/notes/notesSlice";
 
 const NewNoteButtonContainer = styled.div`
-    width: 210px;
+    width: 215px;
     height: 160px;
-    margin: 15px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     cursor: pointer;

@@ -15,12 +15,12 @@ export function MobileView() {
     return (
         <MobileViewDiv>
             <h3 align="center" style={{ margin: "50px 15px" }}>
-                Currently fokus app is not supported in mobile browsers.
+                Currently fokus app is not supported in mobile browsers. Redirecting you to our introduction website
             </h3>
 
-            <h2 align="center" style={{ margin: "50px 15px" }}>
+            <h4 align="center" style={{ margin: "50px 15px" }}>
                 Fokus is a web based productivity tool. Visit <a href="https://fokus-website.netlify.com">website</a> to know more.
-            </h2>
+            </h4>
         </MobileViewDiv>
     );
 }

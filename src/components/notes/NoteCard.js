@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { getTimeDifferenceForNotes } from "../../helpers";
 
 const NoteCardContainer = styled.div`
-    width: 210px;
+    width: 215px;
     height: 160px;
-    margin: 15px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
@@ -37,7 +37,7 @@ const NoteCardStatus = styled.div`
         border-top: 1px solid grey;
         padding: 2px 10px;
         color: rgba(0, 0, 0, 0.6);
-        font-size: 0.65em;
+        font-size: 0.7em;
     }
 `;
 

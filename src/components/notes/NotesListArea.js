@@ -31,7 +31,7 @@ export default function NotesListArea({ setNoteInPreview }) {
     const [filteredNotes, setFilteredNotes] = useState([]);
 
     useEffect(() => {
-        if (searchQuery.trim().length >= 3) {
+        if (searchQuery.trim().length !== 0) {
             setFilteredNotes(
                 notesArray.filter((note) => {
                     if (note.content.trim().length === 0) return true;

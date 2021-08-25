@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BsCalendarFill } from "react-icons/bs";
-import { getFormattedDate  , getOrdinalSuffix} from "../../helpers";
+import { getFormattedDate, getOrdinalSuffix } from "../../helpers";
 
 const DayDateDiv = styled.div`
     display: flex;
@@ -10,7 +10,6 @@ const DayDateDiv = styled.div`
     justify-content: space-around;
     width: 25%;
     height: 55%;
-    /* background-color:grey; */
 `;
 
 const CalendarIconDiv = styled.div`
@@ -29,15 +28,15 @@ const DayDateText = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    width: 65%;
+    width: 70%;
     font-weight: bold;
     font-size: 0.8em;
-    color:${p=>p.theme.primaryText};
+    color: ${(p) => p.theme.primaryText};
     p {
         margin: 0;
     }
-    sup{
-        font-size:0.5em;
+    sup {
+        font-size: 0.5em;
     }
 `;
 
@@ -50,7 +49,8 @@ export function DayDate() {
             </CalendarIconDiv>
             <DayDateText>
                 <span>
-                    {DateObj.day} {DateObj.date}<sup>{getOrdinalSuffix(DateObj.date)}</sup>
+                    {DateObj.day} {DateObj.date}
+                    <sup>{getOrdinalSuffix(DateObj.date)}</sup>
                 </span>
                 <p>
                     {DateObj.month}, {DateObj.year}
