@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { getTimeDifferenceForNotes } from "../../helpers";
 
 const NoteCardContainer = styled.div`
-    width: 215px;
-    height: 160px;
+    width: ${(p) => (p.isGridView ? "215px" : "60%")};
+    height: ${(p) => (p.isGridView ? "160px" : "110px")};
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -49,10 +49,10 @@ function previewNote(str) {
     else return str.substring(0, 90) + "...";
 }
 
-export function NoteCard({ note, setNoteInPreview }) {
+export function NoteCard({ note, setNoteInPreview, isGridView }) {
     return (
         <>
-            <NoteCardContainer noteColor={note.color} onClick={() => setNoteInPreview(note)}>
+            <NoteCardContainer isGridView={isGridView} noteColor={note.color} onClick={() => setNoteInPreview(note)}>
                 <NoteCardContent>
                     <p>{previewNote(note.content)}</p>
                 </NoteCardContent>

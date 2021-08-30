@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { DarkThemeToggle } from "./DarkThemeToggle";
+import { NotesViewToggle } from "./NotesViewToggle";
 import { DefaultTaskTime } from "./DefaultTaskTime";
 import { DefaultTaskLabel } from "./DefaultTaskLabel";
 import { AutoMarkDone } from "./AutoMarkDone";
@@ -66,6 +67,7 @@ export default function Settings() {
                     <DarkThemeToggle />
                     <DefaultTaskLabel />
                     <AutoMarkDone />
+                    <NotesViewToggle />
                     <DefaultTaskTime />
                 </SettingsOptions>
             </SettingsDiv>

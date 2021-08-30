@@ -20,13 +20,16 @@ const NotesListAreaContainer = styled.div`
 
 const NotesDiv = styled.div`
     display: flex;
+    flex-direction: ${(p) => (p.isGridView ? "row" : "column")};
     flex-wrap: wrap;
-    align-content: flex-start;
+    align-items: center;
+    /* align-content: flex-start; */
     width: 90%;
 `;
 
 export default function NotesListArea({ setNoteInPreview }) {
     const notesArray = useSelector((state) => state.notes.notesArray);
+    const isGridView = useSelector((state) => state.settings.isGridView);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredNotes, setFilteredNotes] = useState([]);
 
@@ -45,11 +48,11 @@ export default function NotesListArea({ setNoteInPreview }) {
 
     return (
         <NotesListAreaContainer background={emptyNotes}>
-            <NoteSearchInput noSearchResults={filteredNotes.length === 0} setSearchQuery={setSearchQuery} />
-            <NotesDiv>
-                <NewNoteButton setNoteInPreview={setNoteInPreview} />
+            <NoteSearchInput noSearchResults={notesArray.length !== 0 && filteredNotes.length === 0} setSearchQuery={setSearchQuery} />
+            <NotesDiv isGridView={isGridView}>
+                <NewNoteButton isGridView={isGridView} setNoteInPreview={setNoteInPreview} />
                 {filteredNotes.map((note, idx) => (
-                    <NoteCard key={idx} setNoteInPreview={setNoteInPreview} note={note} />
+                    <NoteCard isGridView={isGridView} key={idx} setNoteInPreview={setNoteInPreview} note={note} />
                 ))}
             </NotesDiv>
         </NotesListAreaContainer>

@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { colorOptions, create, setNoteUnderCreation } from "../../containers/notes/notesSlice";
 
 const NewNoteButtonContainer = styled.div`
-    width: 215px;
-    height: 160px;
+    width: ${(p) => (p.isGridView ? "215px" : "60%")};
+    height: ${(p) => (p.isGridView ? "160px" : "110px")};
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@ const AddIcon = styled.div`
     }
 `;
 
-export function NewNoteButton({ setNoteInPreview }) {
+export function NewNoteButton({ setNoteInPreview , isGridView }) {
     let dispatch = useDispatch();
     const meta = useSelector((state) => state.notes.meta);
 
@@ -47,7 +47,7 @@ export function NewNoteButton({ setNoteInPreview }) {
     };
     return (
         <>
-            <NewNoteButtonContainer onClick={() => handleNewNoteAction()}>
+            <NewNoteButtonContainer isGridView={isGridView} onClick={() => handleNewNoteAction()}>
                 <AddIcon>
                     <AiOutlinePlus />
                 </AddIcon>
