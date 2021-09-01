@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { getTimeDifferenceForNotes } from "../../helpers";
 
@@ -41,12 +41,18 @@ const NoteCardStatus = styled.div`
     }
 `;
 
-function previewNote(str) {
-    let nextLineIdx = str.indexOf("\n");
-    if (nextLineIdx !== -1) str = str.substring(0, nextLineIdx);
-    if (str.length === 0) str = "New Note";
-    if (str.length <= 90) return str;
-    else return str.substring(0, 90) + "...";
+function previewNote(str, isGridView) {
+    if (isGridView) {
+        let nextLineIdx = str.indexOf("\n");
+        if (nextLineIdx !== -1) str = str.substring(0, nextLineIdx);
+        if (str.length === 0) str = "New Note";
+        if (str.length <= 90) return str;
+        else return str.substring(0, 90) + "...";
+    } else {
+        if (str.length === 0) str = "New Note";
+        if (str.length <= 160) return str;
+        else return str.substring(0, 160) + "...";
+    }
 }
 
 export function NoteCard({ note, setNoteInPreview, isGridView }) {
@@ -54,7 +60,7 @@ export function NoteCard({ note, setNoteInPreview, isGridView }) {
         <>
             <NoteCardContainer isGridView={isGridView} noteColor={note.color} onClick={() => setNoteInPreview(note)}>
                 <NoteCardContent>
-                    <p>{previewNote(note.content)}</p>
+                    <p>{previewNote(note.content,isGridView)}</p>
                 </NoteCardContent>
 
                 <NoteCardStatus>

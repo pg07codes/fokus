@@ -4,8 +4,11 @@ import { FaSearch } from "react-icons/fa";
 
 const NoteSearchContainer = styled.div`
     display: flex;
+    justify-content: ${(p) => (p.isGridView ? "flex-start" : "center")};
     margin: 15px 15px 30px 15px;
     min-height: 45px;
+    width:85%;
+    /* background-color: pink; */
 `;
 
 const NoteSearchInputDiv = styled.div`
@@ -42,14 +45,14 @@ const NoSearchResultFeedback = styled.div`
     min-width: 15%;
     height: 90%;
     span {
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: red;
     }
 `;
 
-export default function NoteSearchInput({ setSearchQuery, noSearchResults }) {
+export default function NoteSearchInput({ setSearchQuery, noSearchResults ,isGridView }) {
     return (
-        <NoteSearchContainer>
+        <NoteSearchContainer isGridView={isGridView}>
             <NoteSearchInputDiv noSearchResults={noSearchResults}>
                 <FaSearch />
                 <SearchNoteInput type="text" placeholder="Search here.." onChange={(e) => setSearchQuery(e.target.value)} />

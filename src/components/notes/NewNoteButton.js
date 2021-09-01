@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { colorOptions, create, setNoteUnderCreation } from "../../containers/notes/notesSlice";
+import { colorOptions, create} from "../../containers/notes/notesSlice";
 
 const NewNoteButtonContainer = styled.div`
     width: ${(p) => (p.isGridView ? "215px" : "60%")};

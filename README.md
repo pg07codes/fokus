@@ -10,6 +10,9 @@
   <img  src="https://img.shields.io/badge/bundler-webpack-blueviolet" alt="Module Bundler" />
 </p>
 
+
+> NOTE: the project is under development and i am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and i'll be happy to help. Thanks.
+
 ## screenshots :heart:
 
 <img src="https://user-images.githubusercontent.com/34238240/115880633-90edf500-a468-11eb-91bd-b8a9c52a678c.png" alt="Fokus App">
@@ -18,12 +21,10 @@
 
 <img src="https://user-images.githubusercontent.com/34238240/130842321-1b39a27a-93ab-4b29-8cb8-575e973c365f.png" alt="Fokus App">
 
-<img src="https://user-images.githubusercontent.com/34238240/130842324-6551deb4-f94c-4a12-8ccb-03326598cc6e.png" alt="Fokus App">
+<img src="https://user-images.githubusercontent.com/34238240/131602382-a3ed445c-89cc-4aa3-8869-a03736aff6a9.png" alt="Fokus App">
 
-<img src="https://user-images.githubusercontent.com/34238240/130842314-1c0ea2c8-58f5-4d76-a794-5dda9d398602.png" alt="Fokus App">
+<img src="https://user-images.githubusercontent.com/34238240/131602377-c0dbf022-a81b-4cab-9bb7-4cecf281d903.png" alt="Fokus App">
 
-
-> NOTE: the project is under development and i am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and i'll be happy to help. Thanks.
 
 # How to setup locally and run project
 

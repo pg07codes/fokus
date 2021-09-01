@@ -10,7 +10,6 @@ const NotesListAreaContainer = styled.div`
     display: flex;
     flex: 3 1 0;
     flex-direction: column;
-    align-content: center;
     overflow-y: auto;
     position: relative;
     margin: 20px 0 0 30px;
@@ -18,12 +17,17 @@ const NotesListAreaContainer = styled.div`
     background-size: 400px;
 `;
 
+const NoteSearchDiv = styled.div`
+    display: flex;
+    width: 90%;
+    justify-content: ${(p) => (p.isGridView ? "flex-start" : "center")};
+`;
+
 const NotesDiv = styled.div`
     display: flex;
     flex-direction: ${(p) => (p.isGridView ? "row" : "column")};
     flex-wrap: wrap;
     align-items: center;
-    /* align-content: flex-start; */
     width: 90%;
 `;
 
@@ -48,7 +52,9 @@ export default function NotesListArea({ setNoteInPreview }) {
 
     return (
         <NotesListAreaContainer background={emptyNotes}>
-            <NoteSearchInput noSearchResults={notesArray.length !== 0 && filteredNotes.length === 0} setSearchQuery={setSearchQuery} />
+            <NoteSearchDiv isGridView={isGridView}>
+                <NoteSearchInput isGridView={isGridView} noSearchResults={notesArray.length !== 0 && filteredNotes.length === 0} setSearchQuery={setSearchQuery} />
+            </NoteSearchDiv>
             <NotesDiv isGridView={isGridView}>
                 <NewNoteButton isGridView={isGridView} setNoteInPreview={setNoteInPreview} />
                 {filteredNotes.map((note, idx) => (

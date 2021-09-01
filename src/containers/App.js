@@ -48,11 +48,6 @@ function App() {
             </ThemeProvider>
         );
     else {
-        // redirects to intro website for mobile users after 1 sec
-        setTimeout(() => {
-            window.location = "https://fokus-website.netlify.com";
-        }, 2000);
-
         return (
             <AppContainer>
                 <MobileView />

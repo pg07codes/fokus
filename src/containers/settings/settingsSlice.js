@@ -25,13 +25,12 @@ export const settingsSlice = createSlice({
         updateDefaultLabel(settings, { payload }) {
             settings.defaultLabel = payload;
         },
-        toggleNotesView: (settings, { payload }) => {
-            if (payload === undefined) settings.isGridView = !settings.isGridView;
-            else settings.isGridView = payload;
+        setGridView: (settings, { payload }) => {
+            settings.isGridView = payload;
         },
     },
 });
 
-export const { toggleDarkTheme, toggleAutoCompleteZeroTimeTask, updateDefaultTime, updateDefaultLabel, toggleNotesView } = settingsSlice.actions;
+export const { toggleDarkTheme, toggleAutoCompleteZeroTimeTask, updateDefaultTime, updateDefaultLabel, setGridView } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

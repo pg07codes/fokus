@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import Switch from "react-switch";
-import { toggleNotesView } from "./settingsSlice";
-import { InputDiv } from "./index";
+import { setGridView } from "./settingsSlice";
+import { FaThList } from "react-icons/fa";
+import { BsFillGrid3X3GapFill } from "react-icons/bs";
+import ReactTooltip from "react-tooltip";
 
 const NotesViewDiv = styled.div`
     display: flex;
@@ -17,16 +18,37 @@ const NotesViewDiv = styled.div`
     }
 `;
 
+export const Options = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    svg{
+        cursor: pointer;
+        margin:3px;
+        font-size: 1.2em;
+    }
+    #list-view-opt {
+        color: ${(p) => (p.isGridView ? p.theme.primaryText : "#fabb18")};
+    }
+    #grid-view-opt {
+        color: ${(p) => (p.isGridView ? "#fabb18" : p.theme.primaryText)};
+    }
+`;
+
 export function NotesViewToggle() {
     const isGridView = useSelector((s) => s.settings.isGridView);
     const dispatch = useDispatch();
 
     return (
         <NotesViewDiv>
-            <p>Notes View Grid</p>
-            <InputDiv>
-                <Switch checked={isGridView} offColor="#c1c1d7" onColor="#77dd77" onChange={() => dispatch(toggleNotesView())} />
-            </InputDiv>
+            <p>Notes View Layout</p>
+            <Options isGridView={isGridView}>
+                <FaThList id="list-view-opt" data-for="list-view" data-tip="" onClick={() => {console.log('fd');dispatch(setGridView(false))}} />
+                <BsFillGrid3X3GapFill id="grid-view-opt" data-for="grid-view" data-tip="" onClick={() => dispatch(setGridView(true))} />
+                <ReactTooltip id="list-view" getContent={() => "List View"} />
+                <ReactTooltip id="grid-view" getContent={() => "Grid View"} />
+            </Options>
         </NotesViewDiv>
     );
 }
