@@ -84,6 +84,8 @@ docker build -t fokus .
 docker run -d --name fokus -p 5000:5000 fokus
 ```
 
+NOTE: There is also an unofficially maintained docker image available at `registry.gitlab.com/brandonbutler/fokus-docker:latest`, see the [fokus-docker](https://gitlab.com/brandonbutler/fokus-docker) project for more information.
+
 <br>
 
 # Contributing
