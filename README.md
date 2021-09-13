@@ -58,6 +58,32 @@ yarn dev
 yarn build
 ```
 
+# How to setup locally in Docker
+
+### 1. Clone repository
+
+```
+git clone https://github.com/pg07codes/fokus
+```
+
+### 2. Enter into cloned repo
+
+```
+cd fokus
+```
+
+### 3. Build image
+
+```
+docker build -t fokus .
+```
+
+### 4. Start container
+
+```
+docker run -d --name fokus -p 5000:5000 fokus
+```
+
 <br>
 
 # Contributing
