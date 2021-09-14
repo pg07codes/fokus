@@ -15,16 +15,16 @@ const FokusUsageTips = [
         tip: "Your data never leaves your browser as Fokus respects privacy.",
     },
     {
-        tip: "You can set default label for tasks in the settings.",
+        tip: "You can set a default label for tasks in the settings.",
     },
     {
-        tip: "Taking regular break between tasks helps in increasing productivity.",
+        tip: "Taking regular breaks between tasks helps in increasing productivity.",
     },
     {
         tip: "Starting with smaller tasks helps in building momentum and motivation to carry on.",
     },
     {
-        tip: "Hey there, i think you should be focussing on a task , no ?",
+        tip: "Hey there, I think you should be focusing on a task, no?",
     },
     {
         tip: "Listing all your tasks daily helps clear the head space and improves efficiency.",
@@ -45,10 +45,10 @@ const FokusUsageTips = [
         tip: "Isolate yourself from distractions once you start Fokus timer.",
     },
     {
-        tip: "Small improvements daily leads to more lasting changes, but it takes consistency with discipline. ",
+        tip: "Small improvements daily leads to more lasting changes, but it takes consistency with discipline.",
     },
     {
-        tip: "Always be patient through the rough patches and take actions with consistency",
+        tip: "Always be patient through the rough patches and take actions with consistency.",
     },
     {
         tip: `Multitasking is not efficient. "Pick a task, complete it and move to next" should be the mantra.`,
@@ -57,7 +57,7 @@ const FokusUsageTips = [
         tip: "Finishing the most important tasks first helps in reducing stress & increase motivation.",
     },
     {
-        tip: "Make small changes and build positive habits. It is the key for higher productivity and efficiency at work",
+        tip: "Make small changes and build positive habits. It is the key for higher productivity and efficiency at work.",
     },
     {
         tip: "Keep your phone or any other thing that might distract you aside when you start with your task.",
