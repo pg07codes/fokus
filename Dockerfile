@@ -8,4 +8,4 @@ RUN npm install --force && \
     yarn build && \
     yarn global add serve
 
-CMD serve -s build
+CMD ["serve", "-s", "build"]
