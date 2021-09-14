@@ -11,7 +11,7 @@
 </p>
 
 
-> NOTE: the project is under development and i am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and i'll be happy to help. Thanks.
+> NOTE: the project is under development and I am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and I'll be happy to help. Thanks.
 
 ## screenshots :heart:
 
@@ -90,16 +90,16 @@ NOTE: There is also an unofficially maintained docker image available at `regist
 
 # Contributing
 
-Contributions in any form are encouraged and i would love to merge them back into the codebase. You can help me by:
+Contributions in any form are encouraged and I would love to merge them back into the codebase. You can help me by:
 
 -   STAR this repository :star:
 -   Raising issues or bugs :bug:
 -   Helping new users with issues they may encounter :handshaking:
 -   Improving documentation or raising your suggestions :bulb:
--   submitting PR with bug fixes or new features :arrow_heading_up:
+-   Submitting PR with bug fixes or new features :arrow_heading_up:
 -   Spreading the word and recommending it to your friends and family :speaking_head:
 
-_If you're into react development and interested in contributing, Feel free to raise a issue or PR or hit me up on my mail._
+_If you're into react development and interested in contributing, feel free to raise a issue or PR or hit me up on my mail._
 
 <br>
 
