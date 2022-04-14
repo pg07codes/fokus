@@ -2,7 +2,7 @@
 <img src="https://user-images.githubusercontent.com/34238240/109479789-c5fd4d00-7aa0-11eb-868b-2da35de326b8.png" alt="Fokus Logo">
 </p>
 
-<h3 align="center"> Fokus is a web based productivity tool. Give Fokus App a try <a href="https://fokus-prototype.netlify.com"> here </a> </h3>
+<h3 align="center"> Fokus is a web based productivity tool. Give it a try <a href="https://fokusapp.netlify.app"> here. </a> </h3>
 <p align="center">
   <img  src="https://img.shields.io/badge/name-fokus-yellow" alt="Game Ref" />
   <img  src="https://img.shields.io/badge/category-productivity-orange" alt="Application Category" />
@@ -92,12 +92,12 @@ NOTE: There is also an unofficially maintained docker image available at `regist
 
 Contributions in any form are encouraged and I would love to merge them back into the codebase. You can help me by:
 
--   STAR this repository :star:
--   Raising issues or bugs :bug:
--   Helping new users with issues they may encounter :handshaking:
--   Improving documentation or raising your suggestions :bulb:
--   Submitting PR with bug fixes or new features :arrow_heading_up:
--   Spreading the word and recommending it to your friends and family :speaking_head:
+-   :star: STAR this repository :star:
+-   :bug: Raising issues or bugs :bug:
+-   :handshaking: Helping new users with issues they may encounter 
+-   :bulb: Improving documentation or raising your suggestions
+-   :arrow_heading_up: Submitting PR with bug fixes or new features
+-   :speaking_head: Spreading the word and recommending it to your friends and family
 
 _If you're into react development and interested in contributing, feel free to raise a issue or PR or hit me up on my mail._
 
@@ -118,6 +118,6 @@ See `license` for complete license text.
   Open Source
 </h2>
 <p align="center">
-  <sub>Copyright © 2020-present, Pranav Gupta</sub>
+  <sub>Copyright © 2022 Pranav Gupta</sub>
 </p>
 <p align="center">Fokus Code <a href="https://github.com/pg07codes/fokus/blob/master/LICENSE.md">is GNU GPLv3 licensed 💖</a></p>
