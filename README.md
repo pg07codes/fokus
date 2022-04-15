@@ -93,8 +93,8 @@ NOTE: There is also an unofficially maintained docker image available at `regist
 Contributions in any form are encouraged and I would love to merge them back into the codebase. You can help me by:
 
 -   :star: STAR this repository :star:
--   :bug: Raising issues or bugs :bug:
--   :handshaking: Helping new users with issues they may encounter 
+-   :bug: Raising issues or bugs
+-   :thumbsup: Helping new users with issues they may encounter 
 -   :bulb: Improving documentation or raising your suggestions
 -   :arrow_heading_up: Submitting PR with bug fixes or new features
 -   :speaking_head: Spreading the word and recommending it to your friends and family
