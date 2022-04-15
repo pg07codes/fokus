@@ -5,9 +5,9 @@ import App from './containers/App';
 import store from './store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 ReactGA.initialize('G-D6X2VXVV7T');
-ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.send("pageview");
 
 ReactDOM.render(
   <React.StrictMode>
