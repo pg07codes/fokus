@@ -62,14 +62,6 @@ const TaskTimeInputDiv = styled.div`
         font-size: 1.2em;
         color: #fabb18;
     }
-    input[type="number"] { 
-        -moz-appearance: textfield;   
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
 `;
 
 const TaskTimeInputField = styled.input`
@@ -91,6 +83,9 @@ const TaskTimeInputField = styled.input`
         -moz-appearance: none;
         appearance: none;
         margin: 0;
+    }
+        input[type="number"] { 
+        -moz-appearance: textfield;   
     }
 `;
 
