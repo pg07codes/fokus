@@ -84,6 +84,9 @@ const TaskTimeInputField = styled.input`
         appearance: none;
         margin: 0;
     }
+        input[type="number"] { 
+        -moz-appearance: textfield;   
+    }
 `;
 
 export default function TaskInput() {
