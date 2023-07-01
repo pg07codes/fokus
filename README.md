@@ -11,7 +11,7 @@
 </p>
 
 
-> NOTE: the project is under development and I am making changees to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and I'll be happy to help. Thanks.
+> NOTE: the project is under development and I am making changes to the react state. As the state is being saved to localstorage, updating it might cause some changes to break for you. If you are facing any issues while loading the app, Please clear localstorage and refresh. Please raise an issue and I'll be happy to help. Thanks.
 
 ## screenshots :heart:
 
@@ -31,7 +31,7 @@
 ### 1. Clone repository
 
 ```
-git clone https://github.com/pg07codes/fokus
+git clone https://github.com/gonzalovazquez/fokus
 ```
 
 ### 2. Enter into cloned repo
@@ -63,7 +63,7 @@ yarn build
 ### 1. Clone repository
 
 ```
-git clone https://github.com/pg07codes/fokus
+git clone https://github.com/gonzalovazquez/fokus
 ```
 
 ### 2. Enter into cloned repo
@@ -120,4 +120,4 @@ See `license` for complete license text.
 <p align="center">
   <sub>Copyright © 2022 Pranav Gupta</sub>
 </p>
-<p align="center">Fokus Code <a href="https://github.com/pg07codes/fokus/blob/master/LICENSE.md">is GNU GPLv3 licensed 💖</a></p>
+<p align="center">Fokus Code <a href="https://github.com/gonzalovazquez/fokus/blob/master/LICENSE.md">is GNU GPLv3 licensed 💖</a></p>
