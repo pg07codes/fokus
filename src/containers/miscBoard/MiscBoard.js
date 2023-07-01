@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { LabelPie } from "./../../components/MiscBoard/LabelPie";
 import { ProgressRings } from "./../../components/MiscBoard/ProgressRings";

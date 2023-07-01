@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
 import { FaArrowRight, FaTrash, FaClipboard } from "react-icons/fa";
-import { colorOptions, create, update, remove } from "../../containers/notes/notesSlice";
+import { colorOptions, update, remove } from "../../containers/notes/notesSlice";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { AiFillEye } from "react-icons/ai";

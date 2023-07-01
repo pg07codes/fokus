@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import "react-circular-progressbar/dist/styles.css";
 import { FocussedTask } from "./../../components/FocusBoard/FocussedTask";

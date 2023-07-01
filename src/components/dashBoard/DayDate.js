@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { BsCalendarFill } from "react-icons/bs";
 import { getFormattedDate, getOrdinalSuffix } from "../../helpers";

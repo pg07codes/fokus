@@ -3,12 +3,12 @@ export function formattedTimeString(x) {
     let secs = x % 60;
     let mins = Math.floor(x / 60);
 
-    if (secs == 0) {
+    if (secs === 0) {
         secs = `00`;
     } else if (secs < 10) {
         secs = `0${secs}`;
     }
-    if (mins == 0) {
+    if (mins === 0) {
         mins = `00`;
     } else if (mins < 10) {
         mins = `0${mins}`;
@@ -22,12 +22,12 @@ export function formattedTimeStringv2(x) {
     let secs = x % 60;
     let mins = Math.floor(x / 60);
 
-    if (secs == 0) {
+    if (secs === 0) {
         secs = `00`;
     } else if (secs < 10) {
         secs = `0${secs}`;
     }
-    if (mins == 0) {
+    if (mins === 0) {
         mins = `00`;
     } else if (mins < 10) {
         mins = `0${mins}`;
@@ -53,12 +53,12 @@ export function getFormattedListTimeSummary(x) {
     let mins = Math.floor((x % 3600) / 60);
     let hours = Math.floor(x / 3600);
 
-    if (mins == 0) {
+    if (mins === 0) {
         mins = `00`;
     } else if (mins < 10) {
         mins = `0${mins}`;
     }
-    if (hours == 0) {
+    if (hours === 0) {
         hours = `0`;
     } else if (hours < 10) {
         hours = `${hours}`;
@@ -82,13 +82,13 @@ export function updatePageTitle(title) {
 export function getOrdinalSuffix(i) {
     let j = i % 10,
         k = i % 100;
-    if (j == 1 && k != 11) {
+    if (j === 1 && k !== 11) {
         return "st";
     }
-    if (j == 2 && k != 12) {
+    if (j === 2 && k !== 12) {
         return "nd";
     }
-    if (j == 3 && k != 13) {
+    if (j === 3 && k !== 13) {
         return "rd";
     }
     return "th";

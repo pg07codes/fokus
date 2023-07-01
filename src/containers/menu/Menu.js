@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdDashboard, MdSettings } from "react-icons/md";
 import { IoMdAnalytics } from "react-icons/io";
-import { BiExclude , BiNotepad} from "react-icons/bi";
+import { BiExclude , BiNotepad } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import logo from "./../../images/logo.svg";
@@ -116,8 +116,13 @@ export function Menu() {
             </MenuOptions>
 
             <DummyMenuOptions>
-                <BiExclude data-tip="" data-for="analytics" />
-                <ReactTooltip id="analytics" getContent={() => "Coming Soon"} />
+                <BiExclude data-tip="" data-for="jamboard" />
+                <ReactTooltip id="jamboard" getContent={() => "Jamboard"} />
+            </DummyMenuOptions>
+
+            <DummyMenuOptions>
+                <IoMdAnalytics data-tip="" data-for="analytics" />
+                <ReactTooltip id="analytics" getContent={() => "Analytics"} />
             </DummyMenuOptions>
 
             <MenuOptions exact to="/settings">

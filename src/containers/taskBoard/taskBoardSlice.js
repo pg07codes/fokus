@@ -52,17 +52,17 @@ export const tasksSlice = createSlice({
             tasks.taskArray.unshift(payload);
             tasks.meta.totalTaskListTime += payload.time;
             tasks.meta.remainingTaskListTime += payload.time;
-            if (tasks.meta.completedTaskStartIndex != -1) ++tasks.meta.completedTaskStartIndex;
+            if (tasks.meta.completedTaskStartIndex !== -1) ++tasks.meta.completedTaskStartIndex;
         },
         remove: (tasks, { payload }) => {
             tasks.taskArray = tasks.taskArray.filter((i) => {
                 if (i.id !== payload) return true;
                 else {
                     if (!i.isCompleted) {
-                        if (tasks.meta.completedTaskStartIndex != -1) --tasks.meta.completedTaskStartIndex;
+                        if (tasks.meta.completedTaskStartIndex !== -1) --tasks.meta.completedTaskStartIndex;
                     } else {
                         tasks.meta.completedTasksCount--;
-                        if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length - 1) {
+                        if (tasks.meta.completedTaskStartIndex === tasks.taskArray.length - 1) {
                             tasks.meta.completedTaskStartIndex = -1;
                         }
                     }
@@ -272,7 +272,7 @@ export const tasksSlice = createSlice({
                     tasks.meta.completedTaskStartIndex -= 1;
                 }
             } else {
-                if (tasks.meta.completedTaskStartIndex == 0) {
+                if (tasks.meta.completedTaskStartIndex === 0) {
                     let task, idx;
                     for (let i = tasks.meta.completedTaskStartIndex; i < tasks.taskArray.length; i++) {
                         if (tasks.taskArray[i].id === id) {
@@ -315,7 +315,7 @@ export const tasksSlice = createSlice({
                     tasks.meta.completedTaskStartIndex += 1;
                 }
 
-                if (tasks.meta.completedTaskStartIndex == tasks.taskArray.length) {
+                if (tasks.meta.completedTaskStartIndex === tasks.taskArray.length) {
                     tasks.meta.completedTaskStartIndex = -1;
                 }
             }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import NotesListArea from "./../../components/notes/NotesListArea";
 import NotesPreview from "./../../components/notes/NotesPreview";

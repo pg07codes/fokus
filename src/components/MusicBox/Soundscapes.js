@@ -100,7 +100,7 @@ export function Soundscapes() {
     const soundscape = useSelector((s) => s.tasks.soundscape);
     const dispatch = useDispatch();
 
-    const [soundscapeAudioElement, setSoundscapeAudioElement] = useState(() => generateAudioElement(soundscape.track, soundscape.volume));
+    const [soundscapeAudioElement] = useState(() => generateAudioElement(soundscape.track, soundscape.volume));
 
     // ---- danger zone: don't change without full surety , this code is prone to issues ---///
 

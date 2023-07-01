@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateOrder } from "./taskBoardSlice";
 import TaskCard from "./../../components/TaskBoard/TaskCard";
@@ -42,7 +42,7 @@ export function TaskBoard() {
         let i = result.source.index;
         let direction = result.destination.index > result.source.index; // direction true means moving right & swapping
         // below is logic to reset globalKeys to maintain correct sort order.
-        while (i != result.destination.index) {
+        while (i !== result.destination.index) {
             if (direction) {
                 items[i].globalKey = tasks[i].globalKey;
                 i++;
@@ -50,7 +50,7 @@ export function TaskBoard() {
                 items[i].globalKey = tasks[i].globalKey;
                 i--;
             }
-            if (i == result.destination.index) {
+            if (i === result.destination.index) {
                 items[i].globalKey = tasks[i].globalKey;
             }
         }
